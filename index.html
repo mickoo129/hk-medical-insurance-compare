@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>醫保對照｜自願醫保及危疾保險比較</title>
+<meta name="description" content="比較香港十間主要人壽保險公司的自願醫保及危疾保險計劃：保障範圍、限額、自付費及計劃特點。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16262B; --deep:#0E3B43; --jade:#17806A; --jade-soft:#E3F1ED;
+  --paper:#FAFBFA; --panel:#FFFFFF; --line:#D9E1E0; --mute:#5B6B70;
+  --amber:#9A6200; --amber-soft:#FBF1DC; --diff:#FFF7E0;
+  --sans:"Noto Sans HK","PingFang HK","Microsoft JhengHei",sans-serif;
+  --serif:"Noto Serif HK","Songti TC",serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--jade);outline-offset:2px}
+a{color:var(--jade)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+
+/* 頁首 */
+.top{background:var(--deep);color:#fff}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
+.brand{font-family:var(--serif);font-size:1.25rem;font-weight:700;letter-spacing:.04em}
+.brand small{display:block;font-family:var(--sans);font-weight:400;font-size:.78rem;letter-spacing:0;opacity:.8}
+.mode{display:flex;background:rgba(255,255,255,.12);border-radius:999px;padding:4px}
+.mode button{border:0;background:none;color:#fff;padding:8px 20px;border-radius:999px;font-weight:500}
+.mode button[aria-pressed="true"]{background:#fff;color:var(--deep);font-weight:700}
+
+/* 開場 */
+.intro{background:var(--deep);color:#fff;padding:26px 0 34px}
+.intro h1{font-family:var(--serif);font-size:clamp(1.6rem,3.6vw,2.4rem);line-height:1.3;margin:0 0 8px;font-weight:700}
+.intro p{margin:0 0 18px;max-width:46em;opacity:.9}
+.needs{display:flex;flex-wrap:wrap;gap:8px}
+.needs span{width:100%;font-size:.9rem;opacity:.85}
+.needs button{border:1px solid rgba(255,255,255,.45);background:none;color:#fff;border-radius:6px;padding:8px 14px;text-align:left}
+.needs button:hover{background:rgba(255,255,255,.1)}
+.needs button[aria-pressed="true"]{background:#fff;color:var(--deep);border-color:#fff;font-weight:700}
+
+/* 主體 */
+.main{display:grid;grid-template-columns:270px 1fr;gap:28px;padding-top:24px;padding-bottom:120px;align-items:start}
+.filters{position:sticky;top:12px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;max-height:calc(100vh - 24px);overflow:auto}
+.filters h2{font-size:1rem;margin:0 0 4px}
+.fg{border-top:1px solid var(--line);padding:12px 0}
+.fg:first-of-type{border-top:0}
+.fg legend,.fg label.h{font-weight:700;font-size:.9rem;padding:0;margin-bottom:6px;display:block}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+.chk{display:flex;align-items:center;gap:8px;font-size:.92rem;padding:2px 0}
+.chk input{width:17px;height:17px;accent-color:var(--jade)}
+.insgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 8px}
+select,input[type=search]{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.reset{border:1px solid var(--line);background:#fff;border-radius:6px;padding:8px 12px;width:100%;margin-top:6px}
+.filt-toggle{display:none}
+
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.count{font-weight:700}
+.count span{font-weight:400;color:var(--mute);font-size:.9rem}
+.sort{display:flex;align-items:center;gap:8px;font-size:.9rem}
+.sort select{width:auto}
+
+/* 對照列表 */
+.ledger{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.lhead,.row .sum{display:grid;gap:12px;align-items:center;padding:12px 16px}
+.v .lhead,.v .row .sum{grid-template-columns:34px minmax(180px,2.2fr) .9fr 1fr 1fr 1fr 1.2fr .9fr}
+.c .lhead,.c .row .sum{grid-template-columns:34px minmax(180px,2.2fr) 1fr .8fr .9fr 1.3fr 1.3fr}
+.lhead{background:#EEF3F2;font-size:.82rem;font-weight:700;color:var(--mute);border-bottom:1px solid var(--line);padding-top:9px;padding-bottom:9px}
+.row{border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .sum{font-size:.92rem;cursor:pointer}
+.row .sum:hover{background:#F5F8F7}
+.row.open .sum{background:var(--jade-soft)}
+.pname{font-weight:700;line-height:1.35}
+.pname .ins{display:block;font-weight:500;font-size:.8rem;color:var(--mute)}
+.pname .tier{font-weight:500}
+.cell b{font-weight:700}
+.cell small{display:block;color:var(--mute);font-size:.78rem;line-height:1.3}
+.cell::before{display:none;content:attr(data-l);font-size:.75rem;color:var(--mute)}
+.pick{width:20px;height:20px;accent-color:var(--deep)}
+.tag{display:inline-block;font-size:.74rem;border-radius:4px;padding:1px 6px;margin:1px 3px 1px 0;background:var(--jade-soft);color:#0C5A49;white-space:nowrap}
+.tag.w{background:var(--amber-soft);color:var(--amber)}
+.tag.n{background:#EEF1F1;color:var(--mute)}
+.more{padding:4px 16px 18px 62px;font-size:.92rem;background:var(--jade-soft)}
+.more h4{margin:12px 0 4px;font-size:.88rem}
+.more ul{margin:0;padding-left:1.2em}
+.more .meta{color:var(--mute);font-size:.84rem;margin-top:10px}
+.empty{padding:40px 20px;text-align:center;color:var(--mute)}
+.empty button{margin-top:10px;border:1px solid var(--jade);color:var(--jade);background:#fff;border-radius:6px;padding:8px 14px}
+
+/* 比較欄 */
+.tray{position:fixed;left:0;right:0;bottom:0;background:var(--deep);color:#fff;transform:translateY(110%);transition:transform .2s;z-index:20}
+.tray.on{transform:none}
+.tray .wrap{display:flex;align-items:center;gap:12px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.tray .items{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.tray .it{background:rgba(255,255,255,.14);border-radius:6px;padding:4px 6px 4px 10px;font-size:.84rem;display:flex;align-items:center;gap:6px}
+.tray .it button{border:0;background:none;color:#fff;font-size:1rem;line-height:1;padding:2px 6px}
+.tray .go{background:#fff;color:var(--deep);border:0;border-radius:6px;padding:10px 18px;font-weight:700}
+.tray .go:disabled{opacity:.5;cursor:not-allowed}
+.tray .clr{background:none;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:6px;padding:9px 12px}
+
+dialog{border:0;border-radius:10px;padding:0;width:min(1180px,96vw);max-height:92vh}
+dialog::backdrop{background:rgba(10,30,35,.55)}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
+.dh h2{margin:0;font-family:var(--serif);font-size:1.2rem}
+.dh div{display:flex;gap:8px;align-items:center}
+.dh button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:7px 12px}
+.dh label{font-size:.88rem;display:flex;gap:6px;align-items:center}
+.cmpwrap{overflow:auto;padding:0 20px 20px}
+table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
+.cmp th,.cmp td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.cmp thead th{position:sticky;top:0;background:#fff;font-size:.95rem;border-bottom:2px solid var(--deep)}
+.cmp thead th small{display:block;font-weight:500;color:var(--mute)}
+.cmp tbody th{width:130px;color:var(--mute);font-weight:700;font-size:.84rem;background:#F6F8F8}
+.cmp tr.d td{background:var(--diff)}
+.cmp.onlyd tr:not(.d){display:none}
+.cmp ul{margin:0;padding-left:1.1em}
+
+/* 說明 */
+.notes{background:#fff;border-top:1px solid var(--line);padding:32px 0 60px;font-size:.9rem}
+.notes h2{font-family:var(--serif);font-size:1.15rem;margin:0 0 8px}
+.notes .cols{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.notes p,.notes li{color:#34454A}
+.notes ul{padding-left:1.2em;margin:6px 0}
+.contact{margin-top:20px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--jade-soft)}
+
+@media (max-width:900px){
+  .main{grid-template-columns:1fr}
+  .filters{position:static;max-height:none;display:none}
+  .filters.show{display:block}
+  .filt-toggle{display:inline-block;border:1px solid var(--line);background:#fff;border-radius:6px;padding:8px 14px}
+  .lhead{display:none}
+  .v .row .sum,.c .row .sum{grid-template-columns:28px 1fr 1fr;gap:6px 12px;align-items:start}
+  .row .sum .pname{grid-column:2 / -1}
+  .row .sum .cell:nth-of-type(n+2){grid-column:auto}
+  .row .sum .cell.c1{grid-column:2}
+  .cell::before{display:block}
+  .more{padding-left:16px}
+  .notes .cols{grid-template-columns:1fr}
+  .tray .items{display:none}
+  .tray .wrap{justify-content:flex-end}
+  .tray .go{flex:1}
+}
+@media (prefers-reduced-motion:reduce){.tray{transition:none}html{scroll-behavior:auto}}
+@media print{
+  .top,.intro,.filters,.tray,.bar,.notes,.dh button,.dh label{display:none!important}
+  dialog{position:static;width:100%;max-height:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">醫保對照<small>自願醫保及危疾保險比較</small></div>
+    <div class="mode" role="group" aria-label="選擇比較類別">
+      <button id="mV" aria-pressed="true">自願醫保</button>
+      <button id="mC" aria-pressed="false">危疾保險</button>
+    </div>
+  </div>
+</header>
+
+<section class="intro">
+  <div class="wrap">
+    <h1 id="h1"></h1>
+    <p id="lede"></p>
+    <div class="needs" id="needs"></div>
+  </div>
+</section>
+
+<div class="wrap main">
+  <aside class="filters" id="filters" aria-label="篩選條件"></aside>
+  <main>
+    <div class="bar">
+      <div class="count" id="count"></div>
+      <div class="sort">
+        <button class="filt-toggle" id="ft">篩選條件</button>
+        <label for="sort">排序</label>
+        <select id="sort"></select>
+      </div>
+    </div>
+    <div class="ledger" id="ledger"></div>
+  </main>
+</div>
+
+<section class="notes">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h2>資料說明</h2>
+        <p>資料於 <b id="upd"></b> 整理，範圍為保監局 2025 年長期業務統計中有效個人及團體人壽業務毛保費最高的十間保險公司。自願醫保計劃名單以醫務衞生局自願醫保計劃網站的認可產品名單為準。</p>
+        <ul>
+          <li>標示「已對照官方資料」的計劃，主要數字取自保險公司網站或產品小冊子；標示「資料待核實」的計劃，部分內容來自第三方資料或未能取得完整官方保障表。</li>
+          <li>本頁不包括保費。保費按年齡、性別、吸煙習慣及核保結果而定，請向顧問索取報價。</li>
+          <li>恒生銀行分銷的自願醫保由滙豐人壽保險（國際）有限公司承保。</li>
+          <li id="omit"></li>
+        </ul>
+      </div>
+      <div>
+        <h2>重要聲明</h2>
+        <p>本頁資料只供一般參考，並不構成任何保險產品的要約、招攬或建議，亦未考慮閣下的個人需要及財務狀況。各計劃的保障、不保事項、等候期及條款以保險公司發出的保單條款及最新產品小冊子為準。投保前應細閱有關文件，並向持牌保險中介人查詢。</p>
+        <div class="contact" id="contact" hidden></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tray" id="tray"><div class="wrap">
+  <div class="items" id="trayItems"></div>
+  <button class="clr" id="trayClr">清除</button>
+  <button class="go" id="trayGo">並排比較</button>
+</div></div>
+
+<dialog id="dlg" aria-labelledby="dlgT">
+  <div class="dh">
+    <h2 id="dlgT">並排比較</h2>
+    <div>
+      <label><input type="checkbox" id="onlyd"> 只顯示有分別的項目</label>
+      <button id="prt">列印</button>
+      <button id="cls">關閉</button>
+    </div>
+  </div>
+  <div class="cmpwrap" id="cmp"></div>
+</dialog>
+
+<script>
+/* ========== 顧問資料：填寫後頁底會顯示聯絡方法 ========== */
+const ADVISOR = { name:"", licence:"", company:"", phone:"", whatsapp:"", email:"" };
+const UPDATED = "2026年10月6日";
+
+/* ========== 保險公司 ========== */
+const INS = {
+  aia:{n:"友邦 AIA"}, hsbc:{n:"滙豐人壽 HSBC Life"}, pru:{n:"保誠 Prudential"}, manu:{n:"宏利 Manulife"},
+  boc:{n:"中銀人壽 BOC Life"}, hs:{n:"恒生 Hang Seng"}, fwd:{n:"富衛 FWD"}, cl:{n:"中國人壽（海外）"},
+  sun:{n:"永明 Sun Life"}, axa:{n:"安盛 AXA"}
+};
+const S = {
+  vhis:"https://www.vhis.gov.hk/tc/consumer_corner/flexi-plan.html",
+  vhisStd:"https://www.vhis.gov.hk/tc/consumer_corner/standard-plan.html",
+  aiaV:"https://www.aia.com.hk/zh-hk/products/medical/vhis",
+  aiaC:"https://www.aia.com.hk/zh-hk/products/critical-illness",
+  pruV:"https://www.prudential.com.hk/tc/health-insurance/medical/",
+  pruC:"https://www.prudential.com.hk/tc/health-insurance/critical-illness/",
+  manuV:"https://www.manulife.com.hk/zh-hk/individual/products/health/vhis.html",
+  manuC:"https://www.manulife.com.hk/zh-hk/individual/products/health/critical-illness-protection.html",
+  axaV:"https://www.axa.com.hk/zh/axa-wiseguard-pro-medical-insurance-plan",
+  axaC:"https://www.axa.com.hk/zh/critical-illness-protection",
+  fwdV:"https://www.fwd.com.hk/zh/vhis/",
+  fwdC:"https://www.fwd.com.hk/zh/critical-illness/",
+  hsbcV:"https://www.hsbc.com.hk/zh-hk/insurance/products/medical-and-critical-illness/vhis/flexi/",
+  hsbcV1:"https://www.hsbc.com.hk/zh-hk/insurance/products/medical-and-critical-illness/vhis/one/",
+  hsbcC:"https://www.hsbc.com.hk/zh-hk/insurance/products/medical-and-critical-illness/swift-guard/",
+  hsbcC2:"https://hsbc.com.hk/zh-hk/insurance/products/life/health-goal",
+  hsV:"https://www.hangseng.com/zh-hk/personal/insurance-mpf/medical-critical-illness/vhis/flexi/",
+  hsC:"https://www.hangseng.com/zh-hk/personal/insurance-mpf/medical-critical-illness/lifebetter/",
+  bocV:"https://www.boclife.com.hk/tc/product/smartviva-flexi-vhis-add-live-young-offer.html",
+  bocC:"https://www.boclife.com.hk/tc/product/critical-illness-188-whole-life-insurance-plan.html",
+  bocC2:"https://www.boclife.com.hk/en/product-information.html",
+  clV:"https://www.e-chinalife.com.hk/insurance/product/H143/healthy-life-medical-insurance-plan",
+  clVs:"https://www.e-chinalife.com.hk/insurance/product/H142/guard-your-health-medical-insurance-plan",
+  clC:"https://www.chinalife.com.hk/zh-hk/products/insurance/critical-illness-guardian-insurance-plan-critical-illness-guardian-insurance",
+  sunV:"https://www.sunlife.com.hk/zh-hant/insurance/health/voluntary-health-insurance-scheme/",
+  sunC:"https://www.sunlife.com.hk/zh-hant/insurance/health/critical-illness/"
+};
+const W = 10000, M = 1000000;
+const STD_FEATS = ["政府劃一條款的基本住院及手術保障","病房及膳食每日 $750、外科醫生費（複雜手術）$50,000 等分項限額","訂明非手術癌症治療每年 $80,000","保障投保時未知的已有病症（設首 3 年等候期：第 2 年 25%、第 3 年 50%）","保證續保至 100 歲"];
+
+/* ========== 自願醫保資料 ==========
+   ward: 普通房 / 半私家房 / 私家房 / 不限
+   reg: 1 大中華  2 亞洲  3 全球（美國除外） 4 全球
+   annual: 數字＝每年保障限額；0＝不設限額；null＝待補充
+   full: true 全數賠償（不設分項限額）  false 分項限額
+   ok: true 已對照官方資料  false 資料待核實                                   */
+const std = (ins, name, cert, src, ok=true, note="") => ({ins,name,cert,type:"標準",ward:["普通房"],wardTxt:"不設病房級別限制（分項限額以普通房水平釐定）",reg:[4],regTxt:"全球（精神科治療除外）",annual:420000,life:"不設",ded:[0],full:false,smm:"沒有",feats:STD_FEATS,age:"15日至80歲",src,ok,note});
+
+const HSBC_T = [
+  ["銅級",["普通房"],[1],"大中華",5*M,"2,000萬"],
+  ["銀級",["半私家房"],[2],"亞洲、澳洲及紐西蘭",25*M,"不設"],
+  ["金級",["私家房"],[2],"亞洲、澳洲及紐西蘭",30*M,"不設"],
+  ["鉑級",["私家房"],[3],"全球（美國除外）",35*M,"不設"],
+  ["鑽級",["私家房"],[4],"全球",40*M,"不設"]
+];
+const hsbcFlex = (ins,name,cert,src) => HSBC_T.map(t=>({ins,name,tier:t[0],cert,type:"靈活",ward:t[1],wardTxt:t[1][0]==="私家房"?"標準私家房":t[1][0],reg:t[2],regTxt:t[3],annual:t[4],life:t[5],ded:[0,16000,50000,100000],full:true,smm:"不適用（全數賠償）",feats:["住院及手術費用不設細項賠償限額","4 個每年自付費等級，可配合公司醫保","入住高於可享級別的病房，賠償會按百分比調整",t[0]==="銅級"?"終身保障限額 2,000萬":"不設終身保障限額"],age:"請參閱官方資料",src,ok:true,note:ins==="hs"?"由滙豐人壽保險（國際）有限公司承保，恒生銀行分銷。":""}));
+
+const VHIS = [
+  // 友邦
+  std("aia","AIA自願醫保標準計劃","標準計劃",S.aiaV),
+  {ins:"aia",name:"AIA自願醫保靈活計劃",cert:"F00022",type:"靈活",ward:["普通房","半私家房","私家房"],wardTxt:"普通房／半私家房／標準私家房（三個計劃選項）",reg:[4],regTxt:"全球（精神科治療除外）",annual:0,life:"不設",ded:[0],full:false,smm:"額外醫療保障，賠償超出分項限額部分的 80%",feats:["不設每年及終身保障限額","按病房級別設分項賠償限額","設額外醫療保障","港元或美元保單","保證終身續保"],age:"15日至80歲",src:S.aiaV,ok:true,note:"分項限額金額請參閱官方保障表。"},
+  {ins:"aia",name:"AIA自願醫保睿選計劃",cert:"F00081",type:"靈活",ward:["普通房"],wardTxt:"普通房；於香港指定醫院經網絡醫生及預先批核可升級半私家房",reg:[2],regTxt:"亞洲",annual:12*M,life:"6,000萬",ded:[0,8800,18000,30000,55000],full:true,smm:"不適用（全數賠償）",feats:["主要醫療項目不設分項限額","5 個每年自付費級別","香港指定醫院及中國內地指定醫院網絡","港元或美元保單"],age:"15日至80歲",src:S.vhis,ok:false,note:"認可編號及計劃選項已對照自願醫保官方名單；保障細節來自第三方整理，請以 AIA 產品小冊子核實。"},
+  {ins:"aia",name:"AIA自願醫保尊耀計劃",cert:"F00074",type:"靈活",ward:["半私家房","私家房"],wardTxt:"半私家房／標準私家房（視乎地區，詳見保障表）",reg:[2,3],regTxt:"亞洲 或 全球（美國除外）",annual:12*M,life:"6,000萬",ded:[0,16000,25000,50000],full:true,smm:"不適用（全數賠償）",feats:["主要醫療費用全數賠償，不設分項限額","延伸癌症保障：第三期臨床試驗藥物每年最高 50萬","每連續 3 個保單年度一次指定檢查服務","75 歲或以上因指定癌症接受治療可豁免每年自付費","港元或美元保單，可作基本計劃或附加契約"],age:"15日至80歲",src:"https://www.aia.com.hk/content/dam/hk-wise/pdf/products/individuals/zh-hk/newmedical/newVHISmedical-tc.pdf",ok:true},
+
+  // 保誠
+  std("pru","保誠自主醫保計劃","S00026",S.pruV),
+  {ins:"pru",name:"保誠靈活自主醫保計劃",cert:"F00013",type:"靈活",ward:["普通房","半私家房","私家房"],wardTxt:"普通病房／半私家病房／私家病房（三個選項）",reg:[4],regTxt:"全球（精神科治療只限香港）",annual:0,life:"不設",ded:[0],full:false,smm:"可選額外醫療計劃（設 2 個保障額選項）",feats:["不設每年及終身保障限額","病房及膳食每日 $1,200／$2,500／$4,500","可於 45、50、55 或 60 歲免核保提升額外醫療計劃選項","保證續保至 100 歲"],age:"15日至80歲",src:"https://www.prudential.com.hk/content/dam/prudential-phkl/pdf/tc/brochure/pruhealth-flexichoice-medical-plan-r-product-brochure.pdf",ok:true},
+  {ins:"pru",name:"保誠自願醫保摯稱心計劃",cert:"F00068",type:"靈活",ward:["普通房","半私家房","私家房"],wardTxt:"普通病房／半私家病房／私家病房（三個選項）",reg:[4],regTxt:"請參閱官方保障表",annual:0,life:"不設",ded:[0],full:false,smm:"請參閱官方保障表",feats:["不設每年及終身保障限額","按病房級別設分項限額，癌症治療設分級賠償限額","港元或美元保單","保證終身續保"],age:"請參閱官方資料",src:S.pruV,ok:false,note:"認可編號已對照官方名單；保障細節未能取得完整官方保障表。"},
+  {ins:"pru",name:"保誠自願醫保尚賓計劃",cert:"F00050",type:"靈活",ward:["半私家房","私家房"],wardTxt:"內地、香港、澳門：半私家病房；其他地區：私家病房",reg:[2,3],regTxt:"亞洲（包括澳洲及新西蘭）或 全球（美國除外）",annual:12*M,life:"5,600萬",ded:[0,20000,50000,96000],full:true,smm:"不適用（全數賠償）",feats:["不設個別保障限額的主要醫療費用全數賠償","終身 1 次免體檢調低每年自付費（50 至 85 歲指定年齡）","就受保癌症、心臟病發作及中風提供延伸保障","住院前及出院後支援，另設健康檢查保障","保證終身續保"],age:"15日至80歲",src:"https://www.prudential.com.hk/content/dam/prudential-phkl/pdf/tc/brochure/pruhealth-vhis-vip-plan-tc.pdf",ok:true},
+
+  // 宏利
+  std("manu","宏利愛守護自願醫保標準計劃","S00034",S.manuV),
+  {ins:"manu",name:"宏利全護航自願醫保靈活計劃",cert:"F00019",type:"靈活",ward:["普通房","半私家房","私家房"],wardTxt:"普通房／半私家房／私家房（三個級別）",reg:[4],regTxt:"全球（精神科治療及附加醫療保障除外）",annual:0,life:"不設",ded:[0],full:false,smm:"可選附加醫療保障",feats:["不設每年及終身保障限額","病房及膳食每日 $1,200／$2,500／$4,500","深切治療每日 $4,200／$5,600／$10,000","可加配附加醫療保障提高賠償上限"],age:"15日至80歲",src:S.manuV,ok:false,note:"分項限額來自第三方整理，請以宏利保障表核實。"},
+  ...[["智選",["普通房","半私家房"],"香港、澳洲、新西蘭：普通房；內地、澳門及其餘亞洲地區：半私家房",5*M,"2,000萬",[0,22800,45000,100000],true],
+      ["精選",["半私家房"],"半私家房",12*M,"6,000萬",[0,8000,22800,45000,100000],true],
+      ["優選",["私家房"],"標準私家房（請以官方保障表核實）",30*M,"1.2億",[0,8000,22800,45000,100000],false]
+  ].map(t=>({ins:"manu",name:"宏利晉悅自願醫保靈活計劃",tier:t[0],cert:"F00041",type:"靈活",ward:t[1],wardTxt:t[2],reg:[2],regTxt:"亞洲（亞洲以外只限急症治療）",annual:t[3],life:t[4],ded:t[5],full:true,smm:"不適用（全數賠償）",feats:["主要醫療項目全數賠償，不設分項限額","保障限額重置：每張保單可行使一次，該年度保障限額加倍","可於 50 至 85 歲指定年齡一次性下調自付費，毋須再核保","保持健康生活可享保費折扣"],age:"請參閱官方資料",src:"https://www.manulife.com.hk/zh-hk/individual/products/health/vhis/voluntary-health-insurance-scheme/manulife-supreme-vhis-flexi-plan.html",ok:t[6],note:t[6]?"":"病房級別為推斷，請核實。"})),
+  ...[["智選",["普通房","半私家房"],5*M,"2,000萬"],["精選",["半私家房"],12*M,"6,000萬"],["優選",["私家房"],30*M,"1.2億"]
+  ].map(t=>({ins:"manu",name:"宏利晉逸自願醫保附加保障",tier:t[0],cert:"F00071",type:"靈活",ward:t[1],wardTxt:t[0]==="智選"?"香港、澳洲、新西蘭：普通房；其餘亞洲地區：半私家房":"請參閱官方保障表",reg:[2],regTxt:"亞洲（亞洲以外只限急症治療）",annual:t[2],life:t[3],ded:[0,25000,50000,100000],full:true,smm:"不適用（全數賠償）",feats:["附加於指定基本計劃之上的住院保障（非獨立保單）","主要醫療費用全數賠償","保障限額重置：每張保單可行使一次","港元或美元保單","可於 50 至 85 歲指定年齡一次性下調自付費"],age:"請參閱官方資料",src:"https://www.manulife.com.hk/zh-hk/individual/products/health/vhis/voluntary-health-insurance-scheme/manulife-supreme-lite-vhis-supplementary-benefit.html",ok:true,note:"屬附加保障，須連同指定基本計劃投保。"})),
+
+  // 安盛
+  std("axa","AXA安盛守慧醫療保障","S00014 等",S.vhisStd),
+  {ins:"axa",name:"真智安心醫療保障",cert:"F00017／F00018",type:"靈活",ward:["普通房","半私家房","私家房"],wardTxt:"多個保障級別（請參閱官方保障表）",reg:[4],regTxt:"請參閱官方保障表",annual:0,life:"不設",ded:[0],full:false,smm:"請參閱官方保障表",feats:["不設每年及終身保障限額","按保障級別設分項賠償限額"],age:"請參閱官方資料",src:S.vhis,ok:false,note:"認可編號已對照官方名單；保障細節未能取得官方保障表。"},
+  ...[["標準",["普通房"],[1],"大中華",5*M,"普通房",""],
+      ["卓越",["半私家房"],[2],"亞洲（請核實）",25*M,"半私家房","入住港澳較低級別病房每日現金 $1,000"],
+      ["優尚",["私家房"],[2],"亞洲（請核實）",30*M,"標準私家房","入住港澳較低級別病房每日現金 $2,000"],
+      ["尊貴",["私家房"],[4],"全球",40*M,"標準私家房","入住港澳較低級別病房每日現金 $2,000"]
+  ].map(t=>({ins:"axa",name:"AXA安盛智尊守慧醫療保障",tier:t[0],cert:"F00034",type:"靈活",ward:t[1],wardTxt:t[5],reg:t[2],regTxt:t[3],annual:t[4],life:"不設",ded:[0,20000,50000],full:true,smm:"不適用（全額支付）",feats:["住院及手術費用全額支付，不設細項限額","不設終身保障限額","投保時未知的已有病症毋須等候期","訂明非手術癌症治療及門診洗腎全額支付","無索償折扣","港元或美元保單"].concat(t[6]?[t[6]]:[]),age:"請參閱官方資料",src:S.axaV,ok:true,note:(t[0]==="卓越"||t[0]==="優尚")?"保障地域按計劃設計推斷，請以保障表核實。":""})),
+
+  // 富衛
+  std("fwd","富衛自願醫保標準計劃","S00036",S.vhisStd,false,"計劃正式名稱請以自願醫保官方名單為準。"),
+  {ins:"fwd",name:"更衛您醫療計劃",cert:"F00015",type:"靈活",ward:["普通房"],wardTxt:"請參閱官方保障表",reg:[4],regTxt:"請參閱官方保障表",annual:null,life:"請參閱官方資料",ded:[0],full:false,smm:"請參閱官方保障表",feats:["分項限額型靈活計劃"],age:"請參閱官方資料",src:S.fwdV,ok:false,note:"只確認計劃名稱及認可編號，保障細節待補充。"},
+  {ins:"fwd",name:"更衛您（優越版）醫療計劃",cert:"F00032",type:"靈活",ward:["普通房"],wardTxt:"請參閱官方保障表",reg:[4],regTxt:"請參閱官方保障表",annual:null,life:"請參閱官方資料",ded:[0],full:false,smm:"請參閱官方保障表",feats:["分項限額型靈活計劃（優越版）"],age:"請參閱官方資料",src:S.fwdV,ok:false,note:"只確認計劃名稱及認可編號，保障細節待補充。"},
+  {ins:"fwd",name:"易衛您醫療計劃",cert:"F00051",type:"靈活",ward:["普通房"],wardTxt:"請參閱官方保障表",reg:[4],regTxt:"請參閱官方保障表",annual:null,life:"請參閱官方資料",ded:[0],full:false,smm:"請參閱官方保障表",feats:["靈活計劃"],age:"請參閱官方資料",src:S.fwdV,ok:false,note:"只確認計劃名稱及認可編號，保障細節待補充。"},
+  {ins:"fwd",name:"醫家保醫療計劃",cert:"F00072",type:"靈活",ward:["普通房"],wardTxt:"標準普通病房",reg:[4],regTxt:"全球",annual:550000,annualTxt:"每保單年度每傷病 55萬",life:"請參閱官方資料",ded:[0],full:false,smm:"請參閱官方保障表",feats:["以「每保單年度．每傷病」計算保障限額，每傷病獨立 $550,000","全球保障"],age:"請參閱官方資料",src:S.fwdV,ok:false,note:"限額來自第三方引述富衛資料，請核實。"},
+  {ins:"fwd",name:"倍衛您醫療計劃",cert:"F00069",type:"靈活",ward:["普通房"],wardTxt:"普通房",reg:[2],regTxt:"亞洲",annual:8*M,life:"不設",ded:[0,16000],dedTxt:"多個選項（共 6 個認可選項，包括 $16,000）",full:true,smm:"不適用（全數保障）",feats:["住院及手術費用全數保障，不設分項限額","每年保障限額 800萬，不設終身保障限額","多種自付費選項"],age:"請參閱官方資料",src:S.fwdV,ok:false,note:"自付費完整選項請以富衛資料核實。"},
+  {ins:"fwd",name:"尊衛您醫療計劃",cert:"F00045",type:"靈活",ward:["半私家房"],wardTxt:"標準半私家病房",reg:[2],regTxt:"亞洲（急症治療：全球）",annual:16.5*M,life:"不設",ded:[0,16000,25000,50000,100000,250000],full:true,smm:"不適用（全數保障）",feats:["住院及手術費用全數保障，不設分項限額","指定危疾全額賠償，豁免自付費","現金保障：日間手術、已獲其他保險賠償、入住較低級別病房等","中風復康額外保障","投保時未知的已有病症於第 31 日起保障","無索償保費折扣"],age:"請參閱官方資料",src:"https://www.fwd.com.hk/online-insurance/vhis-vprime-medical-plan/",ok:true,note:"每年保障限額以富衛網站現行資料（1,650萬）為準，舊版小冊子數字不同。"},
+  {ins:"fwd",name:"尊衛您（寰譽版）醫療計劃",cert:"F00070",type:"靈活",ward:["半私家房","私家房"],wardTxt:"請參閱官方保障表",reg:[3,4],regTxt:"請參閱官方保障表",annual:null,life:"不設",ded:[0],dedTxt:"多個選項（共 12 個認可選項）",full:true,smm:"不適用（全數保障）",feats:["住院及手術費用全數保障","不設終身保障限額"],age:"請參閱官方資料",src:S.fwdV,ok:false,note:"病房級別、地域及限額待補充。"},
+  {ins:"fwd",name:"至．衛一醫療計劃",cert:"F00067",type:"靈活",ward:["半私家房","私家房"],wardTxt:"多個保障級別（請參閱官方保障表）",reg:[2,3,4],regTxt:"多種保障地域範圍可選",annual:35*M,annualTxt:"最高 3,500萬（視乎保障級別）",life:"不設",ded:[0],dedTxt:"多個選項（共 24 個認可選項）",full:true,smm:"不適用（全數保障）",feats:["住院及手術費用全數保障，不設終身保障限額","多種保障地域範圍及自付費選項","就非手術癌症治療、腎臟透析及器官移植另設額外保障"],age:"請參閱官方資料",src:S.fwdV,ok:false,note:"各級別限額及病房級別請以富衛保障表核實。"},
+
+  // 滙豐
+  std("hsbc","滙豐自願醫保標準計劃","S00042",S.hsbcV1),
+  {ins:"hsbc",name:"滙豐自願醫保進階計劃",cert:"F00079",type:"靈活",ward:["普通房","半私家房","私家房"],wardTxt:"不設病房級別限制",reg:[4],regTxt:"全球",annual:null,life:"請參閱官方資料",ded:[0],full:false,smm:"可選附加額外醫療保障：賠償超出限額費用的 80%，每年最高 $120,000",feats:["每個保障項目設相應賠償限額","不設自付費","不設病房級別及地域限制","可選加額外醫療保障（SMM）"],age:"請參閱官方資料",src:S.hsbcV1,ok:true,note:"每年保障限額請參閱保障表。"},
+  ...hsbcFlex("hsbc","滙豐自願醫保靈活計劃","F00049",S.hsbcV),
+
+  // 恒生
+  Object.assign(std("hs","滙豐自願醫保標準計劃（恒生分銷）","S00042","https://www.hangseng.com/zh-hk/personal/insurance-mpf/medical-critical-illness/vhis/standard/"),{note:"由滙豐人壽保險（國際）有限公司承保，恒生銀行分銷。"}),
+  ...hsbcFlex("hs","「愛．護航」自願醫保靈活計劃","F00076",S.hsV),
+
+  // 中銀人壽
+  std("boc","中銀人壽標準自願醫保","S00022",S.bocV),
+  {ins:"boc",name:"非凡守護靈活自願醫保",cert:"F00057",type:"靈活",ward:["私家房"],wardTxt:"標準私家房",reg:[3],regTxt:"全球（不包括美國）",annual:33*M,life:"不設",ded:[0,10000,30000,70000],full:true,smm:"不適用（全數賠償）",feats:["主要住院及手術費用全數賠償，不設分項限額","每保單年度身體檢查賠償最高 $4,500","不設終身保障限額，保證終身續保","於香港及美國以外地區進行器官移植設總保障限額"],age:"15日至80歲",src:S.bocV,ok:true},
+
+  // 中國人壽（海外）
+  std("cl","衛您健康醫療保險計劃","標準計劃",S.clVs),
+  {ins:"cl",name:"健康常伴醫療保險計劃",cert:"F00024",type:"靈活",ward:["普通房"],wardTxt:"普通病房（連超額醫療附加保障）",reg:[4],regTxt:"請參閱官方保障表",annual:null,life:"不設",ded:[0],full:false,smm:"超額醫療附加保障，賠償餘額最高 80%",feats:["設每年保障限額，不設終身保障限額","連續 3 個保單年度無索償，下年度保費折扣 15%","保證續保至 100 歲"],age:"15日至80歲",src:S.clV,ok:true,note:"每年保障限額金額請參閱保障表。"},
+  {ins:"cl",name:"健康常伴優越醫療保險計劃",cert:"F00030",type:"靈活",ward:["半私家房","私家房"],wardTxt:"半私家病房／私家病房",reg:[4],regTxt:"請參閱官方保障表",annual:null,life:"不設",ded:[0],full:false,smm:"可選超額醫療附加保障，賠償餘額最高 80%",feats:["設每年保障限額，不設終身保障限額","可選連超額醫療附加保障","連續 3 個保單年度無索償，下年度保費折扣 15%","保證續保至 100 歲"],age:"15日至80歲",src:S.clV,ok:true,note:"每年保障限額金額請參閱保障表。"},
+
+  // 永明
+  std("sun","永明港健康醫療保","S00018","https://www.sunlife.com.hk/zh-hant/insurance/voluntary-health-insurance-scheme/wehealth/"),
+  {ins:"sun",name:"永明港稱心醫療保",tier:"計劃 1",cert:"F00026",type:"靈活",ward:["普通房"],wardTxt:"普通房每日 $1,000；半私家房或以上每日 $1,100",reg:[4],regTxt:"全球",annual:500000,life:"不設",ded:[0],full:false,smm:"沒有",feats:["訂明非手術癌症治療每年 $80,000","洗腎治療每年 $60,000","入院前後門診每年 $3,000","保障至 100 歲"],age:"請參閱官方資料",src:"https://www.sunlife.com.hk/content/dam/sunlife/regional/hong-kong/documents/WeHealth_Plus_TC.pdf",ok:true},
+  {ins:"sun",name:"永明港稱心醫療保",tier:"計劃 2",cert:"F00026",type:"靈活",ward:["普通房"],wardTxt:"普通房不設每日限額；半私家房或以上每日 $1,100",reg:[4],regTxt:"全球",annual:800000,life:"不設",ded:[0],full:false,smm:"額外醫療保障每年 $300,000，設 20% 共同保險",feats:["普通房病房及膳食不設每日賠償限額","訂明非手術癌症治療每年 $80,000","洗腎治療每年 $60,000","保障至 100 歲"],age:"請參閱官方資料",src:"https://www.sunlife.com.hk/content/dam/sunlife/regional/hong-kong/documents/WeHealth_Plus_TC.pdf",ok:true},
+  {ins:"sun",name:"永明港無憂醫療保",cert:"F00066",type:"靈活",ward:["普通房"],wardTxt:"普通房",reg:[1],regTxt:"大中華（急症治療：全球）",annual:5*M,life:"2,000萬",ded:[0,20000,50000,80000],full:true,smm:"不適用（全數賠償）",feats:["主要醫療費用全數賠償，不設分項限額","確診指定危疾設加強伸延保障","指定嚴重疾病可豁免自付費","保證終身續保"],age:"請參閱官方資料",src:"https://www.sunlife.com.hk/zh-hant/insurance/health/voluntary-health-insurance-scheme/wehealth-preferred/",ok:true},
+  {ins:"sun",name:"永明港卓越醫療保",cert:"F00063",type:"靈活",ward:["半私家房"],wardTxt:"半私家房",reg:[2],regTxt:"亞洲",annual:10*M,life:"4,000萬",ded:[0,20000,50000,80000],full:true,smm:"不適用（全數賠償）",feats:["主要醫療費用全數賠償","確診指定癌症可豁免 36 個月保費","指定嚴重疾病可豁免自付費","自付費可於續保及符合指定要求時調整","保證終身續保"],age:"請參閱官方資料",src:"https://www.sunlife.com.hk/zh-hant/insurance/health/voluntary-health-insurance-scheme/wehealth-prestige/",ok:true}
+];
+
+/* ========== 危疾保險資料 ==========
+   kind: 終身儲蓄型 / 定期 / 儲蓄壽險附危疾 / 簡易核保
+   ill: 保障疾病總數（null＝待補充）  max: 最高總賠償（佔保額 %，null＝待補充）   */
+const CI = [
+  {ins:"aia",name:"「愛伴航」保險計劃2",kind:"終身儲蓄型",ill:115,illTxt:"58 種危疾、44 種早期危疾、13 種嚴重兒童疾病",multi:true,max:1100,cancer:"最多 6 次，總額上限 600%",heart:"心臟病及中風最多 3 次",early:true,child:true,prenatal:false,cash:true,icu:true,dem:true,feats:["10X 多重危疾賠償：首次嚴重疾病賠償後最多 10 次額外賠償（至 85 歲）","持續癌症現金選項：每月保額 5%，最長 100 個月","腦退化疾病／柏金遜終身年金賠償","深切治療保障設兩個賠償級別，涵蓋危疾以外的健康問題","65 歲或其後早期危疾雙倍賠償","加入 AIA Vitality 首年額外 10% 保障"],src:"https://www.aia.com.hk/content/dam/hk-wise/pdf/products/individuals/zh-hk/on-your-side-plan-2/OnYourSideInsurancePlan2_tc.pdf",ok:true},
+  {ins:"aia",name:"「愛伴航 – 首護摯寶」保險計劃2",kind:"終身儲蓄型",ill:115,illTxt:"58 種危疾、44 種早期危疾、13 種嚴重兒童疾病",multi:true,max:1100,cancer:"最多 6 次，總額上限 600%",heart:"心臟病及中風最多 3 次",early:true,child:true,prenatal:true,cash:true,icu:true,dem:true,feats:["專為 18 至 45 歲準媽媽及初生子女而設","唐氏綜合症豁免繳付保費保障","嚴重黃疸保障","臍帶血幹細胞移植保障","其餘保障與「愛伴航」保險計劃2 相同"],src:"https://www.aia.com.hk/content/dam/hk-wise/pdf/products/individuals/zh-hk/on-your-side-plan-2/OnYourSideInsurancePlan2_tc.pdf",ok:true},
+  {ins:"aia",name:"「簡緻‧愛伴航」保險計劃",kind:"終身儲蓄型",ill:58,illTxt:"58 種危疾",multi:true,max:200,cancer:"三大危疾守護賠償：1 次額外賠償",heart:"與癌症共用 1 次額外賠償",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,feats:["基本危疾保障，適合預算有限人士","三大危疾守護賠償：癌症、心臟病或中風 1 次額外賠償","盛年危疾額外升級保障：指定時段額外最高 40% 保額","加入 AIA Vitality 首年額外 10% 保障"],src:S.aiaC,ok:true,note:"最高總賠償為首次賠償加一次守護賠償的概數，不包括升級保障。"},
+
+  {ins:"pru",name:"「誠保一生」危疾保",kind:"終身儲蓄型",ill:127,illTxt:"56 種嚴重病況、49 種早期嚴重病況、15 種兒童病況、7 種次級兒童病況",multi:true,max:1100,maxTxt:"1,100%（1,000% 多重危疾＋索償後 100% 人壽保障）",cancer:"最多 3 次，上限 300%",heart:"心臟病及中風最多 3 次",early:true,child:true,prenatal:false,cash:false,icu:false,dem:true,feats:["索償嚴重疾病保障後仍可享 100% 人壽保障","嚴重腦退化症或柏金遜病終身年金","認知障礙賠償不限於首次索償","早期病況賠償不會預支原保額"],src:"https://www.prudential.com.hk/tc/.galleries/pdf/brochure/pruhealth-guardian-critical-illness-plan-series-product-brochure.pdf",ok:true},
+  {ins:"pru",name:"「誠保一生」危疾保 — 摯愛寶",kind:"終身儲蓄型",ill:127,illTxt:"127 種病況；另保障 22 種兒童疾病至 18 歲",multi:true,max:1100,maxTxt:"1,100%（包括人壽保障）",cancer:"最多 3 次，上限 300%",heart:"心臟病及中風最多 3 次",early:true,child:true,prenatal:true,cash:false,icu:false,dem:true,feats:["孕婦可為未出生孩子投保，出生後即獲保障","嚴重初生嬰兒黃疸保障","新任母親產後抑鬱保障","兒童疾病包括嚴重濕疹、嚴重風疹、肺炎及嚴重哮喘","父母身故可豁免往後保費至孩子 26 歲"],src:"https://www.prudential.com.hk/tc/.galleries/pdf/brochure/pruhealth-guardian-critical-illness-plan-series-product-brochure.pdf",ok:true},
+  {ins:"pru",name:"危疾加護保III",kind:"終身儲蓄型",ill:null,illTxt:"請參閱產品小冊子",multi:true,max:860,cancer:"額外最多 2 次，另最多 6 次癌症治療額外保障（癌症保障合共最高 660%）",heart:"心臟病發作或中風額外合共最多 2 次",early:true,child:false,prenatal:false,cash:false,icu:true,dem:false,feats:["危疾保障合共最高為當時保額的 860%","針對癌症持續治療提供額外保障","涵蓋深切治療保障"],src:S.pruC,ok:false,note:"數字來自產品推出時的報道，請以現行小冊子核實。"},
+
+  {ins:"manu",name:"宏健守護危疾入息保障",kind:"終身儲蓄型",ill:121,illTxt:"60 種嚴重危疾、44 種早期危疾、17 種兒童疾病",multi:true,max:1000,cancer:"最多 9 次，上限 900%；等候期 1 年",heart:"心臟病及中風最多 5 次",early:true,child:true,prenatal:false,cash:true,icu:false,dem:false,feats:["賠償可快至每年發放，作為持續收入支援","突發性心臟病／中風的持續治療保障：後續複雜或大型手術每次最高 100%","首 10 個保單年度額外最高 100% 保障","末期癌症預支保障 100%","受保癌症的中醫治療實報實銷","嚴重危疾賠償後豁免未來保費"],src:"https://www.manulife.com.hk/zh-hk/individual/products/health/critical-illness-protection/incomeguard-critical-illness-protector.html",ok:true},
+  {ins:"manu",name:"宏伴護航危疾入息保障",kind:"簡易核保",ill:null,illTxt:"集中保障癌症、心臟疾病及中風",multi:true,max:500,cancer:"設多重保障",heart:"設多重保障",early:false,child:false,prenatal:false,cash:true,icu:false,dem:false,feats:["只需回答 3 條健康問題，簡易核保","每年提供穩定收入支援","保障最高為名義金額的 500%"],src:S.manuC,ok:true},
+  {ins:"manu",name:"活耀人生危疾保 PRO",kind:"終身儲蓄型",ill:123,illTxt:"多達 123 種危疾和疾病",multi:true,max:null,cancer:"設多重保障",heart:"心臟病／中風設多重保障",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,feats:["末期癌症治療可獲額外財政支援","父母恩恤保費豁免"],src:S.manuC,ok:true,note:"多重賠償次數及上限請參閱產品小冊子。"},
+  {ins:"manu",name:"守護無間危疾保／守護無間危疾保（保寶未來）",kind:"終身儲蓄型",ill:121,illTxt:"多達 121 種危疾和疾病",multi:true,max:1000,cancer:"額外 5 次（包括新確診、復發、擴散及持續癌症）",heart:"心臟病或中風額外 2 次",early:true,child:true,prenatal:true,cash:true,icu:true,dem:true,feats:["3 種癌症賠償方案，包括末期癌症靈活選及持續癌症現金","認知障礙或柏金遜病額外 1 次保障","因未知疾病連續 3 日或以上入住深切治療部亦可獲保障","持續守護保障至 85 歲","「保寶未來」版本於嬰兒出生後即時提供保障","嚴重危疾賠償後豁免未來保費"],src:"https://www.manulife.com.hk/zh-hk/individual/products/health/critical-illness-protection/manuprimo-care-manuprimo-care-beststart.html",ok:true},
+  {ins:"manu",name:"活耀人生危疾保2／活耀人生危疾保2（加強版）",kind:"終身儲蓄型",ill:112,illTxt:"多達 112 種危疾和疾病",multi:true,max:null,cancer:"額外 2 次；加強版另設癌症治療加強保障",heart:"心臟病或中風額外 2 次",early:true,child:true,prenatal:false,cash:false,icu:true,dem:false,feats:["生活守護保障：支援危疾後傷殘帶來的長期護理負擔","因任何疾病連續 3 日或以上入住深切治療部可獲 20% 保額","加強版設癌症治療加強保障"],src:S.manuC,ok:true},
+
+  {ins:"axa",name:"愛唯守危疾保障／愛唯守危疾保障 – 愛寶保",kind:"終身儲蓄型",ill:138,illTxt:"3 種早期風險狀況、72 種非嚴重疾病、63 種嚴重疾病",multi:true,max:1000,cancer:"嚴重疾病合共最多 9 次賠償（至 85 歲）",heart:"包括在嚴重疾病多重賠償內",early:true,child:true,prenatal:true,cash:true,icu:true,dem:true,feats:["超前保障 3 種早期風險狀況：乳房癌前病變、大腸息肉（鋸齒狀腺瘤）、早期擴張型心肌病","持續癌症賠償最長 111 個月","中風後每月額外 5% 保額，最長 11 個月","嚴重認知障礙症每年持續現金支援至 100 歲","涵蓋 51 種重大手術","「愛寶保」版本由孕期 18 週起提供保障"],src:"https://www.axa.com.hk/zh/total-assure-critical-illness",ok:true},
+  {ins:"axa",name:"愛唯守危疾保障（升級版）／愛唯守危疾保障（升級版）– 愛寶保",kind:"終身儲蓄型",ill:138,illTxt:"3 種早期風險狀況、72 種非嚴重疾病、63 種嚴重疾病",multi:true,max:1300,cancer:"嚴重疾病合共最多 12 次賠償（至 85 歲）",heart:"包括在嚴重疾病多重賠償內",early:true,child:true,prenatal:true,cash:true,icu:true,dem:true,feats:["總保障最高為保額的 1,300%","就癌症、中風及嚴重認知障礙症提供持續賠償","超前保障 3 種早期風險狀況","「愛寶保」版本由孕期 18 週起提供保障"],src:"https://www.axa.com.hk/zh/total-assure-plus-critical-illness",ok:true},
+  {ins:"axa",name:"「愛護有加危疾保障」系列",kind:"終身儲蓄型",ill:62,illTxt:"62 種嚴重疾病（首次索償）",multi:true,max:null,cancer:"設癌症額外保障",heart:"升級版：心臟病發作及中風各 1 次額外賠償",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,feats:["就 62 種嚴重疾病提供首次索償保障","升級版就心臟病發作及中風分別提供 1 次額外賠償","無索償保險賠償"],src:S.axaC,ok:true,note:"多重賠償上限請參閱產品小冊子。"},
+  {ins:"axa",name:"康諾II嚴重疾病保障",kind:"終身儲蓄型",ill:63,illTxt:"多達 63 種嚴重疾病",multi:false,max:100,cancer:"1 次",heart:"1 次",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,feats:["保障至 100 歲","確診受保嚴重疾病或身故，一筆過賠償最高 100% 基本保額","基本危疾保障，結構簡單"],src:"https://www.axa.com.hk/zh/health-insurance-advisor/critical-illness",ok:true},
+
+  {ins:"fwd",name:"危疾應援保／危疾應援保（升級版）系列",kind:"終身儲蓄型",ill:127,illTxt:"62 種危疾、65 種特別疾病（包括 12 種兒童疾病）",multi:true,max:990,maxTxt:"約 990% 或以上（視乎版本）",cancer:"設指定危疾多重權益",heart:"急性心肌梗塞及中風設多重權益",early:true,child:true,prenatal:false,cash:true,icu:true,dem:true,feats:["因未知疾病連續 3 日或以上入住深切治療部可獲重大醫療護理權益","已獲危疾賠償後，首次確診亞爾茲默氏病、腎衰竭或柏金遜症仍有保障","自選「家添守護」：毋須核保為父母及子女提供危疾保障","不孕症治療權益","三大疾病現金權益支援康復"],src:"https://www.fwd.com.hk/zh/critical-illness/crisis-usupporter-series/",ok:true,note:"最高總賠償百分比因版本而異，請以小冊子核實。"},
+  {ins:"fwd",name:"危疾晉御保（尊尚版）",kind:"終身儲蓄型",ill:null,illTxt:"按嚴重程度保障已定義及未定義／未知疾病",multi:true,max:1000,cancer:"癌症組別上限 500%",heart:"非癌症組別上限 500%",early:true,child:false,prenatal:false,cash:false,icu:true,dem:false,feats:["只設癌症及非癌症 2 個疾病組別","首 15 個保單年度額外最高 90% 保障","良性腫瘤額外保障最高 30%","癌症治療權益 20%","主要危疾賠償後每月 2% 健康補助，最長 6 個月"],src:"https://www.fwd.com.hk/zh/critical-illness/crisis-onecover-prime/",ok:true},
+  {ins:"fwd",name:"危疾緻尚保系列",kind:"終身儲蓄型",ill:null,illTxt:"請參閱產品小冊子",multi:true,max:null,cancer:"設多次賠償",heart:"設多次賠償",early:true,child:false,prenatal:false,cash:false,icu:false,dem:false,feats:["一站式多次賠償危疾方案"],src:S.fwdC,ok:false,note:"只確認產品現正發售及設多次賠償，保障細節待補充。"},
+
+  {ins:"hsbc",name:"滙達保危疾保障計劃",kind:"定期",ill:80,illTxt:"76 種危疾＋4 種指定情況（末期疾病、完全及永久傷殘、不能獨立生活、重大醫療治療）",multi:false,max:100,cancer:"1 次",heart:"1 次",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,feats:["保單年期 10 年，供款 2 年或 5 年","期滿未曾索償可獲退回已繳總保費的 101%","保費於供款期內不變","港元保單，最高保額 250萬","可於網上投保（19 至 55 歲）"],src:S.hsbcC,ok:true},
+  {ins:"hsbc",name:"滙康保險計劃",kind:"儲蓄壽險附危疾",ill:3,illTxt:"癌症、心臟疾病、中風",multi:true,max:null,cancer:"1 次額外賠償（80 歲前）",heart:"心臟疾病及中風各 1 次額外賠償",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,feats:["儲蓄壽險計劃，附三大危疾保障","危疾賠償上限 3 次（每項疾病各 1 次），不影響保單價值","兼顧財富增值"],src:S.hsbcC2,ok:true},
+
+  {ins:"hs",name:"「愛‧生活」危疾人壽保險計劃",kind:"終身儲蓄型",ill:132,illTxt:"60 種嚴重疾病、58 種早期嚴重疾病、14 種嚴重兒童疾病",multi:true,max:500,cancer:"三大嚴重疾病合共最多 4 次額外賠償（85 歲前）",heart:"與癌症共用 4 次額外賠償",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,feats:["多重嚴重疾病保障針對癌症、心臟病及中風","恩恤身故保障：額外 5% 保額","保證現金價值及非保證特別紅利","由恒生保險有限公司承保"],src:S.hsC,ok:true},
+
+  {ins:"boc",name:"危疾188終身壽險計劃",kind:"終身儲蓄型",ill:188,illTxt:"188 種疾病，包括嚴重疾病、特別疾病、非嚴重疾病及兒童疾病",multi:true,max:550,cancer:"額外癌症賠償（至 88 歲）",heart:"額外心臟病、中風及腎衰竭賠償（至 88 歲）",early:true,child:true,prenatal:false,cash:true,icu:true,dem:false,feats:["持續支援保障：就癌症、心臟病、中風或腎衰竭提供持續支援","首 10 個保單年度身故或嚴重疾病賠償升級保障","涵蓋入住深切治療部的保障","提升良性病變狀況的保障","受保人配偶或父母身故可豁免保費"],src:S.bocC,ok:true},
+  {ins:"boc",name:"非凡守護危疾保險計劃",kind:"終身儲蓄型",ill:100,illTxt:"超過 100 種疾病，包括嚴重疾病、非嚴重疾病及兒童疾病",multi:true,max:500,cancer:"癌症、中風及心臟病合共最多 4 次額外賠償",heart:"與癌症共用 4 次額外賠償",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,feats:["首 10 年額外最高 50% 保障","同時提供人壽保障"],src:S.bocC2,ok:true},
+  {ins:"boc",name:"摯守護危疾保險計劃",kind:"終身儲蓄型",ill:100,illTxt:"超過 100 種疾病，包括嚴重疾病、非嚴重疾病及兒童疾病",multi:true,max:null,cancer:"可加配附加契約，嚴重疾病最多 5 次額外賠償",heart:"同上",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,feats:["3 個保費供款期選項，最短 10 年","多重賠償須加配附加契約","設週年紅利及終期紅利（非保證）"],src:S.bocC2,ok:true},
+
+  {ins:"cl",name:"危疾全裕備保險計劃／危疾全裕備保險計劃（強護版）",kind:"終身儲蓄型",ill:60,illTxt:"多達 60 種嚴重病症，另設特別疾病保障",multi:true,max:null,cancer:"強護版設多重癌症保障；原位癌最多賠償 2 次",heart:"強護版設多重急性心肌梗塞及中風保障",early:true,child:false,prenatal:false,cash:false,icu:false,dem:false,feats:["66 歲生日後的保單週年日前確診嚴重病症，賠償原保額的 180%","特別疾病保障最多 3 次，每次原保額的 20%","最多 2 次可支取現金作退休零用","強護版於嚴重病症賠償後豁免未來保費","多重保障的確診日期須相隔至少 1 年"],src:S.clC,ok:true},
+  {ins:"cl",name:"衛你守護危疾多重保（自選計劃）",kind:"終身儲蓄型",ill:194,illTxt:"約 194 種疾病",multi:true,max:null,cancer:"設多重賠償",heart:"設多重賠償",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,feats:["保障疾病數目為同類計劃中較多","設慢性疾病相關保障"],src:"https://www.chinalife.com.hk",ok:false,note:"資料來自第三方比較平台，未能取得官方小冊子，請核實。"},
+
+  {ins:"sun",name:"萬家康卓越保／萬家康尊尚保",kind:"終身儲蓄型",ill:188,illTxt:"188 種受保疾病及 38 項指定複雜手術",multi:true,max:null,cancer:"設多重賠償；與中風、心臟病之間豁免等候期",heart:"設多重賠償；互相之間豁免等候期",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,feats:["癌症、中風、心臟病互相之間豁免等候期","涵蓋 38 項指定複雜手術","終身保障"],src:S.sunC,ok:true,note:"兩個版本的賠償上限請參閱產品小冊子。"}
+];
+
+const OMIT = "未收錄：AIA自願醫保尊尚計劃（已不接受新申請）、尊顯計劃及尊裕計劃（未能確認是否仍接受新投保）；以及資料不足的危疾產品，包括保誠 EasyWell 系列、宏利定期危疾及心愛一家保、富衛好易揀及自主揀危疾保障計劃等。";
+
+/* ========== 介面 ========== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const money = n => n>=1e8 ? (n/1e8)+"億" : n>=W ? (n/W).toLocaleString()+"萬" : "$"+n.toLocaleString();
+const REG = {1:"大中華",2:"亞洲",3:"全球（美國除外）",4:"全球"};
+VHIS.forEach((p,i)=>p.id="v"+i); CI.forEach((p,i)=>p.id="c"+i);
+
+const state = { mode:"v", need:null, picks:{v:[],c:[]}, open:null,
+  f:{ v:{ins:[],type:"",ward:"",reg:0,full:"",ded:"",annual:0,ok:false,q:""},
+      c:{ins:[],kind:"",multi:false,early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,ill:0,ok:false,q:""} },
+  sort:{v:"ins",c:"ins"} };
+const blank = JSON.parse(JSON.stringify(state.f));
+
+const COPY = {
+  v:{h:"比較十間保險公司的自願醫保計劃", p:"按病房級別、保障地域、每年保障限額及自付費篩選，再勾選最多四個計劃並排比較。先揀一個最接近你情況的需要，或直接用篩選條件。",
+     needs:[["有公司醫保，想補足大額開支",{full:"y",ded:"y"}],["想入住私家房",{ward:"私家房",full:"y"}],["只需基本保障及扣稅",{type:"標準"}],["經常往返內地或亞洲",{reg:2,full:"y"}],["會在海外生活或升學",{reg:3}],["不想有終身或每年上限",{annual:-1}]]},
+  c:{h:"比較十間保險公司的危疾保險計劃", p:"按多重賠償、早期危疾、兒童及孕期保障等特點篩選，再勾選最多四個計劃並排比較。先揀一個最接近你情況的需要，或直接用篩選條件。",
+     needs:[["擔心危疾復發，想要多重賠償",{multi:true}],["為初生或未出生的孩子投保",{prenatal:true}],["擔心癌症長期治療的開支",{cash:true}],["關注認知障礙及柏金遜",{dem:true}],["想保障未列明的疾病",{icu:true}],["預算有限或只需指定年期",{kind:"定期"}]]}
+};
+
+function renderIntro(){
+  const c = COPY[state.mode];
+  $("#h1").textContent = c.h; $("#lede").textContent = c.p;
+  $("#needs").innerHTML = "<span>我的情況是：</span>" + c.needs.map((n,i)=>`<button data-n="${i}" aria-pressed="${state.need===i}">${esc(n[0])}</button>`).join("");
+}
+$("#needs").addEventListener("click", e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  const i = +b.dataset.n, m = state.mode;
+  state.f[m] = JSON.parse(JSON.stringify(blank[m]));
+  state.need = state.need===i ? null : i;
+  if(state.need!==null) Object.assign(state.f[m], COPY[m].needs[i][1]);
+  renderAll();
+});
+
+function chk(key,label){ const f=state.f[state.mode]; return `<label class="chk"><input type="checkbox" data-k="${key}" ${f[key]?"checked":""}>${label}</label>`; }
+function sel(key,label,opts){ const f=state.f[state.mode]; return `<div class="fg"><label class="h" for="f_${key}">${label}</label><select id="f_${key}" data-k="${key}">${opts.map(o=>`<option value="${o[0]}" ${String(f[key])===String(o[0])?"selected":""}>${o[1]}</option>`).join("")}</select></div>`; }
+
+function renderFilters(){
+  const m = state.mode, f = state.f[m];
+  let h = `<h2>篩選條件</h2>
+  <div class="fg"><label class="h" for="f_q">搜尋計劃名稱</label><input type="search" id="f_q" data-k="q" value="${esc(f.q)}" placeholder="例如：尊耀、愛伴航"></div>
+  <fieldset class="fg"><legend>保險公司</legend><div class="insgrid">${Object.keys(INS).map(k=>`<label class="chk"><input type="checkbox" data-ins="${k}" ${f.ins.includes(k)?"checked":""}>${INS[k].n.split(" ")[0]}</label>`).join("")}</div></fieldset>`;
+  if(m==="v"){
+    h += sel("type","計劃類別",[["","全部"],["標準","標準計劃"],["靈活","靈活計劃"]])
+      + sel("ward","病房級別",[["","全部"],["普通房","普通房"],["半私家房","半私家房"],["私家房","私家房"]])
+      + sel("reg","保障地域最少涵蓋",[[0,"不限"],[1,"大中華"],[2,"亞洲"],[3,"全球（美國除外）"],[4,"全球"]])
+      + sel("full","賠償方式",[["","全部"],["y","全數賠償（不設分項限額）"],["n","分項限額"]])
+      + sel("ded","自付費",[["","全部"],["y","有自付費選項可揀"],["n","可選零自付費"]])
+      + sel("annual","每年保障限額",[[0,"不限"],[1000000,"100萬或以上"],[5000000,"500萬或以上"],[10000000,"1,000萬或以上"],[25000000,"2,500萬或以上"],[-1,"不設每年限額"]]);
+  } else {
+    h += sel("kind","計劃類型",[["","全部"],["終身儲蓄型","終身儲蓄型"],["定期","定期"],["儲蓄壽險附危疾","儲蓄壽險附危疾"],["簡易核保","簡易核保"]])
+      + sel("ill","保障疾病數目",[[0,"不限"],[60,"60 種或以上"],[100,"100 種或以上"],[120,"120 種或以上"],[180,"180 種或以上"]])
+      + `<fieldset class="fg"><legend>必須包括</legend>${chk("multi","多重賠償")}${chk("early","早期危疾保障")}${chk("child","兒童疾病保障")}${chk("prenatal","孕期／未出生嬰兒版本")}${chk("cash","持續癌症現金或入息式賠償")}${chk("icu","深切治療／未知疾病保障")}${chk("dem","認知障礙或柏金遜額外保障")}</fieldset>`;
+  }
+  h += `<fieldset class="fg"><legend>資料狀態</legend>${chk("ok","只顯示已對照官方資料的計劃")}</fieldset><button class="reset" id="reset">清除所有條件</button>`;
+  $("#filters").innerHTML = h;
+}
+$("#filters").addEventListener("input", e=>{
+  const t = e.target, f = state.f[state.mode];
+  if(t.dataset.ins){ const k=t.dataset.ins; f.ins = t.checked ? [...f.ins,k] : f.ins.filter(x=>x!==k); }
+  else if(t.dataset.k){ const k=t.dataset.k; f[k] = t.type==="checkbox" ? t.checked : (typeof blank[state.mode][k]==="number" ? +t.value : t.value); }
+  state.need = null; renderIntro(); renderList();
+});
+$("#filters").addEventListener("click", e=>{ if(e.target.id==="reset"){ state.f[state.mode]=JSON.parse(JSON.stringify(blank[state.mode])); state.need=null; renderAll(); }});
+
+function match(p){
+  const m = state.mode, f = state.f[m];
+  if(f.ins.length && !f.ins.includes(p.ins)) return false;
+  if(f.ok && !p.ok) return false;
+  if(f.q && !(p.name+(p.tier||"")+INS[p.ins].n).toLowerCase().includes(f.q.trim().toLowerCase())) return false;
+  if(m==="v"){
+    if(f.type && p.type!==f.type) return false;
+    if(f.ward && !p.ward.includes(f.ward)) return false;
+    if(f.reg && Math.max(...p.reg) < f.reg) return false;
+    if(f.full==="y" && !p.full) return false;
+    if(f.full==="n" && p.full) return false;
+    if(f.ded==="y" && !p.ded.some(d=>d>0)) return false;
+    if(f.ded==="n" && !p.ded.includes(0)) return false;
+    if(f.annual===-1 && p.annual!==0) return false;
+    if(f.annual>0 && !(p.annual===0 || (p.annual && p.annual>=f.annual))) return false;
+  } else {
+    if(f.kind && p.kind!==f.kind) return false;
+    if(f.ill && !(p.ill && p.ill>=f.ill)) return false;
+    for(const k of ["multi","early","child","prenatal","cash","icu","dem"]) if(f[k] && !p[k]) return false;
+  }
+  return true;
+}
+const SORTS = {
+  v:[["ins","保險公司"],["annual","每年保障限額（高至低）"],["reg","保障地域（闊至窄）"]],
+  c:[["ins","保險公司"],["ill","保障疾病數目（多至少）"],["max","最高總賠償（高至低）"]]
+};
+function sorted(list){
+  const s = state.sort[state.mode], order = Object.keys(INS);
+  const val = { annual:p=>p.annual===0?Infinity:(p.annual||-1), reg:p=>Math.max(...p.reg), ill:p=>p.ill||-1, max:p=>p.max||-1 };
+  return s==="ins" ? list : [...list].sort((a,b)=> val[s](b)-val[s](a) || order.indexOf(a.ins)-order.indexOf(b.ins));
+}
+const annualTxt = p => p.annualTxt || (p.annual===null ? "待補充" : p.annual===0 ? "不設限額" : money(p.annual));
+const dedTxt = p => p.dedTxt || (p.ded.length===1 && p.ded[0]===0 ? "沒有自付費" : p.ded.map(d=>d===0?"$0":money(d)).join("／"));
+const okTag = p => p.ok ? `<span class="tag">已對照官方資料</span>` : `<span class="tag w">資料待核實</span>`;
+
+function rowV(p){
+  return `<div class="pname c1"><span class="ins">${INS[p.ins].n}</span>${esc(p.name)}${p.tier?` <span class="tier">（${p.tier}）</span>`:""}</div>
+  <div class="cell" data-l="類別">${p.type}計劃</div>
+  <div class="cell" data-l="病房級別">${p.ward.join("／")}</div>
+  <div class="cell" data-l="保障地域">${p.reg.map(r=>REG[r]).join(" 或 ")}</div>
+  <div class="cell" data-l="每年保障限額"><b>${annualTxt(p)}</b><small>終身：${p.life}</small></div>
+  <div class="cell" data-l="每年自付費">${dedTxt(p)}</div>
+  <div class="cell" data-l="賠償方式">${p.full?"全數賠償":"分項限額"}</div>`;
+}
+function rowC(p){
+  const tags = [[p.early,"早期危疾"],[p.child,"兒童疾病"],[p.prenatal,"孕期版本"],[p.cash,"持續現金"],[p.icu,"深切治療"],[p.dem,"認知障礙"]].filter(t=>t[0]).map(t=>`<span class="tag n">${t[1]}</span>`).join("");
+  return `<div class="pname c1"><span class="ins">${INS[p.ins].n}</span>${esc(p.name)}</div>
+  <div class="cell" data-l="類型">${p.kind}</div>
+  <div class="cell" data-l="保障疾病"><b>${p.ill?p.ill+" 種":"待補充"}</b></div>
+  <div class="cell" data-l="最高總賠償"><b>${p.max?p.max.toLocaleString()+"%":"待補充"}</b><small>${p.multi?"多重賠償":"單次賠償"}</small></div>
+  <div class="cell" data-l="癌症">${esc(p.cancer)}</div>
+  <div class="cell" data-l="其他保障">${tags||"—"}</div>`;
+}
+function moreHtml(p){
+  const extra = state.mode==="v"
+    ? `<h4>病房及地域</h4><div>${esc(p.wardTxt)}；${esc(p.regTxt)}</div><h4>額外醫療保障</h4><div>${esc(p.smm)}</div>`
+    : `<h4>保障疾病</h4><div>${esc(p.illTxt)}</div><h4>心臟病及中風</h4><div>${esc(p.heart)}</div>${p.maxTxt?`<h4>最高總賠償</h4><div>${esc(p.maxTxt)}</div>`:""}`;
+  return `<div class="more">${extra}<h4>計劃特點</h4><ul>${p.feats.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+  ${p.note?`<h4>備註</h4><div>${esc(p.note)}</div>`:""}
+  <div class="meta">${okTag(p)} ${p.cert?`認可產品編號：${esc(p.cert)}　`:""}${p.age?`投保年齡：${esc(p.age)}　`:""}<a href="${p.src}" target="_blank" rel="noopener">查看資料來源</a></div></div>`;
+}
+function renderList(){
+  const m = state.mode, data = m==="v"?VHIS:CI, list = sorted(data.filter(match)), picks = state.picks[m];
+  $("#count").innerHTML = `${list.length} 個計劃 <span>（共 ${data.length} 個）</span>`;
+  const head = m==="v" ? ["","計劃","類別","病房級別","保障地域","每年保障限額","每年自付費","賠償方式"] : ["","計劃","類型","保障疾病","最高總賠償","癌症賠償","其他保障"];
+  const L = $("#ledger"); L.className = "ledger "+m;
+  if(!list.length){ L.innerHTML = `<div class="empty">沒有計劃同時符合所有條件。試試放寬其中一項，例如保障地域或每年保障限額。<br><button id="reset2">清除所有條件</button></div>`; return; }
+  L.innerHTML = `<div class="lhead">${head.map(h=>`<div>${h}</div>`).join("")}</div>` + list.map(p=>`
+    <div class="row ${state.open===p.id?"open":""}" data-id="${p.id}">
+      <div class="sum" tabindex="0" role="button" aria-expanded="${state.open===p.id}">
+        <input type="checkbox" class="pick" aria-label="加入比較：${esc(p.name)}" ${picks.includes(p.id)?"checked":""}>
+        ${m==="v"?rowV(p):rowC(p)}
+      </div>${state.open===p.id?moreHtml(p):""}
+    </div>`).join("");
+}
+$("#ledger").addEventListener("click", e=>{
+  if(e.target.id==="reset2"){ state.f[state.mode]=JSON.parse(JSON.stringify(blank[state.mode])); state.need=null; renderAll(); return; }
+  const row = e.target.closest(".row"); if(!row) return; const id = row.dataset.id;
+  if(e.target.classList.contains("pick")){ togglePick(id, e.target); return; }
+  if(e.target.closest(".more")) return;
+  state.open = state.open===id ? null : id; renderList();
+});
+$("#ledger").addEventListener("keydown", e=>{
+  if((e.key==="Enter"||e.key===" ") && e.target.classList.contains("sum")){ e.preventDefault(); const id=e.target.parentNode.dataset.id; state.open = state.open===id?null:id; renderList(); document.querySelector(`.row[data-id="${id}"] .sum`).focus(); }
+});
+function togglePick(id, box){
+  const p = state.picks[state.mode], i = p.indexOf(id);
+  if(i>=0) p.splice(i,1);
+  else if(p.length>=4){ box.checked=false; alert("最多可同時比較四個計劃。請先移除一個。"); return; }
+  else p.push(id);
+  renderTray();
+}
+const find = id => (id[0]==="v"?VHIS:CI).find(p=>p.id===id);
+function renderTray(){
+  const p = state.picks[state.mode];
+  $("#tray").classList.toggle("on", p.length>0);
+  $("#trayItems").innerHTML = p.map(id=>{const x=find(id);return `<span class="it">${esc(x.name)}${x.tier?"（"+x.tier+"）":""}<button data-rm="${id}" aria-label="移除">×</button></span>`}).join("");
+  $("#trayGo").disabled = p.length<2;
+  $("#trayGo").textContent = p.length<2 ? "再揀一個計劃" : `並排比較 ${p.length} 個計劃`;
+}
+$("#tray").addEventListener("click", e=>{
+  const m = state.mode;
+  if(e.target.dataset.rm){ state.picks[m]=state.picks[m].filter(x=>x!==e.target.dataset.rm); renderTray(); renderList(); }
+  if(e.target.id==="trayClr"){ state.picks[m]=[]; renderTray(); renderList(); }
+  if(e.target.id==="trayGo") openCompare();
+});
+function openCompare(){
+  const m = state.mode, ps = state.picks[m].map(find), yn = b => b?"有":"沒有";
+  const rows = m==="v" ? [
+    ["計劃類別",p=>p.type+"計劃"],["認可產品編號",p=>p.cert],["病房級別",p=>p.wardTxt],["保障地域",p=>p.regTxt],
+    ["每年保障限額",p=>annualTxt(p)],["終身保障限額",p=>p.life],["每年自付費選項",p=>dedTxt(p)],["賠償方式",p=>p.full?"全數賠償（不設分項限額）":"分項限額"],
+    ["額外醫療保障",p=>p.smm],["投保年齡",p=>p.age],["計劃特點",p=>"<ul>"+p.feats.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>",1],["備註",p=>p.note||"—"],["資料狀態",p=>p.ok?"已對照官方資料":"資料待核實"]
+  ] : [
+    ["計劃類型",p=>p.kind],["保障疾病數目",p=>p.ill?p.ill+" 種":"待補充"],["疾病分類",p=>p.illTxt],["賠償次數",p=>p.multi?"多重賠償":"單次賠償"],
+    ["最高總賠償",p=>p.maxTxt||(p.max?p.max.toLocaleString()+"%":"待補充")],["癌症",p=>p.cancer],["心臟病及中風",p=>p.heart],
+    ["早期危疾保障",p=>yn(p.early)],["兒童疾病保障",p=>yn(p.child)],["孕期／未出生嬰兒版本",p=>yn(p.prenatal)],["持續癌症現金或入息式賠償",p=>yn(p.cash)],
+    ["深切治療／未知疾病保障",p=>yn(p.icu)],["認知障礙或柏金遜額外保障",p=>yn(p.dem)],
+    ["計劃特點",p=>"<ul>"+p.feats.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>",1],["備註",p=>p.note||"—"],["資料狀態",p=>p.ok?"已對照官方資料":"資料待核實"]
+  ];
+  $("#cmp").innerHTML = `<table class="cmp" id="cmpT"><thead><tr><th></th>${ps.map(p=>`<th><small>${INS[p.ins].n}</small>${esc(p.name)}${p.tier?"（"+p.tier+"）":""}</th>`).join("")}</tr></thead><tbody>${
+    rows.map(r=>{ const vals = ps.map(r[1]); const d = new Set(vals).size>1; return `<tr class="${d?"d":""}"><th>${r[0]}</th>${vals.map(v=>`<td>${r[2]?v:esc(v)}</td>`).join("")}</tr>`; }).join("")
+  }<tr><th>資料來源</th>${ps.map(p=>`<td><a href="${p.src}" target="_blank" rel="noopener">開啟來源</a></td>`).join("")}</tr></tbody></table>`;
+  $("#onlyd").checked = false; $("#dlg").showModal();
+}
+$("#onlyd").addEventListener("change", e=>$("#cmpT").classList.toggle("onlyd", e.target.checked));
+$("#cls").addEventListener("click", ()=>$("#dlg").close());
+$("#prt").addEventListener("click", ()=>window.print());
+
+function renderSort(){ $("#sort").innerHTML = SORTS[state.mode].map(s=>`<option value="${s[0]}" ${state.sort[state.mode]===s[0]?"selected":""}>${s[1]}</option>`).join(""); }
+$("#sort").addEventListener("change", e=>{ state.sort[state.mode]=e.target.value; renderList(); });
+$("#ft").addEventListener("click", ()=>$("#filters").classList.toggle("show"));
+function setMode(m){ state.mode=m; state.need=null; state.open=null; $("#mV").setAttribute("aria-pressed",m==="v"); $("#mC").setAttribute("aria-pressed",m==="c"); renderAll(); }
+$("#mV").addEventListener("click", ()=>setMode("v")); $("#mC").addEventListener("click", ()=>setMode("c"));
+function renderAll(){ renderIntro(); renderFilters(); renderSort(); renderList(); renderTray(); }
+
+$("#upd").textContent = UPDATED; $("#omit").textContent = OMIT;
+if(ADVISOR.name){
+  const a = ADVISOR, c = $("#contact"); c.hidden = false;
+  c.innerHTML = `<b>想了解哪個計劃適合你？</b><br>${esc(a.name)}${a.company?"｜"+esc(a.company):""}${a.licence?"｜保險中介人牌照號碼 "+esc(a.licence):""}<br>${a.phone?"電話："+esc(a.phone)+"　":""}${a.whatsapp?`<a href="https://wa.me/${esc(a.whatsapp)}" target="_blank" rel="noopener">用 WhatsApp 查詢</a>　`:""}${a.email?`<a href="mailto:${esc(a.email)}">${esc(a.email)}</a>`:""}`;
+}
+renderAll();
+</script>
+</body>
+</html>
