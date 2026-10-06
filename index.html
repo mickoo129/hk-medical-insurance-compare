@@ -560,20 +560,18 @@ const CI = [
    age:"18 至 80 歲",pay:"每年或每 10 年續保，繳費至 100 歲",cur:"港元／澳門元／美元",term:"保證續保至 100 歲",
    death:"視乎保障級別：保額 100% 身故賠償或恩恤身故賠償",
    feats:["簡易核保，適合有慢性疾病或曾患癌症、心臟病發作或中風的人士","4 個保障級別：摯守護、全守護、心意保、癌症保","純危疾保障，沒有儲蓄成分，保費按年齡調整","於第 3 或第 5 個保單週年日可選擇升級保障","等候期：保單日期後 90 日；保額 12萬至 200萬港元"],src:"https://www.axa.com.hk/zh/care-for-all-critical-illness-plan",ok:true},
-  {ins:"axa",name:"康采 II 嚴重疾病保障",kind:"終身儲蓄型",ill:90,illTxt:"62 種嚴重疾病、28 種非嚴重疾病（其中 12 種為 22 歲以下而設）",multi:true,max:900,maxTxt:"基本計劃 100%；連多重附加契約 500%；連多重附加契約（加強版）900%",cancer:"連多重附加契約：癌症最多 3 次",heart:"連加強版：心臟病發作及中風各最多 2 次",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
+  {ins:"axa",name:"康采 II 嚴重疾病保障",kind:"終身儲蓄型",ill:90,illTxt:"62 種嚴重疾病、28 種非嚴重疾病（其中 12 種為 22 歲以下而設）",multi:false,max:100,maxTxt:"基本計劃 100%；可加配多重附加契約或多重附加契約（加強版）（見「附加保障」）",cancer:"基本計劃 1 次；加配多重附加契約可多次賠償",heart:"基本計劃 1 次；加配多重附加契約（加強版）可多次賠償",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
    age:"0 至 65 歲（10年繳）／0 至 60 歲（15年繳）／0 至 55 歲（20年繳）／0 至 50 歲（25年繳）",pay:"10／15／20／25年",cur:"港元／澳門元／美元",term:"至 100 歲",
    earlyPct:25,earlyTxt:"非嚴重疾病每次 25%（每種上限 40萬港元）；原位癌及血管成形術最多 2 次",
-   waitRecur:3,waitTxt:"兩種不同嚴重疾病相距最少 1 年；加強版：全新癌症 1 年，復發、擴散或持續癌症 3 年",multiAge:85,
    boostPct:50,boostTxt:"首 10 年：0–35 歲投保額外 50%，36 歲或以上 35%",
    waiver:"賠償達基本計劃保額 100% 後，多重附加契約日後保費可獲豁免",death:"基本計劃保額 100%＋終期紅利（扣除已付非嚴重疾病賠償）",
-   feats:["必須連同最少一項附加契約繕發：早期附加契約、多重附加契約或多重附加契約（加強版）","多重附加契約：額外 4 次；加強版：額外 8 次，每次為附加契約保額 100%","設保證現金價值及非保證終期紅利"],src:"https://www.axa.com.hk/zh/healthvital-major-illness-insurance",ok:true,note:"多重賠償以附加契約提供，附加契約保額可為基本計劃的 50% 至 120%。"},
-  {ins:"axa",name:"康諾 II 嚴重疾病保障",kind:"終身儲蓄型",ill:62,illTxt:"逾 60 種嚴重疾病及多種非嚴重疾病",multi:true,max:900,maxTxt:"基本計劃 100%；可選多重附加契約（額外 4 次）或加強版（額外 8 次）",cancer:"可選多重附加契約：癌症最多 3 次",heart:"可選加強版：心臟病發作及中風各最多 2 次",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
+   feats:["必須連同最少一項附加契約繕發：早期附加契約、多重附加契約或多重附加契約（加強版）","多重附加契約：額外 4 次；加強版：額外 8 次，每次為附加契約保額 100%","設保證現金價值及非保證終期紅利"],src:"https://www.axa.com.hk/zh/healthvital-major-illness-insurance",ok:true,note:"基本計劃為單次賠償；多重賠償以附加契約提供，已另列於「附加保障」類別。"},
+  {ins:"axa",name:"康諾 II 嚴重疾病保障",kind:"終身儲蓄型",ill:62,illTxt:"逾 60 種嚴重疾病及多種非嚴重疾病",multi:false,max:100,maxTxt:"基本計劃 100%；可加配多重附加契約或多重附加契約（加強版）（見「附加保障」）",cancer:"基本計劃 1 次；加配多重附加契約可多次賠償",heart:"基本計劃 1 次；加配多重附加契約（加強版）可多次賠償",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
    age:"0 至 55 歲（20年繳）／0 至 50 歲（25年繳）",pay:"20／25年",cur:"港元／澳門元／美元",term:"至 100 歲",
    earlyPct:25,earlyTxt:"非嚴重疾病每次 25%（每種上限 40萬港元）",
-   waitRecur:3,waitTxt:"多重附加契約：全新癌症 1 年，復發或擴散 5 年；加強版：復發、擴散或持續癌症 3 年",multiAge:85,
    boostPct:50,boostTxt:"首 10 年：0–35 歲投保額外 50%，36 歲或以上 35%",
    waiver:"賠償達基本計劃保額 100% 後，多重附加契約日後保費可獲豁免",death:"基本計劃保額 100%＋終期紅利（扣除已付非嚴重疾病賠償）",
-   feats:["自選組合：早期附加契約及多重附加契約屬可選項目","設保證現金價值及非保證終期紅利","延長寬限期保障：結婚、成為父母、失業或離婚可延長至 365 日"],src:"https://www.axa.com.hk/zh/healthselect-major-illness-insurance",ok:true,note:"多重賠償及早期附加保障屬自選附加契約，基本計劃本身為單次賠償。"},
+   feats:["自選組合：早期附加契約及多重附加契約屬可選項目","設保證現金價值及非保證終期紅利","延長寬限期保障：結婚、成為父母、失業或離婚可延長至 365 日"],src:"https://www.axa.com.hk/zh/healthselect-major-illness-insurance",ok:true,note:"基本計劃為單次賠償；多重賠償以附加契約提供，已另列於「附加保障」類別。"},
 
   {ins:"fwd",name:"危疾應援保／危疾應援保（升級版）系列",kind:"終身儲蓄型",ill:127,illTxt:"62 種危疾、65 種特別疾病（包括 12 種兒童疾病）",multi:true,max:990,cancer:"指定危疾多重權益最多 7 次（首兩次各 120%，其後每次 150%），合共上限 990%",heart:"急性心肌梗塞及中風同屬指定危疾多重權益",early:true,child:true,prenatal:false,cash:true,icu:true,dem:true,
    age:"1 至 70 歲（下次生日年齡）",pay:"10／15／20／25／30年",cur:"港元／美元",term:"至 100 歲",
@@ -630,11 +628,11 @@ const CI = [
    boostPct:50,boostTxt:"首 10 年：30 歲或以下投保額外 50%，31 歲或以上 35%",
    waiver:"確診嚴重疾病後豁免基本計劃保費",death:"索償時投保額＋升級保障＋終期紅利（非保證）",
    feats:["同時提供人壽保障","設終期紅利（非保證）","三種保單貨幣可選"],src:"https://www.boclife.com.hk/f/upload/2122/SmartGuard_Critical_Illness_PB_nonbank_TC.pdf",ok:true},
-  {ins:"boc",name:"摯守護危疾保險計劃",kind:"終身儲蓄型",ill:103,illTxt:"55 種嚴重疾病、39 種非嚴重疾病、9 種兒童疾病",multi:true,max:600,maxTxt:"連「摯危疾多重附加利益保障」最多 6 次嚴重疾病賠償（600%）",cancer:"連附加保障：癌症最多 3 次",heart:"連附加保障：額外最多 5 次嚴重疾病賠償，每次 100%",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
+  {ins:"boc",name:"摯守護危疾保險計劃",kind:"終身儲蓄型",ill:103,illTxt:"55 種嚴重疾病、39 種非嚴重疾病、9 種兒童疾病",multi:false,max:100,maxTxt:"基本計劃 100%；可加配「摯危疾多重附加利益保障」（見「附加保障」）",cancer:"基本計劃 1 次；加配附加保障後癌症最多 3 次",heart:"基本計劃 1 次；加配附加保障可多次賠償",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
    age:"15日至 65 歲（10年繳）／60 歲（15年繳）／55 歲（20年繳）",pay:"10／15／20年",cur:"人民幣／港元／美元",term:"至 100 歲",
-   earlyPct:20,earlyTxt:"非嚴重疾病及兒童疾病每次 20%，累計上限 80%",surv:30,multiAge:88,multiAgeTxt:"附加保障至 88 歲",
+   earlyPct:20,earlyTxt:"非嚴重疾病及兒童疾病每次 20%，累計上限 80%",surv:30,
    waiver:"支付嚴重疾病賠償後豁免其後保費",death:"索償時投保額＋週年紅利及累積利息＋終期紅利",
-   feats:["多重賠償須加配附加保障","設週年紅利及終期紅利（非保證）","首 90 日為等候期"],src:"https://www.boclife.com.hk/f/upload/2122/BestCare_Pro_Critical_Illness_PB_nonbank_TC.pdf",ok:true,note:"多重賠償須加配「摯危疾多重附加利益保障」；其等候期請參閱產品小冊子。"},
+   feats:["設週年紅利及終期紅利（非保證）","首 90 日為等候期"],src:"https://www.boclife.com.hk/f/upload/2122/BestCare_Pro_Critical_Illness_PB_nonbank_TC.pdf",ok:true,note:"基本計劃為單次賠償；多重賠償以「摯危疾多重附加利益保障」提供，已另列於「附加保障」類別。"},
 
   {ins:"cl",name:"危疾全裕備保險計劃／危疾全裕備保險計劃（強護版）",kind:"終身儲蓄型",ill:79,illTxt:"60 項嚴重病症、19 項特別疾病",multi:true,max:580,maxTxt:"強護版：66 歲前首次 180%＋多重癌症 2 次＋心肌梗塞／中風 2 次，每次 100%（按小冊子條款計算）；標準計劃只賠 1 次",cancer:"強護版：多重癌症保障最多 3 次，每次 100%",heart:"強護版：急性心肌梗塞及中風最多 2 次，每次 100%",early:true,child:false,prenatal:false,cash:false,icu:false,dem:false,
    age:"15日至 60 歲（10年繳）／55 歲（15年繳）／50 歲（20年繳）",pay:"10／15／20年",cur:"港元／美元",term:"至 100 歲",
@@ -670,17 +668,32 @@ const CI = [
 
 /* ========== 危疾附加保障（須附加於基本計劃，不可獨立投保） ========== */
 const RIDER = [
-  {ins:"manu",name:"摯無憂危疾附加保障（基本版／加強版）",kind:"附加保障",ill:112,illTxt:"基本版：60 種嚴重危疾；加強版另加 44 種早期危疾及 8 種兒童疾病；兩個版本均涵蓋 59 種複雜手術",multi:false,max:100,cancer:"1 次",heart:"1 次",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
+  {ins:"axa",name:"多重附加契約（康采 II／康諾 II）",kind:"附加保障",base:"康采 II 或康諾 II 嚴重疾病保障",ill:null,illTxt:"按基本計劃的受保嚴重疾病",multi:true,max:400,maxTxt:"額外 4 次，每次為附加契約保額 100%（連基本計劃合共 500%）",cancer:"癌症最多 3 次",heart:"屬額外 4 次賠償之內",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,
+   cur:"港元／澳門元／美元",term:"至 85 歲",
+   waitRecur:5,waitTxt:"兩種不同嚴重疾病相距最少 1 年；全新癌症 1 年；癌症復發或擴散 5 年",
+   waiver:"賠償達基本計劃保額 100% 後，附加契約日後保費可獲豁免",
+   feats:["附加契約保額可為基本計劃的 50% 至 120%","須附加於康采 II 或康諾 II"],src:"https://www.axa.com.hk/zh/healthvital-major-illness-insurance",ok:true,note:"資料取自安盛網站康采 II 及康諾 II 產品頁。受保疾病數目、投保年齡及供款年期待補充。"},
+  {ins:"axa",name:"多重附加契約（加強版）（康采 II／康諾 II）",kind:"附加保障",base:"康采 II 或康諾 II 嚴重疾病保障",ill:null,illTxt:"按基本計劃的受保嚴重疾病",multi:true,max:800,maxTxt:"額外 8 次，每次為附加契約保額 100%（連基本計劃合共 900%）",cancer:"設多次癌症賠償，包括復發、擴散或持續癌症",heart:"心臟病發作及中風各最多 2 次",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,
+   cur:"港元／澳門元／美元",term:"至 85 歲",
+   waitRecur:3,waitTxt:"兩種不同嚴重疾病相距最少 1 年；全新癌症 1 年；復發、擴散或持續癌症 3 年",
+   waiver:"賠償達基本計劃保額 100% 後，附加契約日後保費可獲豁免",
+   feats:["附加契約保額可為基本計劃的 50% 至 120%","須附加於康采 II 或康諾 II"],src:"https://www.axa.com.hk/zh/healthvital-major-illness-insurance",ok:true,note:"資料取自安盛網站康采 II 及康諾 II 產品頁。受保疾病數目、癌症賠償次數、投保年齡及供款年期待補充。"},
+  {ins:"boc",name:"摯危疾多重附加利益保障",kind:"附加保障",base:"摯守護危疾保險計劃（必須同時投保）",ill:52,illTxt:"52 種嚴重疾病（不包括不能獨立生活、完全及永久傷殘及末期疾病）",multi:true,max:500,maxTxt:"額外最多 5 次，每次為附加保障投保額 100%（連基本計劃最多 6 次）",cancer:"連基本計劃，癌症組別最多 3 次",heart:"屬額外 5 次賠償之內",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,
+   age:"15日至 65 歲（10年繳）／60 歲（15年繳）／55 歲（20年繳）",pay:"10／15／20年",cur:"人民幣／港元／美元",term:"至 88 歲",
+   waitRecur:5,waitTxt:"一般相距最少 1 年；癌症須在 5 年無癌症期之後",surv:30,
+   waiver:"基本計劃支付嚴重疾病賠償後，豁免此附加保障其後所有保費",
+   feats:["不同癌症或相同癌症復發均可索償第 2 及第 3 次癌症賠償","須與摯守護危疾保險計劃同時投保"],src:"https://www.boclife.com.hk/f/upload/2122/BestCare_Pro_Critical_Illness_PB_nonbank_TC.pdf",ok:true,note:"資料取自中銀人壽摯守護產品小冊子。"},
+  {ins:"manu",name:"摯無憂危疾附加保障（基本版／加強版）",kind:"附加保障",base:"宏利指定基本計劃",ill:112,illTxt:"基本版：60 種嚴重危疾；加強版另加 44 種早期危疾及 8 種兒童疾病；兩個版本均涵蓋 59 種複雜手術",multi:false,max:100,cancer:"1 次",heart:"1 次",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
    age:"15日至 65 歲",pay:"5 年或 10 年續保期，續保期內保費不變，自動續保至 80 歲",cur:"跟隨基本計劃",term:"至 80 歲",
    earlyPct:20,earlyTxt:"複雜手術每次 20%；加強版：早期危疾及兒童疾病每次 20%；合共上限 80%",
    death:"保障額 100%（扣除已付賠償）",
    feats:["複雜手術賠償：全膝置換術、結腸切除術、椎板切除術等 59 種","65 歲前可免健康證明轉換至指定終身人壽保障計劃一次（須未曾索償）","支付嚴重危疾賠償後附加保障終止","ManulifeMOVE 最高 10% 保費折扣"],src:"https://www.manulife.com.hk/zh-hk/individual/products/health/critical-illness-protection.html",ok:true,note:"資料取自宏利產品單張。早期危疾及兒童疾病只適用於加強版。"},
-  {ins:"manu",name:"現金扶危附加保障",kind:"附加保障",ill:53,illTxt:"53 種危疾",multi:false,max:100,cancer:"1 次",heart:"1 次",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,
+  {ins:"manu",name:"現金扶危附加保障",kind:"附加保障",base:"宏利指定基本計劃",ill:53,illTxt:"53 種危疾",multi:false,max:100,cancer:"1 次",heart:"1 次",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,
    age:"30日至 60 歲",pay:"每年續保，保費按年齡調整",cur:"跟隨基本計劃：港元／美元／加元／英鎊",term:"至 75 歲；行使保證受保權益後至 100 歲",
    survTxt:"75 歲或之後確診須存活最少 14 天",
    death:"行使保證受保權益後：85 歲或之後身故賠償保障額 100%",
    feats:["保證受保權益：生效滿三年而受保人未滿 61 歲，可免健康證明將保障期延長至 100 歲","可選通脹加保權益（須於申請時加入）","沒有儲蓄成分，沒有現金價值","最低保障額 8萬港元"],src:"https://www.manulife.com.hk/zh-hk/individual/products/health/critical-illness-protection.html",ok:true,note:"資料取自宏利產品單張。2 歲或以前失聰賠償 50%。"},
-  {ins:"manu",name:"「保寶安心」兒童附加保障",kind:"附加保障",ill:null,illTxt:"癌症、昏迷、主要器官移植、嚴重灼傷、喪失語言能力、失明、失聰及肢體殘缺",multi:false,max:100,cancer:"1 次，保障額 100%",heart:"不適用",early:false,child:true,prenatal:false,cash:false,icu:false,dem:false,
+  {ins:"manu",name:"「保寶安心」兒童附加保障",kind:"附加保障",base:"宏利指定基本計劃",ill:null,illTxt:"癌症、昏迷、主要器官移植、嚴重灼傷、喪失語言能力、失明、失聰及肢體殘缺",multi:false,max:100,cancer:"1 次，保障額 100%",heart:"不適用",early:false,child:true,prenatal:false,cash:false,icu:false,dem:false,
    age:"30日至 18 歲",pay:"繳費至 25 歲",cur:"跟隨基本計劃：港元／美元／加元／英鎊",term:"每年續保至 25 歲",
    feats:["部分傷殘按比例賠償：例如單目失明 50%、單耳失聰 50%、喪失拇指 20%","意外醫療費用賠償：每次意外最高為保障額 5%","受保權益保證：年滿 16 歲而生效滿一年，可免健康證明轉為其他重病保障計劃","國際醫療援助","最低保障額 8萬港元"],src:"https://www.manulife.com.hk/zh-hk/individual/products/health/critical-illness-protection.html",ok:true,note:"資料取自宏利產品單張。同一意外導致多項重病，只賠償最高的一項。"}
 ];
@@ -697,7 +710,7 @@ const DATA = () => state.mode==="v" ? VHIS : state.mode==="c" ? CI : RIDER;
 /* 主要項目有缺漏的計劃自動標示為「資料未齊」 */
 VHIS.forEach(p=>{ p.ok = !!(p.ok && p.ward.length && p.reg.length && p.annual!==null && p.full!==null); });
 CI.forEach(p=>{ p.ok = !!(p.ok && p.ill && p.age && p.pay && (p.max || !p.multi)); });
-RIDER.forEach(p=>{ p.ok = !!(p.ok && p.pay && p.term); });
+RIDER.forEach(p=>{ p.ok = !!(p.ok && p.pay && p.term && p.age); });
 
 const MAXPICK = 12;
 const state = { mode:"v", need:null, picks:{v:[],c:[],r:[]}, open:null,
@@ -712,7 +725,7 @@ const COPY = {
      needs:[["有公司醫保，想補足大額開支",{full:"y",ded:"y"}],["想入住私家房",{ward:"私家房",full:"y"}],["只需基本保障及扣稅",{type:"標準"}],["經常往返內地或亞洲",{reg:2,full:"y"}],["會在海外生活或升學",{reg:3}],["不想有終身或每年上限",{annual:-1}]]},
   c:{h:"比較十間保險公司的危疾保險計劃", p:"按多重賠償、早期危疾、兒童及孕期保障等特點篩選，再勾選多個計劃並排比較，或一次過比較同一間公司的所有計劃。先揀一個最接近你情況的需要，或直接用篩選條件。",
      needs:[["擔心危疾復發，想要多重賠償",{multi:true}],["為初生或未出生的孩子投保",{prenatal:true}],["擔心癌症長期治療的開支",{cash:true}],["關注認知障礙及柏金遜",{dem:true}],["想保障未列明的疾病",{icu:true}],["預算有限或只需指定年期",{kind:"定期"}]]},
-  r:{h:"比較危疾附加保障", p:"附加保障須附加於基本計劃之上，不可獨立投保，保障範圍及年期一般較基本危疾計劃簡單，所以另外分類比較。暫時只收錄已取得保險公司產品單張的附加保障。",
+  r:{h:"比較危疾附加保障", p:"附加保障須附加於基本計劃之上，不可獨立投保，保障範圍及年期一般較基本危疾計劃簡單，所以另外分類比較。暫時只收錄已取得保險公司官方資料的附加保障。",
      needs:[["想為孩子加一份保障",{child:true}],["想保障早期危疾",{early:true}]]}
 };
 
@@ -870,6 +883,24 @@ $("#tray").addEventListener("click", e=>{
   if(e.target.id==="trayGo") openCompare();
 });
 const lifeN = p => p.life==="不設" ? Infinity : /億/.test(p.life) ? parseFloat(p.life)*1e8 : /萬/.test(p.life) ? parseFloat(p.life.replace(/,/g,""))*1e4 : null;
+/* 疾病數目分項：[嚴重, 早期／非嚴重, 兒童, 其他]，讓用家看到各公司的計法分別；null = 保險公司未有分項 */
+const ILL = {
+  "「愛伴航」保險計劃2":[58,44,13,""], "「愛伴航 – 首護摯寶」保險計劃2":[58,44,13,""], "「簡緻‧愛伴航」保險計劃":[57,1,0,""],
+  "危疾加護保險計劃 III":[56,61,"已計入早期病況",""],
+  "宏健守護危疾入息保障":[60,44,17,""], "宏伴護航危疾入息保障":[10,3,0,""], "活耀人生危疾保 PRO":[60,44,19,""],
+  "守護無間危疾保／守護無間危疾保（保寶未來）":[60,44,17,"未知疾病深切治療另計"], "活耀人生危疾保2／活耀人生危疾保2（加強版）":[60,44,8,""], "心愛一家保":[60,null,null,""], "悠然危疾保":[60,44,8,""],
+  "愛唯守危疾保障／愛唯守危疾保障 – 愛寶保":[63,72,"已計入非嚴重疾病","非嚴重疾病包括重大手術；另加 3 種早期風險狀況"],
+  "愛唯守危疾保障（升級版）／愛唯守危疾保障（升級版）– 愛寶保":[63,72,"15 種，已計入非嚴重疾病","非嚴重疾病其中一項涵蓋 51 種重大手術；另加 3 種早期風險狀況"],
+  "盛滿愛危疾保障":[4,0,0,""], "康采 II 嚴重疾病保障":[62,28,"12 種，已計入非嚴重疾病",""],
+  "危疾應援保／危疾應援保（升級版）系列":[62,65,"12 種，已計入特別疾病",""], "危疾緻尚保／危疾緻尚保（升級版）":[68,80,22,""], "危疾優易保 — 摯護您":[62,65,"12 種，已計入特別疾病",""],
+  "滙達保危疾保障計劃":[76,0,0,"另計 4 種指定情況（末期疾病、傷殘等）"],
+  "「愛‧生活」危疾人壽保險計劃":[60,58,14,""],
+  "非凡守護危疾保險計劃":[55,39,9,""], "摯守護危疾保險計劃":[55,39,9,""],
+  "危疾全裕備保險計劃／危疾全裕備保險計劃（強護版）":[60,19,"部分特別疾病只保 17 歲或以下",""],
+  "衛您守護危疾多重保險計劃系列（包括自選計劃及保寶版）":[93,98,"21 種，已計入特別疾病","另計 3 種慢性疾病（三高）"],
+  "萬家康卓越保":[71,90,27,"38 項指定複雜手術不計入總數"], "萬家康尊尚保":[71,90,27,"38 項指定複雜手術不計入總數"]
+};
+const IL = (p,i) => { const a = ILL[p.name]; if(!a) return "保險公司未有分項"; const v = a[i]; return v===null ? "保險公司未有分項" : v==="" ? "—" : typeof v==="number" ? (v ? v+" 種" : "沒有") : v; };
 const WARD = {"普通房":1,"半私家房":2,"私家房":3};
 const TBC = "待補充";
 function openCompare(ids){
@@ -885,17 +916,22 @@ function openCompare(ids){
     ["賠償方式",p=>p.full===null?TBC:p.full?"全數賠償（不設分項限額）":"分項限額",0,{v:p=>p.full===null?null:p.full?1:0,dir:"hi"}],
     ["額外醫療保障",p=>p.smm],["投保年齡",p=>p.age],["計劃特點",p=>"<ul>"+p.feats.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>",1],["備註",p=>p.note||"—"],["資料狀態",p=>p.ok?"主要資料齊備":"資料未齊"]
   ] : m==="r" ? [
-    ["保障疾病數目",p=>p.ill?p.ill+" 種":"見保障範圍",0,N("ill")],["保障範圍",p=>p.illTxt],
+    ["適用基本計劃",p=>p.base||TBC],
+    ["保障疾病數目（不作評分）",p=>p.ill?p.ill+" 種":"見保障範圍"],["保障範圍",p=>p.illTxt],
+    ["賠償次數",p=>p.multi?"多重賠償":"單次賠償",0,B("multi")],
     ["最高賠償",p=>p.maxTxt||(p.max?"保障額 "+p.max+"%":TBC)],
     ["癌症",p=>p.cancer],["心臟病及中風",p=>p.heart],
     ["早期危疾／手術賠償",p=>p.early?(p.earlyTxt||"有"):"沒有",0,B("early")],
     ["兒童疾病保障",p=>yn(p.child),0,B("child")],
-    ["身故賠償",p=>p.death||"單張未有提及"],
+    ["多重賠償等候期",p=>p.multi?(p.waitTxt||TBC):"不適用",0,{v:p=>p.multi?(p.waitRecur==null?null:p.waitRecur):null,dir:"lo"}],
+    ["保費豁免",p=>p.waiver||"單張未有提及"],["身故賠償",p=>p.death||"單張未有提及"],
     ["投保年齡",p=>p.age||TBC],["續保及保費",p=>p.pay||TBC],["保單貨幣",p=>p.cur||TBC],["保障期",p=>p.term||TBC],
     ["計劃特點",p=>"<ul>"+p.feats.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>",1],["備註",p=>p.note||"—"],["資料狀態",p=>p.ok?"主要資料齊備":"資料未齊"]
   ] : [
     ["計劃類型",p=>p.kind],
-    ["保障疾病數目",p=>p.ill?p.ill+" 種":TBC,0,N("ill")],["疾病分類",p=>p.illTxt],
+    ["保障疾病總數（各公司計法不同，不作評分）",p=>p.ill?p.ill+" 種":TBC],
+    ["　嚴重疾病",p=>IL(p,0)],["　早期／非嚴重疾病",p=>IL(p,1)],["　兒童疾病",p=>IL(p,2)],["　其他計入或額外保障的項目",p=>IL(p,3)],
+    ["疾病分類（保險公司原文）",p=>p.illTxt],
     ["賠償次數",p=>p.multi?"多重賠償":"單次賠償",0,B("multi")],
     ["最高總賠償",p=>p.maxTxt||(p.max?p.max.toLocaleString()+"%":TBC),0,N("max")],
     ["癌症",p=>p.cancer],["心臟病及中風",p=>p.heart],
