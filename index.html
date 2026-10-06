@@ -153,31 +153,71 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
   .lhead{display:none}
   .v .row .sum,.c .row .sum{grid-template-columns:28px 1fr 1fr;gap:6px 12px;align-items:start}
   .row .sum .pname{grid-column:2 / -1}
-  .row .sum .cell:nth-of-type(n+2){grid-column:auto}
-  .row .sum .cell.c1{grid-column:2}
+  .row .sum .pick{grid-column:1;grid-row:1}
+  .row .sum .cell:nth-child(odd){grid-column:2}
+  .row .sum .cell:nth-child(even){grid-column:3}
+  .c .row .sum .cell:nth-child(n+6){grid-column:2 / -1}
+  .row .sum .cell{min-width:0;overflow-wrap:anywhere}
   .cell::before{display:block}
   .more{padding-left:16px}
   .notes .cols{grid-template-columns:1fr}
   .tray .items{display:none}
   .tray .wrap{justify-content:flex-end}
   .tray .go{flex:1}
+  body{padding-bottom:72px}
+}
+@media (max-width:700px){
+  .intro h1{font-size:1.35rem;line-height:1.3}
+  .intro p{font-size:.92rem}
+  .needs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;margin-right:-16px;padding:0 16px 6px 0;scrollbar-width:none}
+  .needs::-webkit-scrollbar{display:none}
+  .needs>*{flex:none;white-space:nowrap}
+  .needs span{width:auto;align-self:center}
+  .main>main,.intro .wrap{min-width:0}
+  .main{grid-template-columns:minmax(0,1fr)}
+  .whole{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+  .whole::-webkit-scrollbar{display:none}
+  .whole>*{flex:none;white-space:nowrap}
+  .bar{gap:8px}
+  .bar .count{width:100%}
+  .sort{flex:1;min-width:0}
+  .sort select{flex:1;min-width:0}
+  dialog{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0;margin:0}
+  .dh{padding:10px 12px;flex-wrap:wrap;gap:6px}
+  .dh h2{font-size:1.05rem;white-space:nowrap}
+  .dh div{gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .dh label{font-size:.8rem;white-space:nowrap}
+  .dh button{padding:6px 10px;white-space:nowrap}
+  .cmpwrap{padding:0 0 12px;max-height:calc(100dvh - 60px)}
+  .cmpnote{padding:8px 12px 0;font-size:.76rem}
+  table.cmp{font-size:.84rem;min-width:0!important;width:max-content}
+  .cmp th,.cmp td{min-width:0;width:44vw;max-width:44vw;padding:8px 9px;overflow-wrap:anywhere}
+  .cmp tbody th,.cmp thead th:first-child{width:22vw;max-width:22vw;min-width:0;font-size:.76rem;padding:8px 6px}
+  .cmp thead th{font-size:.84rem}
+  .cmp tr.score td{font-size:.86rem}
+  .cmp .up{margin-left:0;display:table;margin-top:3px}
 }
 @media (prefers-reduced-motion:reduce){.tray{transition:none}html{scroll-behavior:auto}}
 #printArea{display:none}
-@page{size:A4 landscape;margin:9mm}
+@page{size:A4 landscape;margin:10mm}
 @media print{
   .top,.intro,.filters,.tray,.bar,.notes{display:none!important}
   body.pcmp>*:not(#printArea){display:none!important}
   body.pcmp{background:#fff}
   body.pcmp #printArea{display:block}
   #printArea *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  /* 即使列印設定選了「無邊界」，仍保留內邊距 */
+  #printArea .pg{padding:0 4mm}
+  #printArea .cmp thead tr.sp th,#printArea .cmp tfoot td{height:4mm;padding:0!important;border:0!important;background:none!important}
+  #printArea .cmp tfoot{display:table-footer-group}
+  #printArea .ph{margin-top:4mm}
   #printArea .ph{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--deep);padding-bottom:4px;margin-bottom:6px}
   #printArea .ph b{font-size:12pt}
   #printArea .ph span{font-size:8pt;color:#555}
   #printArea .cmpnote{font-size:7.5pt;margin:0 0 6px;padding:4px 6px}
   #printArea .pg{break-after:page;page-break-after:always}
   #printArea .pg:last-child{break-after:auto;page-break-after:auto}
-  #printArea table.cmp{width:100%;min-width:0!important;table-layout:fixed;font-size:8pt;line-height:1.35}
+  #printArea table.cmp{width:100%;min-width:0!important;table-layout:fixed;font-size:7.6pt;line-height:1.3}
   #printArea .cmp th,#printArea .cmp td{min-width:0;padding:4px 6px;position:static!important;word-break:break-word;overflow-wrap:anywhere}
   #printArea .cmp tbody th,#printArea .cmp thead th:first-child{width:24mm;font-size:7.5pt}
   #printArea .cmp thead{display:table-header-group}
@@ -907,7 +947,7 @@ function buildPrint(){
     const a = 1+pg*per, b = Math.min(n, a+per-1);
     const tr = r => `<tr class="${r.className}">${r.cells[0].outerHTML}${[...r.cells].slice(a,b+1).map(c=>c.outerHTML).join("")}</tr>`;
     h += `<div class="pg"><div class="ph"><b>醫保對照｜${title}並排比較${onlyd?"（只顯示有分別的項目）":""}</b><span>計劃 ${a}–${b}／共 ${n} 個　第 ${pg+1}／${pages} 部分　資料更新：${UPDATED}</span></div>${pg===0?note:""}
-    <table class="cmp"><thead>${tr(rows[0])}</thead><tbody>${rows.slice(1).map(tr).join("")}</tbody></table>
+    <table class="cmp"><thead><tr class="sp"><th colspan="${b-a+2}"></th></tr>${tr(rows[0])}</thead><tfoot><tr><td colspan="${b-a+2}"></td></tr></tfoot><tbody>${rows.slice(1).map(tr).join("")}</tbody></table>
     <p class="pf">資料只供參考，並非保險建議或要約；一切以保險公司的保單條款為準。</p></div>`;
   }
   $("#printArea").innerHTML = h; document.body.classList.add("pcmp");
