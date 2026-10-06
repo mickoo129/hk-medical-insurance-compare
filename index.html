@@ -98,6 +98,14 @@ select,input[type=search]{width:100%;padding:8px 10px;border:1px solid var(--lin
 .more h4{margin:12px 0 4px;font-size:.88rem}
 .more ul{margin:0;padding-left:1.2em}
 .more .meta{color:var(--mute);font-size:.84rem;margin-top:10px}
+.whole{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px;font-size:.86rem}
+.whole span:first-child{color:var(--mute);margin-right:2px}
+.whole button{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-left-width:4px;border-radius:5px;padding:4px 10px}
+.whole button:hover{background:#F5F8F7}
+.cmp tbody th,.cmp thead th:first-child{position:sticky;left:0;z-index:1}
+.cmp thead th:first-child{z-index:3;background:#fff}
+.cmp th,.cmp td{min-width:200px}
+.cmp tbody th{min-width:120px}
 .empty{padding:40px 20px;text-align:center;color:var(--mute)}
 .empty button{margin-top:10px;border:1px solid var(--jade);color:var(--jade);background:#fff;border-radius:6px;padding:8px 14px}
 
@@ -112,14 +120,14 @@ select,input[type=search]{width:100%;padding:8px 10px;border:1px solid var(--lin
 .tray .go:disabled{opacity:.5;cursor:not-allowed}
 .tray .clr{background:none;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:6px;padding:9px 12px}
 
-dialog{border:0;border-radius:10px;padding:0;width:min(1180px,96vw);max-height:92vh}
+dialog{border:0;border-radius:10px;padding:0;width:min(1500px,97vw);max-width:97vw;max-height:94vh}
 dialog::backdrop{background:rgba(10,30,35,.55)}
 .dh{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
 .dh h2{margin:0;font-family:var(--serif);font-size:1.2rem}
 .dh div{display:flex;gap:8px;align-items:center}
 .dh button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:7px 12px}
 .dh label{font-size:.88rem;display:flex;gap:6px;align-items:center}
-.cmpwrap{overflow:auto;padding:0 20px 20px}
+.cmpwrap{overflow:auto;padding:0 20px 20px;max-height:calc(94vh - 70px)}
 table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
 .cmp th,.cmp td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
 .cmp thead th{position:sticky;top:0;background:#fff;font-size:.95rem;border-bottom:2px solid var(--deep)}
@@ -192,6 +200,7 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
         <select id="sort"></select>
       </div>
     </div>
+    <div class="whole" id="whole"></div>
     <div class="ledger" id="ledger"></div>
   </main>
 </div>
@@ -429,25 +438,47 @@ const CI = [
    icuTxt:"須連續入住深切治療部（日數視版本而定）",
    feats:["生活守護保障：支援危疾後傷殘帶來的長期護理負擔","加強版設癌症治療加強保障"],src:"https://www.manulife.com.hk/zh-hk/individual/products/health/critical-illness-protection.html",ok:true,note:"最高總賠償、投保年齡及等候期請參閱產品單張。"},
 
-  {ins:"axa",name:"愛唯守危疾保障／愛唯守危疾保障 – 愛寶保",kind:"終身儲蓄型",ill:138,illTxt:"3 種早期風險狀況，以及 135 種非嚴重疾病及嚴重疾病（嚴重疾病 63 種）",multi:true,max:1000,cancer:"就大部分受保嚴重疾病提供多重賠償，另設持續癌症支援",heart:"包括在嚴重疾病多重賠償內",early:true,child:true,prenatal:true,cash:true,icu:true,dem:true,
-   earlyPct:20,earlyTxt:"非嚴重疾病每次最高基本保額 20%",
-   icuTxt:"因任何疾病或受傷入住深切治療部亦受保",
-   feats:["超前保障 3 種早期風險狀況","靈活的多重賠償及持續癌症支援","危疾定義自動保障提升：按新增標準定義及保單原有定義評估索償","「愛寶保」版本由孕期 18 週起提供保障"],src:"https://www.axa.com.hk/zh/total-assure-critical-illness",ok:true,note:"安盛網站的細則頁及產品說明書未能自動讀取，賠償次數、等候期、投保年齡及供款年期待補充。"},
-  {ins:"axa",name:"愛唯守危疾保障（升級版）／愛唯守危疾保障（升級版）– 愛寶保",kind:"終身儲蓄型",ill:138,illTxt:"3 種早期風險狀況，以及 135 種非嚴重疾病及嚴重疾病（嚴重疾病 63 種）",multi:true,max:1300,cancer:"就大部分受保嚴重疾病提供多重賠償；全面支援第 III／IV 期癌症",heart:"包括在嚴重疾病多重賠償內；另設中風支援",early:true,child:true,prenatal:true,cash:true,icu:true,dem:true,
-   earlyPct:20,earlyTxt:"非嚴重疾病每次最高基本保額 20%",icuTxt:"因任何疾病或受傷入住深切治療部亦受保",
-   feats:["總保障最高為保額的 1,300%","就癌症、中風及嚴重認知障礙症持續守護","超前保障 3 種早期風險狀況","「愛寶保」版本由孕期 18 週起提供保障"],src:"https://www.axa.com.hk/zh/total-assure-plus-critical-illness",ok:true,note:"安盛網站的細則頁及產品說明書未能自動讀取，賠償次數、等候期、投保年齡及供款年期待補充。"},
-  {ins:"axa",name:"「愛護有加危疾保障」系列",kind:"終身儲蓄型",ill:62,illTxt:"62 種嚴重疾病（首次索償）",multi:true,max:null,cancer:"設癌症額外保障",heart:"升級版：心臟病發作及中風各 1 次額外賠償",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,
-   feats:["就 62 種嚴重疾病提供首次索償保障","升級版就心臟病發作及中風分別提供 1 次額外賠償","無索償保險賠償"],src:"https://www.axa.com.hk/zh/critical-illness-protection",ok:true,note:"多重賠償上限、投保年齡及供款年期請參閱產品說明書。"},
-  {ins:"axa",name:"康采 II 嚴重疾病保障",kind:"終身儲蓄型",ill:62,illTxt:"62 種嚴重疾病及多種非嚴重疾病（其中 12 種為 22 歲以下而設）；可加配早期危疾附加契約（54 種）",multi:true,max:null,cancer:"須加配多重賠償附加契約：基本版額外 4 次／加強版額外 8 次",heart:"同上",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
-   term:"至 100 歲",boostPct:50,boostTxt:"首 10 年：0–35 歲投保額外 50%，36 歲或以上 35%",
-   feats:["模組化設計：早期危疾及多重賠償以附加契約形式加配","設保證現金價值"],src:"https://www.axa.com.hk/zh/critical-illness-protection",ok:true,note:"早期及多重保障並非基本計劃內含，比較時請留意。"},
-  {ins:"axa",name:"康諾II嚴重疾病保障",kind:"終身儲蓄型",ill:63,illTxt:"多達 63 種嚴重疾病",multi:false,max:100,cancer:"1 次（可選多重賠償附加契約）",heart:"1 次",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,
-   term:"至 100 歲",boostPct:50,boostTxt:"首 10 年：0–35 歲投保額外 50%，36 歲或以上 35%",death:"最高 100% 基本保額",
-   feats:["確診受保嚴重疾病或身故，一筆過賠償最高 100% 基本保額","可選加早期危疾及多重賠償附加契約","設保證現金價值"],src:"https://www.axa.com.hk/zh/health-insurance-advisor/critical-illness",ok:true},
+  {ins:"axa",name:"愛唯守危疾保障／愛唯守危疾保障 – 愛寶保",kind:"終身儲蓄型",ill:138,illTxt:"3 種早期風險狀況，以及 135 種非嚴重疾病及嚴重疾病（嚴重疾病 63 種）",multi:true,max:1000,cancer:"最多 5 次，每次 100%；或選每月 5% 的持續癌症賠償，長達 100 個月；癌症總賠償上限 600%",heart:"心臟病發作及中風最多 2 次",early:true,child:true,prenatal:true,cash:true,icu:true,dem:true,
+   age:"0–70 歲（10年繳）／0–65 歲（15、20年繳）／0–60 歲（25年繳）；愛寶保：孕婦 18–45 歲，懷孕 18 週或以上",pay:"10／15／20／25年",cur:"港元／澳門元／美元",term:"至 100 歲",
+   earlyPct:20,earlyTxt:"非嚴重疾病每次 20%（每種上限 40萬港元）；早期風險狀況每次 5%",
+   waitTxt:"任何兩種嚴重疾病相距最少 1 年；持續癌症賠償選項等候期短至 1 年（其他癌症等候期請參閱說明書）",multiAge:85,
+   boostPct:50,boostTxt:"首 10 個保單年度：額外 50%（同時投保指定附加契約可延長至首 20 年）",
+   icuTxt:"深切治療屬受保非嚴重疾病；深切治療連複雜手術屬受保嚴重疾病",
+   waiver:"賠償總額達保額 100% 後豁免往後保費；父母（保單持有人）身故可豁免至孩子 25 歲",death:"保額 100%＋終期紅利（扣除已付的早期風險及非嚴重疾病賠償）",
+   feats:["嚴重疾病合共最多 9 次賠償：癌症 5 次、心臟病發作及中風 2 次、嚴重認知障礙症 1 次、其他嚴重疾病 1 次","認知障礙症照顧者年金：每年保額 6%，直至 100 歲（須於 85 歲前確診）","超前保障 3 種早期風險狀況：早期擴張型心肌病、大腸息肉（鋸齒狀腺瘤／息肉）、乳房癌前病變","教育特殊支援及未知先天性病況保障","「愛寶保」版本設妊娠併發症及產後抑鬱保險賠償"],src:"https://www.axa.com.hk/zh/total-assure-critical-illness",ok:true},
+  {ins:"axa",name:"愛唯守危疾保障（升級版）／愛唯守危疾保障（升級版）– 愛寶保",kind:"終身儲蓄型",ill:138,illTxt:"3 種早期風險狀況，以及 135 種非嚴重疾病及嚴重疾病（嚴重疾病 63 種）",multi:true,max:1300,cancer:"設多次賠償；或選每月 5% 的持續癌症賠償（上限 500%）；癌症總賠償上限 600%；另設即時支援每月 5%（最高 55%）",heart:"設多次賠償；另設中風復康保障每月 5%（最高 55%）",early:true,child:true,prenatal:true,cash:true,icu:true,dem:true,
+   age:"0–70 歲（10年繳）／0–65 歲（15、20年繳）／0–60 歲（25年繳）；愛寶保：孕婦 18–45 歲，懷孕 18 週或以上",pay:"10／15／20／25年",cur:"港元／澳門元／美元",term:"至 100 歲",
+   earlyPct:20,earlyTxt:"非嚴重疾病每次 20%（每種上限 40萬港元）；早期風險狀況每次 5%",multiAge:85,
+   boostTxt:"首 10 個保單年度設額外保障（百分比請參閱說明書）",
+   icuTxt:"深切治療屬受保非嚴重疾病；深切治療連複雜手術屬受保嚴重疾病",
+   waiver:"父母（保單持有人）身故可豁免至孩子 25 歲",death:"保額 100%＋終期紅利（扣除已付的早期風險及非嚴重疾病賠償）",
+   feats:["嚴重疾病合共最多 12 次賠償（首次＋額外 11 次），合共上限 1,200%","認知障礙症照顧者年金：每年保額 12%，直至 100 歲","即時支援保險賠償及中風復康保障","兒童照顧者保險賠償及教育特殊支援","超前保障 3 種早期風險狀況"],src:"https://www.axa.com.hk/zh/total-assure-plus-critical-illness",ok:true,note:"各類疾病的最多賠償次數及等候期請參閱產品說明書。"},
+  {ins:"axa",name:"盛滿愛危疾保障",kind:"簡易核保",ill:4,illTxt:"按保障級別保障癌症、心臟病發作、中風及嚴重認知障礙症",multi:false,max:100,cancer:"1 次，保額 100%（視乎保障級別）",heart:"1 次，保額 100%（視乎保障級別）",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,
+   age:"18–80 歲",pay:"每年或每 10 年續保，繳費至 100 歲",cur:"港元／澳門元／美元",term:"保證續保至 100 歲",
+   death:"視乎保障級別：保額 100% 身故賠償或恩恤身故賠償",
+   feats:["簡易核保，適合有慢性疾病或曾患癌症、心臟病發作或中風的人士","4 個保障級別：摯守護、全守護、心意保、癌症保","純危疾保障，沒有儲蓄成分，保費按年齡調整","於第 3 或第 5 個保單週年日可選擇升級保障","等候期：保單日期後 90 日；保額 12萬至 200萬港元"],src:"https://www.axa.com.hk/zh/care-for-all-critical-illness-plan",ok:true},
+  {ins:"axa",name:"康采 II 嚴重疾病保障",kind:"終身儲蓄型",ill:90,illTxt:"62 種嚴重疾病、28 種非嚴重疾病（其中 12 種為 22 歲以下而設）",multi:true,max:900,maxTxt:"基本計劃 100%；連多重附加契約 500%；連多重附加契約（加強版）900%",cancer:"連多重附加契約：癌症最多 3 次",heart:"連加強版：心臟病發作及中風各最多 2 次",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
+   age:"0–65 歲（10年繳）／0–60 歲（15年繳）／0–55 歲（20年繳）／0–50 歲（25年繳）",pay:"10／15／20／25年",cur:"港元／澳門元／美元",term:"至 100 歲",
+   earlyPct:25,earlyTxt:"非嚴重疾病每次 25%（每種上限 40萬港元）；原位癌及血管成形術最多 2 次",
+   waitRecur:3,waitTxt:"兩種不同嚴重疾病相距最少 1 年；加強版：全新癌症 1 年，復發、擴散或持續癌症 3 年",multiAge:85,
+   boostPct:50,boostTxt:"首 10 年：0–35 歲投保額外 50%，36 歲或以上 35%",
+   waiver:"賠償達基本計劃保額 100% 後，多重附加契約日後保費可獲豁免",death:"基本計劃保額 100%＋終期紅利（扣除已付非嚴重疾病賠償）",
+   feats:["必須連同最少一項附加契約繕發：早期附加契約、多重附加契約或多重附加契約（加強版）","多重附加契約：額外 4 次；加強版：額外 8 次，每次為附加契約保額 100%","設保證現金價值及非保證終期紅利"],src:"https://www.axa.com.hk/zh/healthvital-major-illness-insurance",ok:true,note:"多重賠償以附加契約提供，附加契約保額可為基本計劃的 50% 至 120%。"},
+  {ins:"axa",name:"康諾 II 嚴重疾病保障",kind:"終身儲蓄型",ill:62,illTxt:"逾 60 種嚴重疾病及多種非嚴重疾病",multi:true,max:900,maxTxt:"基本計劃 100%；可選多重附加契約（額外 4 次）或加強版（額外 8 次）",cancer:"可選多重附加契約：癌症最多 3 次",heart:"可選加強版：心臟病發作及中風各最多 2 次",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
+   age:"0–55 歲（20年繳）／0–50 歲（25年繳）",pay:"20／25年",cur:"港元／澳門元／美元",term:"至 100 歲",
+   earlyPct:25,earlyTxt:"非嚴重疾病每次 25%（每種上限 40萬港元）",
+   waitRecur:3,waitTxt:"多重附加契約：全新癌症 1 年，復發或擴散 5 年；加強版：復發、擴散或持續癌症 3 年",multiAge:85,
+   boostPct:50,boostTxt:"首 10 年：0–35 歲投保額外 50%，36 歲或以上 35%",
+   waiver:"賠償達基本計劃保額 100% 後，多重附加契約日後保費可獲豁免",death:"基本計劃保額 100%＋終期紅利（扣除已付非嚴重疾病賠償）",
+   feats:["自選組合：早期附加契約及多重附加契約屬可選項目","設保證現金價值及非保證終期紅利","延長寬限期保障：結婚、成為父母、失業或離婚可延長至 365 日"],src:"https://www.axa.com.hk/zh/healthselect-major-illness-insurance",ok:true,note:"多重賠償及早期附加保障屬自選附加契約，基本計劃本身為單次賠償。"},
 
-  {ins:"fwd",name:"危疾應援保／危疾應援保（升級版）系列",kind:"終身儲蓄型",ill:127,illTxt:"62 種危疾、65 種特別疾病（包括 12 種兒童疾病）",multi:true,max:null,cancer:"設指定危疾多重權益",heart:"急性心肌梗塞及中風設多重權益",early:true,child:true,prenatal:false,cash:true,icu:true,dem:true,
-   icuTxt:"因未知疾病連續 3 日或以上入住深切治療部可獲重大醫療護理權益",
-   feats:["因未知疾病入住深切治療部可獲重大醫療護理權益","已獲危疾賠償後，首次確診亞爾茲默氏病、腎衰竭或柏金遜症仍有保障","自選「家添守護」：毋須回答醫療核保問題，為家庭提供危疾保障","三大疾病現金權益支援康復"],src:"https://www.fwd.com.hk/zh/critical-illness/crisis-usupporter-series/",ok:true,note:"富衛網站的細則未能自動讀取，最高總賠償、賠償次數、等候期、投保年齡及供款年期待補充。"},
+  {ins:"fwd",name:"危疾應援保／危疾應援保（升級版）系列",kind:"終身儲蓄型",ill:127,illTxt:"62 種危疾、65 種特別疾病（包括 12 種兒童疾病）",multi:true,max:990,cancer:"指定危疾多重權益最多 7 次（首兩次各 120%，其後每次 150%），合共上限 990%",heart:"急性心肌梗塞及中風同屬指定危疾多重權益",early:true,child:true,prenatal:false,cash:true,icu:true,dem:true,
+   age:"1–70 歲（下次生日年齡）",pay:"10／15／20／25／30年",cur:"港元／美元",term:"至 100 歲",
+   earlyPct:20,earlyTxt:"特別疾病預支原有投保額 20%",surv:14,
+   boostPct:75,boostTxt:"首 15 年：35 歲或以下投保額外 75%，以上 60%",
+   icuTxt:"重大醫療護理權益預支 20%（因未知疾病連續 3 日或以上入住深切治療部亦受保）；生活守護權益額外 50%–100%",
+   waiver:"賠償達原有投保額 100% 後豁免保費",death:"現有投保額＋特別紅利",
+   feats:["已獲危疾賠償後，首次確診亞爾茲默氏病、腎衰竭或柏金遜症仍有保障","三大疾病現金權益：癌症每年 5%（升級版 10%）；心肌梗塞／中風每月 1%，為期 6 個月（升級版 12 個月）","升級版另設試驗藥物權益（上限 20%）及延伸深切治療權益（額外 50%）","不孕症治療權益：原有投保額 10%","自選「家添守護」及「童步守護」版本"],src:"https://www.fwd.com.hk/zh/critical-illness/crisis-usupporter-series/",ok:true,note:"首 90 日為等候期。多重權益的等候期請參閱小冊子。"},
   {ins:"fwd",name:"危疾晉御保（尊尚版）",kind:"終身儲蓄型",ill:null,illTxt:"按嚴重程度保障已定義及未定義／未知疾病",multi:true,max:1000,cancer:"癌症組別上限 500%",heart:"非癌症組別上限 500%",early:true,child:true,prenatal:false,cash:false,icu:true,dem:false,
    age:"1 至 65 歲（下次生日年齡）",pay:"10／15／20／25年",cur:"港元／美元",term:"終身",
    earlyPct:25,earlyTxt:"嚴重疾病（較輕程度）每次 25%；主要危疾 100%",
@@ -457,6 +488,19 @@ const CI = [
    waiver:"多重危疾賠償總額達 100% 後豁免往後保費",death:"另設恩恤身故權益 10%",
    feats:["只設癌症及非癌症 2 個疾病組別","良性腫瘤額外保障最高 30%","指定癌症額外權益 25%；癌症治療權益 20%","主要危疾賠償後每月 2% 健康補助，最長 6 個月"],src:"https://www.fwd.com.hk/zh/critical-illness/crisis-onecover-prime/",ok:true,note:"受保疾病總數請以小冊子為準。"},
 
+  {ins:"fwd",name:"危疾緻尚保／危疾緻尚保（升級版）",kind:"終身儲蓄型",ill:170,illTxt:"68 種主要危疾、80 種嚴重疾病、22 種兒童疾病",multi:true,max:1300,cancer:"癌症組別上限 650%",heart:"非癌症組別上限 650%",early:true,child:true,prenatal:false,cash:true,icu:true,dem:true,
+   age:"1–70 歲",pay:"10／15／20／25／30年",cur:"港元／美元",term:"至 100 歲",
+   earlyPct:25,earlyTxt:"嚴重疾病（較輕程度）及兒童疾病每次 25%（個別精神及皮膚疾病 8%–10%）",
+   waitRecur:3,waitTxt:"同一癌症相隔最少 3 年；其他最少 1 年",surv:14,
+   boostPct:90,boostTxt:"首 15 年：35 歲或以下投保額外 90%，以上 60%",icuTxt:"重大醫療護理權益 20%",
+   waiver:"賠償總額達投保額 100% 後豁免保費",death:"現有投保額＋紅利",
+   feats:["只設癌症及非癌症兩個疾病組別","升級版：腦退化／柏金遜終身年金，每年原有投保額 6%（86 歲前首次確診）","升級版：持續癌症治療每年 10%，最長連續 5 年","升級版：照顧者支援及精神健康診症賠償"],src:"https://www.fwd.com.hk/zh/critical-illness/crisis-onemaster-series/",ok:true,note:"年金、癌症現金及照顧者支援只適用於升級版。"},
+  {ins:"fwd",name:"危疾優易保 — 摯護您",kind:"簡易核保",ill:127,illTxt:"62 種危疾、65 種特別疾病（包括 12 種兒童疾病）",multi:true,max:null,cancer:"指定危疾多重權益最多 2 次",heart:"同屬指定危疾多重權益",early:true,child:true,prenatal:false,cash:false,icu:true,dem:false,
+   age:"1–70 歲（下次生日年齡）",pay:"10／15／20／25年",cur:"港元／美元",term:"至 100 歲",
+   earlyPct:20,earlyTxt:"預支原有投保額 20%（每次上限 40萬港元）",surv:14,
+   boostPct:55,boostTxt:"首 15 年：35 歲或以下投保額外 55%，以上 35%",icuTxt:"生活守護權益最高 100%（入住深切治療部 3 日或以上並使用維生支持）",
+   waiver:"確診危疾後豁免結餘保費；可附加父母／配偶身故保費豁免",death:"現有投保額 100%＋特別紅利",
+   feats:["簡易核保，適合患有受控高血壓、高膽固醇等輕微慢性疾病人士","嬰兒之特別權益：20%（至 5 歲）","首 90 日為等候期（意外除外）"],src:"https://www.fwd.com.hk/zh/critical-illness/crisis-easygo-series/",ok:true,note:"最高總賠償請參閱小冊子。同系列另有其他版本未收錄。"},
   {ins:"hsbc",name:"滙達保危疾保障計劃",kind:"定期",ill:80,illTxt:"76 種危疾＋4 種指定情況（末期疾病、完全及永久傷殘、不能獨立生活、重大醫療治療）",multi:false,max:100,cancer:"1 次",heart:"1 次",early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,
    age:"19 至 55 歲（網上）；15日至 55 歲（電話）",pay:"2 或 5 年",cur:"港元",term:"10 年",
    waiver:"失業延繳保費（最長 365 日）",death:"已繳總保費 100%",
@@ -478,12 +522,18 @@ const CI = [
    boostPct:50,boostTxt:"首 10 年：身故或嚴重疾病賠償額外 50%",icuTxt:"涵蓋入住深切治療部（港澳以外減半）",
    waiver:"嚴重疾病確診後豁免；配偶或父母身故亦可豁免",
    feats:["持續支援保障：癌症、心臟病、中風或腎衰竭確診後分 12 個月每月支付","提升良性病變狀況的保障","三種保單貨幣可選"],src:"https://www.bochk.com/m/tc/insurance/life/illness/CI188.html",ok:true},
-  {ins:"boc",name:"非凡守護危疾保險計劃",kind:"終身儲蓄型",ill:100,illTxt:"超過 100 種疾病，包括嚴重疾病、非嚴重疾病及兒童疾病",multi:true,max:null,cancer:"癌症、中風及心臟病合共最多 4 次額外賠償",heart:"與癌症共用 4 次額外賠償",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
-   pay:"3 種選擇，最短 10 年",boostPct:50,boostTxt:"首 10 年：額外最高 50%",
-   feats:["同時提供人壽保障","設終期紅利（非保證）"],src:"https://www.boclife.com.hk/tc/product/smartguard-critical-illness-plan.html",ok:true,note:"投保年齡、貨幣及等候期待補充。"},
-  {ins:"boc",name:"摯守護危疾保險計劃",kind:"終身儲蓄型",ill:100,illTxt:"超過 100 種疾病，包括嚴重疾病、非嚴重疾病及兒童疾病",multi:true,max:null,cancer:"須加配「摯危疾多重附加利益保障」：嚴重疾病額外最多 5 次",heart:"同上",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
-   pay:"3 種選擇，最短 10 年",
-   feats:["多重賠償須加配附加保障","設週年紅利及終期紅利（非保證）","同時提供人壽保障"],src:"https://www.boclife.com.hk/tc/product/bestcare-pro-critical-illness-plan.html",ok:true,note:"投保年齡、貨幣及賠償上限待補充。"},
+  {ins:"boc",name:"非凡守護危疾保險計劃",kind:"終身儲蓄型",ill:103,illTxt:"55 種嚴重疾病、39 種非嚴重疾病、9 種兒童疾病",multi:true,max:470,maxTxt:"470%（30 歲或以下投保）",cancer:"額外最多 2 次，每次投保額 80%",heart:"心臟病及中風各額外 1 次，每次 80%",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
+   age:"15日至 65 歲（10年繳）／60 歲（15年繳）／55 歲（20年繳）",pay:"10／15／20年",cur:"人民幣／港元／美元",term:"至 100 歲",
+   earlyPct:20,earlyTxt:"非嚴重疾病及兒童疾病每次 20%（每種上限 24萬港元），累計上限 80%，會扣減投保額；原位癌最多 2 次",
+   waitRecur:3,waitTxt:"癌症與癌症相隔最少 3 年；癌症與中風或心臟病相隔最少 1 年",surv:14,multiAge:88,
+   boostPct:50,boostTxt:"首 10 年：30 歲或以下投保額外 50%，31 歲或以上 35%",
+   waiver:"確診嚴重疾病後豁免基本計劃保費",death:"索償時投保額＋升級保障＋終期紅利（非保證）",
+   feats:["同時提供人壽保障","設終期紅利（非保證）","三種保單貨幣可選"],src:"https://www.boclife.com.hk/f/upload/2122/SmartGuard_Critical_Illness_PB_nonbank_TC.pdf",ok:true},
+  {ins:"boc",name:"摯守護危疾保險計劃",kind:"終身儲蓄型",ill:103,illTxt:"55 種嚴重疾病、39 種非嚴重疾病、9 種兒童疾病",multi:true,max:600,maxTxt:"連「摯危疾多重附加利益保障」最多 6 次嚴重疾病賠償（600%）",cancer:"連附加保障：癌症最多 3 次",heart:"連附加保障：額外最多 5 次嚴重疾病賠償，每次 100%",early:true,child:true,prenatal:false,cash:false,icu:false,dem:false,
+   pay:"10 年至 20 年，多種選擇",cur:"人民幣／港元／美元",term:"至 100 歲",
+   earlyPct:20,earlyTxt:"非嚴重疾病及兒童疾病每次 20%，累計上限 80%",surv:30,multiAge:88,
+   waiver:"支付嚴重疾病賠償後豁免其後保費",death:"索償時投保額＋週年紅利及累積利息＋終期紅利",
+   feats:["多重賠償須加配附加保障","設週年紅利及終期紅利（非保證）","首 90 日為等候期"],src:"https://www.boclife.com.hk/f/upload/2122/BestCare_Pro_Critical_Illness_PB_nonbank_TC.pdf",ok:true,note:"投保年齡上限及附加保障的等候期請參閱產品小冊子。"},
 
   {ins:"cl",name:"危疾全裕備保險計劃／危疾全裕備保險計劃（強護版）",kind:"終身儲蓄型",ill:79,illTxt:"60 項嚴重病症、19 項特別疾病",multi:true,max:null,cancer:"強護版：多重癌症保障最多 3 次，每次 100%",heart:"強護版：急性心肌梗塞及中風最多 2 次，每次 100%",early:true,child:false,prenatal:false,cash:false,icu:false,dem:false,
    age:"15日至 60 歲（10年繳）／55 歲（15年繳）／50 歲（20年繳）",pay:"10／15／20年",cur:"港元／美元",term:"至 100 歲",
@@ -509,7 +559,7 @@ const CI = [
    feats:["永安心現金支援：每月 1%，最多 18 個月，最多 5 次（累積上限 90%）","男女加護額外保障：最高 20%","特定疾病關愛保障：最高 20%","癌症、中風、心臟病互相之間豁免等候期","涵蓋 38 項指定複雜手術"],src:"https://www.sunlife.com.hk/content/dam/sunlife/regional/hong-kong/documents/SunWell_ACSC_M_TC.pdf",ok:true}
 ];
 
-const OMIT = "未收錄：AIA自願醫保尊尚計劃（已不接受新申請）、尊顯計劃及尊裕計劃（未能確認是否仍接受新投保）；以及未能取得保險公司官方資料的危疾產品，包括 AIA 簡緻‧愛伴航、保誠危疾加護保III 及 EasyWell 系列、宏利定期危疾及心愛一家保、安盛康齊及摯愛保、富衛危疾緻尚保、好易揀、自主揀及危疾優易保、中國人壽（海外）衛你守護系列等。";
+const OMIT = "未收錄：AIA自願醫保尊尚計劃（已不接受新申請）、尊顯計劃及尊裕計劃（未能確認是否仍接受新投保）；以及未能取得保險公司官方資料的危疾產品，包括 AIA 簡緻‧愛伴航、保誠危疾加護保III 及 EasyWell 系列、宏利定期危疾及心愛一家保、安盛康齊及摯愛保、富衛好易揀及危疾優易保其他版本、中國人壽（海外）衛你守護系列等。";
 
 /* ========== 介面 ========== */
 const $ = s => document.querySelector(s);
@@ -521,6 +571,7 @@ VHIS.forEach((p,i)=>p.id="v"+i); CI.forEach((p,i)=>p.id="c"+i);
 VHIS.forEach(p=>{ p.ok = !!(p.ok && p.ward.length && p.reg.length && p.annual!==null && p.full!==null); });
 CI.forEach(p=>{ p.ok = !!(p.ok && p.ill && p.age && p.pay && (p.max || !p.multi)); });
 
+const MAXPICK = 12;
 const state = { mode:"v", need:null, picks:{v:[],c:[]}, open:null,
   f:{ v:{ins:[],type:"",ward:"",reg:0,full:"",ded:"",annual:0,ok:false,q:""},
       c:{ins:[],kind:"",multi:false,early:false,child:false,prenatal:false,cash:false,icu:false,dem:false,ill:0,ok:false,q:""} },
@@ -528,9 +579,9 @@ const state = { mode:"v", need:null, picks:{v:[],c:[]}, open:null,
 const blank = JSON.parse(JSON.stringify(state.f));
 
 const COPY = {
-  v:{h:"比較十間保險公司的自願醫保計劃", p:"按病房級別、保障地域、每年保障限額及自付費篩選，再勾選最多四個計劃並排比較。先揀一個最接近你情況的需要，或直接用篩選條件。",
+  v:{h:"比較十間保險公司的自願醫保計劃", p:"按病房級別、保障地域、每年保障限額及自付費篩選，再勾選多個計劃並排比較，或一次過比較同一間公司的所有計劃。先揀一個最接近你情況的需要，或直接用篩選條件。",
      needs:[["有公司醫保，想補足大額開支",{full:"y",ded:"y"}],["想入住私家房",{ward:"私家房",full:"y"}],["只需基本保障及扣稅",{type:"標準"}],["經常往返內地或亞洲",{reg:2,full:"y"}],["會在海外生活或升學",{reg:3}],["不想有終身或每年上限",{annual:-1}]]},
-  c:{h:"比較十間保險公司的危疾保險計劃", p:"按多重賠償、早期危疾、兒童及孕期保障等特點篩選，再勾選最多四個計劃並排比較。先揀一個最接近你情況的需要，或直接用篩選條件。",
+  c:{h:"比較十間保險公司的危疾保險計劃", p:"按多重賠償、早期危疾、兒童及孕期保障等特點篩選，再勾選多個計劃並排比較，或一次過比較同一間公司的所有計劃。先揀一個最接近你情況的需要，或直接用篩選條件。",
      needs:[["擔心危疾復發，想要多重賠償",{multi:true}],["為初生或未出生的孩子投保",{prenatal:true}],["擔心癌症長期治療的開支",{cash:true}],["關注認知障礙及柏金遜",{dem:true}],["想保障未列明的疾病",{icu:true}],["預算有限或只需指定年期",{kind:"定期"}]]}
 };
 
@@ -668,7 +719,7 @@ $("#ledger").addEventListener("keydown", e=>{
 function togglePick(id, box){
   const p = state.picks[state.mode], i = p.indexOf(id);
   if(i>=0) p.splice(i,1);
-  else if(p.length>=4){ box.checked=false; alert("最多可同時比較四個計劃。請先移除一個。"); return; }
+  else if(p.length>=MAXPICK){ box.checked=false; alert("最多可同時比較 "+MAXPICK+" 個計劃。請先移除一個。"); return; }
   else p.push(id);
   renderTray();
 }
@@ -689,8 +740,8 @@ $("#tray").addEventListener("click", e=>{
 const lifeN = p => p.life==="不設" ? Infinity : /億/.test(p.life) ? parseFloat(p.life)*1e8 : /萬/.test(p.life) ? parseFloat(p.life.replace(/,/g,""))*1e4 : null;
 const WARD = {"普通房":1,"半私家房":2,"私家房":3};
 const TBC = "待補充";
-function openCompare(){
-  const m = state.mode, ps = state.picks[m].map(find), yn = b => b?"有":"沒有", B = k => ({v:p=>p[k]?1:0,dir:"hi"}), N = (k,dir="hi") => ({v:p=>p[k]==null?null:p[k],dir});
+function openCompare(ids){
+  const m = state.mode, ps = (Array.isArray(ids)?ids:state.picks[m]).map(find), yn = b => b?"有":"沒有", B = k => ({v:p=>p[k]?1:0,dir:"hi"}), N = (k,dir="hi") => ({v:p=>p[k]==null?null:p[k],dir});
   /* 每行：[標題, 顯示內容, 是否HTML, 比較方法]。比較方法只用於可以客觀比較的項目。 */
   const rows = m==="v" ? [
     ["計劃類別",p=>p.type+"計劃"],["認可產品編號",p=>p.cert],
@@ -735,19 +786,24 @@ function openCompare(){
   const top = Math.max(...wins);
   const score = judged ? `<tr class="score"><th>較佳項目數</th>${wins.map(w=>`<td>${w} 項 <span class="stars">${"★".repeat(top?Math.round(w/top*5):0)}${"☆".repeat(5-(top?Math.round(w/top*5):0))}</span></td>`).join("")}</tr>` : "";
   $("#cmp").innerHTML = `<p class="cmpnote">👍 及星數只按下表可以用數字或有／沒有直接比較的 ${judged} 個項目計算（例如限額較高、等候期較短、保障項目較多），未計保費、核保、條款細節及個人需要，並不代表整體較適合。標示「待補充」的項目不會計算。</p>
-  <table class="cmp" id="cmpT"><thead><tr><th></th>${ps.map(p=>`<th style="--bc:${INS[p.ins].c}">${chip(p.ins)}<br>${esc(p.name)}${p.tier?"（"+p.tier+"）":""}</th>`).join("")}</tr></thead><tbody>${score}${body}<tr><th>資料來源</th>${ps.map(p=>`<td><a href="${p.src}" target="_blank" rel="noopener">開啟來源</a></td>`).join("")}</tr></tbody></table>`;
+  <table class="cmp" id="cmpT" style="min-width:${140+ps.length*230}px"><thead><tr><th></th>${ps.map(p=>`<th style="--bc:${INS[p.ins].c}">${chip(p.ins)}<br>${esc(p.name)}${p.tier?"（"+p.tier+"）":""}</th>`).join("")}</tr></thead><tbody>${score}${body}<tr><th>資料來源</th>${ps.map(p=>`<td><a href="${p.src}" target="_blank" rel="noopener">開啟來源</a></td>`).join("")}</tr></tbody></table>`;
   $("#onlyd").checked = false; $("#dlg").showModal();
 }
 $("#onlyd").addEventListener("change", e=>$("#cmpT").classList.toggle("onlyd", e.target.checked));
 $("#cls").addEventListener("click", ()=>$("#dlg").close());
 $("#prt").addEventListener("click", ()=>window.print());
 
+function renderWhole(){
+  const data = state.mode==="v"?VHIS:CI;
+  $("#whole").innerHTML = `<span>一次過比較整間公司：</span>` + Object.keys(INS).map(k=>{ const n=data.filter(p=>p.ins===k).length; return n>1?`<button data-w="${k}" style="border-color:${INS[k].c}"><span class="dot" style="background:${INS[k].c}"></span>${INS[k].n.split(" ")[0]}（${n}）</button>`:""; }).join("");
+}
+$("#whole").addEventListener("click", e=>{ const b=e.target.closest("button"); if(!b) return; openCompare((state.mode==="v"?VHIS:CI).filter(p=>p.ins===b.dataset.w).map(p=>p.id)); });
 function renderSort(){ $("#sort").innerHTML = SORTS[state.mode].map(s=>`<option value="${s[0]}" ${state.sort[state.mode]===s[0]?"selected":""}>${s[1]}</option>`).join(""); }
 $("#sort").addEventListener("change", e=>{ state.sort[state.mode]=e.target.value; renderList(); });
 $("#ft").addEventListener("click", ()=>$("#filters").classList.toggle("show"));
 function setMode(m){ state.mode=m; state.need=null; state.open=null; $("#mV").setAttribute("aria-pressed",m==="v"); $("#mC").setAttribute("aria-pressed",m==="c"); renderAll(); }
 $("#mV").addEventListener("click", ()=>setMode("v")); $("#mC").addEventListener("click", ()=>setMode("c"));
-function renderAll(){ renderIntro(); renderFilters(); renderSort(); renderList(); renderTray(); }
+function renderAll(){ renderIntro(); renderFilters(); renderSort(); renderWhole(); renderList(); renderTray(); }
 
 $("#upd").textContent = UPDATED; $("#omit").textContent = OMIT;
 if(ADVISOR.name){
