@@ -440,7 +440,7 @@ const VHIS = [
 ];
 
 /* ========== 危疾保險資料 ==========
-   kind: 終身儲蓄型 / 定期 / 儲蓄壽險附危疾 / 簡易核保
+   kind: 終身儲蓄型 / 定期 / 簡易核保
    ill: 保障疾病總數（null＝待補充）  max: 最高總賠償（佔保額 %，null＝待補充）   */
 const CI = [
   {ins:"aia",name:"「愛伴航」保險計劃2",kind:"終身儲蓄型",ill:115,illTxt:"58 種危疾、44 種早期危疾、13 種嚴重兒童疾病",multi:true,max:1100,cancer:"設多重賠償，癌症總賠償上限 600%",heart:"設多重賠償；等候期 1 年",early:true,child:true,prenatal:false,cash:true,icu:true,dem:true,
@@ -732,7 +732,7 @@ const COPY = {
 function renderIntro(){
   const c = COPY[state.mode];
   $("#h1").textContent = c.h; $("#lede").textContent = c.p;
-  $("#needs").innerHTML = "<span>我的情況是：</span>" + c.needs.map((n,i)=>`<button data-n="${i}" aria-pressed="${state.need===i}">${esc(n[0])}</button>`).join("");
+  $("#needs").innerHTML = "<span>我的情況是：</span>" + c.needs.map((n,i)=>avail(n[1])?`<button data-n="${i}" aria-pressed="${state.need===i}">${esc(n[0])}</button>`:"").join("");
 }
 $("#needs").addEventListener("click", e=>{
   const b = e.target.closest("button"); if(!b) return;
@@ -743,14 +743,16 @@ $("#needs").addEventListener("click", e=>{
   renderAll();
 });
 
-function chk(key,label){ const f=state.f[state.mode]; return `<label class="chk"><input type="checkbox" data-k="${key}" ${f[key]?"checked":""}>${label}</label>`; }
-function sel(key,label,opts){ const f=state.f[state.mode]; return `<div class="fg"><label class="h" for="f_${key}">${label}</label><select id="f_${key}" data-k="${key}">${opts.map(o=>`<option value="${o[0]}" ${String(f[key])===String(o[0])?"selected":""}>${o[1]}</option>`).join("")}</select></div>`; }
+/* 只顯示現有資料中真的有計劃符合的選項，避免揀了之後一個結果都沒有 */
+function avail(over){ const ff = Object.assign(JSON.parse(JSON.stringify(blank[state.mode])), over); return DATA().some(p=>match(p,ff)); }
+function chk(key,label){ const f=state.f[state.mode]; if(!f[key] && !avail({[key]:true})) return ""; return `<label class="chk"><input type="checkbox" data-k="${key}" ${f[key]?"checked":""}>${label}</label>`; }
+function sel(key,label,opts){ const f=state.f[state.mode]; if(!opts.some((o,i)=>i>0 && (String(f[key])===String(o[0]) || avail({[key]:o[0]})))) return ""; return `<div class="fg"><label class="h" for="f_${key}">${label}</label><select id="f_${key}" data-k="${key}">${opts.filter((o,i)=>i===0 || String(f[key])===String(o[0]) || avail({[key]:o[0]})).map(o=>`<option value="${o[0]}" ${String(f[key])===String(o[0])?"selected":""}>${o[1]}</option>`).join("")}</select></div>`; }
 
 function renderFilters(){
   const m = state.mode, f = state.f[m];
   let h = `<h2>篩選條件</h2>
   <div class="fg"><label class="h" for="f_q">搜尋計劃名稱</label><input type="search" id="f_q" data-k="q" value="${esc(f.q)}" placeholder="例如：尊耀、愛伴航"></div>
-  <fieldset class="fg"><legend>保險公司</legend><div class="insgrid">${Object.keys(INS).map(k=>`<label class="chk"><input type="checkbox" data-ins="${k}" ${f.ins.includes(k)?"checked":""}><span class="dot" style="background:${INS[k].c}"></span>${INS[k].n.split(" ")[0]}</label>`).join("")}</div></fieldset>`;
+  <fieldset class="fg"><legend>保險公司</legend><div class="insgrid">${Object.keys(INS).filter(k=>DATA().some(p=>p.ins===k)).map(k=>`<label class="chk"><input type="checkbox" data-ins="${k}" ${f.ins.includes(k)?"checked":""}><span class="dot" style="background:${INS[k].c}"></span>${INS[k].n.split(" ")[0]}</label>`).join("")}</div></fieldset>`;
   if(m==="v"){
     h += sel("type","計劃類別",[["","全部"],["標準","標準計劃"],["靈活","靈活計劃"]])
       + sel("ward","病房級別",[["","全部"],["普通房","普通房"],["半私家房","半私家房"],["私家房","私家房"]])
@@ -759,7 +761,7 @@ function renderFilters(){
       + sel("ded","自付費",[["","全部"],["y","有自付費選項可揀"],["n","可選零自付費"]])
       + sel("annual","每年保障限額",[[0,"不限"],[1000000,"100萬或以上"],[5000000,"500萬或以上"],[10000000,"1,000萬或以上"],[25000000,"2,500萬或以上"],[-1,"不設每年限額"]]);
   } else {
-    h += (m==="c" ? sel("kind","計劃類型",[["","全部"],["終身儲蓄型","終身儲蓄型"],["定期","定期"],["儲蓄壽險附危疾","儲蓄壽險附危疾"],["簡易核保","簡易核保"]]) : "")
+    h += (m==="c" ? sel("kind","計劃類型",[["","全部"],["終身儲蓄型","終身儲蓄型"],["定期","定期"],["簡易核保","簡易核保"]]) : "")
       + sel("ill","保障疾病數目",[[0,"不限"],[60,"60 種或以上"],[100,"100 種或以上"],[120,"120 種或以上"],[180,"180 種或以上"]])
       + `<fieldset class="fg"><legend>必須包括</legend>${chk("multi","多重賠償")}${chk("early","早期危疾保障")}${chk("child","兒童疾病保障")}${chk("prenatal","孕期／未出生嬰兒版本")}${chk("cash","持續癌症現金或入息式賠償")}${chk("icu","深切治療／未知疾病保障")}${chk("dem","認知障礙或柏金遜額外保障")}</fieldset>`;
   }
@@ -774,8 +776,8 @@ $("#filters").addEventListener("input", e=>{
 });
 $("#filters").addEventListener("click", e=>{ if(e.target.id==="reset"){ state.f[state.mode]=JSON.parse(JSON.stringify(blank[state.mode])); state.need=null; renderAll(); }});
 
-function match(p){
-  const m = state.mode, f = state.f[m];
+function match(p,ff){
+  const m = state.mode, f = ff || state.f[m];
   if(f.ins.length && !f.ins.includes(p.ins)) return false;
   if(f.ok && !p.ok) return false;
   if(f.q && !(p.name+(p.tier||"")+INS[p.ins].n).toLowerCase().includes(f.q.trim().toLowerCase())) return false;
@@ -838,7 +840,7 @@ function moreHtml(p){
   <div class="meta">${okTag(p)} ${p.cert?`認可產品編號：${esc(p.cert)}　`:""}${p.age?`投保年齡：${esc(p.age)}　`:""}<a href="${p.src}" target="_blank" rel="noopener">查看資料來源</a></div></div>`;
 }
 function renderList(){
-  const m = state.mode, data = DATA(), list = sorted(data.filter(match)), picks = state.picks[m];
+  const m = state.mode, data = DATA(), list = sorted(data.filter(p=>match(p))), picks = state.picks[m];
   $("#count").innerHTML = `${list.length} 個計劃 <span>（共 ${data.length} 個）</span>`;
   const head = m==="v" ? ["","計劃","類別","病房級別","保障地域","每年保障限額","每年自付費","賠償方式"] : ["","計劃","類型","保障疾病","最高總賠償","癌症賠償","其他保障"];
   const L = $("#ledger"); L.className = "ledger "+(m==="v"?"v":"c");
