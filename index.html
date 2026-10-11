@@ -279,7 +279,6 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
           <li>未能從保險公司官方資料取得的項目顯示為「待補充」；計劃標示「資料未齊」代表主要項目仍有缺漏。</li>
           <li>本頁不包括保費。保費按年齡、性別、吸煙習慣及核保結果而定，請向顧問索取報價。</li>
           <li>恒生銀行分銷的自願醫保由滙豐人壽保險（國際）有限公司承保。</li>
-          <li id="omit"></li>
         </ul>
       </div>
       <div>
@@ -721,7 +720,6 @@ const CANCER = [
   {ins:"hsbc",name:"癌症保障計劃",ctype:"lump",form:"獨立",base:null,kind:"每年續保",uw:null,age:"出生後 14 天至 60 歲（首次申請時，首尾包括）；須為持香港身份證的香港居民",pay:"保險期限 12 個月，每年續保；保費可月繳或年繳，非保證，安盛可於保單週年日更改",renew:"可續保至 79 歲（保單於受保人 80 歲生日當天或緊接其後的保單週年日自動終止）",cur:"港元",term:"至 80 歲生日當天或緊接其後的保單週年日（可續保至 79 歲）",wait:90,surv:14,lumpTxt:"確診癌症賠償 100% 保額（扣除已付／批准支付的原位癌及初期癌症保障），只賠一次",earlyCa:"原位癌保障 30% 保額（預支，可多次索償，每次限一個器官）；初期癌症保障 30% 保額（預支，同一器官不可同時索償原位癌及初期癌症）",max:100,maxTxt:"保障 1.1、1.2、1.3 的總賠償額不得超過保額；保障 1.2／1.3 預支後癌症保障按同額減少，保費不會因而減少",multi:true,multiTxt:"癌症保障只賠一次；原位癌及初期癌症保障可多次索償（每次限一個器官，左右對稱器官視為同一器官），累計至保額 100% 保單終止",recurWait:null,cashTxt:"確診後 12 個曆月內設醫療諮詢及護理保障（中醫診症治療、營養師諮詢、心理輔導、紓緩護理，實報實銷）；各項限額於保障項目表留空，小冊子未載金額",lifeLimit:null,yearLimit:null,subLimit:null,treatTxt:null,outTxt:null,region:null,death:null,waiver:null,feats:["原位癌及初期癌症（甲狀腺 T1N0M0、CLL RAI 第 1–2 期、何傑金氏淋巴瘤第 1 期）各預支 30% 保額，可多次索償（每器官一次）","確診癌症賠 100% 保額（扣除已付預支）","確診後 12 個月內醫療諮詢及護理保障（中醫、營養師、心理輔導、紓緩護理）","保單期限 12 個月，可續保至 79 歲"],ok:true,note:"資料取自滙豐分銷之「癌症保障計劃」保單文件，實際由安盛保險有限公司（AXA）承保，滙豐為授權保險代理。此為保單條款（非宣傳小冊子），計劃級別（基本／精選／優越／尊尚）及保額、保費、醫療諮詢及護理保障各項限額於保障項目表模板中均為空白，未載數值。保單未列身故賠償（身故即終止）。不保 HIV 相關癌症及已存在病狀；生效或復效日起 90 日內確診或首次出現徵狀不賠。冷靜期 30 天。",src:"https://www.hsbc.com.hk/zh-hk/insurance/products/medical-and-critical-illness/cancer-care/"}
 ];
 
-const OMIT = "未收錄：AIA自願醫保尊尚計劃（已不接受新申請）、尊顯計劃及尊裕計劃（未能確認是否仍接受新投保）；中銀人壽守護十年網上保險計劃及隨身保危疾保險計劃（只限網上／手機銀行投保，未取得單張）；保誠守護健康女性保障及特選危疾治療保、安盛癌症及中風治療保障（並非純癌症或標準危疾保障）。";
 
 /* ========== 介面 ========== */
 const $ = s => document.querySelector(s);
@@ -1085,7 +1083,7 @@ $("#mR").addEventListener("click", ()=>setMode("r")); $("#mK").addEventListener(
 $("#mV").addEventListener("click", ()=>setMode("v")); $("#mC").addEventListener("click", ()=>setMode("c"));
 function renderAll(){ renderIntro(); renderFilters(); renderSort(); renderWhole(); renderList(); renderTray(); }
 
-$("#upd").textContent = UPDATED; $("#omit").textContent = OMIT;
+$("#upd").textContent = UPDATED;
 if(ADVISOR.name){
   const a = ADVISOR, c = $("#contact"); c.hidden = false;
   c.innerHTML = `<b>想了解哪個計劃適合你？</b><br>${esc(a.name)}${a.company?"｜"+esc(a.company):""}${a.licence?"｜保險中介人牌照號碼 "+esc(a.licence):""}<br>${a.phone?"電話："+esc(a.phone)+"　":""}${a.whatsapp?`<a href="https://wa.me/${esc(a.whatsapp)}" target="_blank" rel="noopener">用 WhatsApp 查詢</a>　`:""}${a.email?`<a href="mailto:${esc(a.email)}">${esc(a.email)}</a>`:""}`;
