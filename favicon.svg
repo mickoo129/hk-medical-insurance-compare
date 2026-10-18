@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>醫保對照</title>
+  <defs><clipPath id="s"><path d="M32 8 52 14.5V31c0 13.5-8.6 21.4-20 26-11.4-4.6-20-12.5-20-26V14.5Z"/></clipPath></defs>
+  <rect width="64" height="64" rx="14" fill="#0E3B43"/>
+  <g clip-path="url(#s)">
+    <rect width="32" height="64" fill="#FFFFFF"/>
+    <rect x="32" width="32" height="64" fill="#7FD3BC"/>
+  </g>
+  <path d="M28 19h8v9h9v8h-9v9h-8v-9h-9v-8h9Z" fill="#0E3B43"/>
+</svg>
