@@ -8,10 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Noto+Sans+HK:wght@400;500;700;900&display=swap" rel="stylesheet">
 <meta name="description" content="比較香港十間主要人壽保險公司的自願醫保及危疾保險計劃：保障範圍、限額、自付費及計劃特點。">
+<meta name="theme-color" content="#0E5E57">
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#0E5E57">
+<link rel="manifest" href="site.webmanifest">
 <style>
 :root{
   --ink:#1D2B2A; --deep:#0E5E57; --brand:#00A758; --jade:#00753E; --jade-soft:#E6F6EE;
@@ -27,14 +28,14 @@ button,select,input{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:3px solid var(--jade);outline-offset:2px}
 a{color:var(--jade)}
-.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+.wrap{max-width:calc(1320px + 2 * var(--mk-gutter));margin:0 auto;padding:0 var(--mk-gutter)}
 
 /* 頁首 */
 .top{background:var(--deep);color:#fff}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
 .brand{font-family:var(--sans);font-size:1.25rem;font-weight:700;letter-spacing:.04em}
 .brand{display:flex;align-items:center;gap:10px}
-.brand img{width:40px;height:40px;flex:none;border-radius:9px;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+.brand img{width:40px;height:40px;flex:none}
 .brand small{display:block;font-family:var(--sans);font-weight:400;font-size:.78rem;letter-spacing:0;opacity:.8}
 .top .mode{margin-left:auto}
 .mode{display:flex;background:rgba(255,255,255,.12);border-radius:999px;padding:4px}
@@ -245,7 +246,13 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
   --mk-warn:#8A5B00; --mk-warn-soft:#FFF5DC; --mk-danger:#C62828; --mk-danger-soft:#FDECEC;
   --mk-sans:"Noto Sans HK","PingFang HK","Microsoft JhengHei",system-ui,sans-serif;
   --mk-num:"Barlow","Noto Sans HK",system-ui,sans-serif;
+  --mk-max:1320px;                        /* 內容最闊 */
+  --mk-gutter:clamp(16px,3vw,32px);       /* 兩邊留白：手機 16px → 桌面 32px */
 }
+/* 版面外框：工具可以用自己嘅 class，但數值要一樣 */
+.mk-wrap{width:100%;max-width:calc(var(--mk-max) + 2 * var(--mk-gutter));margin:0 auto;padding-left:var(--mk-gutter);padding-right:var(--mk-gutter);box-sizing:border-box}
+/* 標題旁 icon */
+.mk-logo{width:32px;height:32px;flex:none;display:block}
 .mk-ecard{display:flex;align-items:center;gap:16px 24px;flex-wrap:wrap;margin:28px 0 0;padding:20px 22px;border-radius:14px;border:1px solid var(--mk-brand-line);background:var(--mk-brand-soft);font-family:var(--mk-sans);color:var(--mk-ink);text-align:left}
 .mk-ecard-txt{flex:1;min-width:200px}
 .mk-ecard-txt b{display:block;font-size:17px;font-weight:700;margin-bottom:2px;color:var(--mk-ink)}
@@ -276,7 +283,7 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
 
 <header class="top">
   <div class="wrap">
-    <div class="brand"><img src="favicon.svg" alt="" width="40" height="40"><div>醫保對照<small>自願醫保、危疾及癌症保障比較</small></div></div>
+    <div class="brand"><img class="mk-logo" src="favicon.svg" alt="" width="40" height="40"><div>醫保對照<small>自願醫保、危疾及癌症保障比較</small></div></div>
     <div class="mode" role="group" aria-label="選擇比較類別">
       <button id="mV" aria-pressed="true">自願醫保</button>
       <button id="mC" aria-pressed="false">危疾保險</button>
