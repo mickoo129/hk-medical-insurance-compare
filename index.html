@@ -288,6 +288,9 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
 .mk-bar{display:flex;align-items:center;gap:12px;min-height:56px}
 .mk-title{display:flex;align-items:center;gap:10px;min-width:0;font-family:var(--mk-sans);font-weight:900;font-size:17px;white-space:nowrap}
 .mk-title span{overflow:hidden;text-overflow:ellipsis}
+/* 工具名 + 細字簡介（兩行都擠喺 56px 頁頭入面） */
+.mk-name{display:flex;flex-direction:column;justify-content:center;min-width:0;line-height:1.2}
+.mk-sub{display:block;margin-top:2px;color:inherit;font-size:12px;font-weight:500;letter-spacing:0;opacity:.78;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mk-actions{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
 /* 分享呢個方案（同列印按鈕一樣樣式） */
 .mk-share-btn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--mk-brand);background:var(--mk-surface);color:var(--mk-brand-ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
@@ -306,7 +309,7 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
 
 <header class="top mk-header">
   <div class="wrap">
-    <div class="brand"><img class="mk-logo" src="favicon.svg" alt="" width="32" height="32"><span>醫保對照</span></div>
+    <div class="brand"><img class="mk-logo" src="favicon.svg" alt="" width="32" height="32"><span class="mk-name">醫保對照<small class="mk-sub">自願醫保、危疾及癌症保障比較</small></span></div>
     <div class="mode" role="group" aria-label="選擇比較類別">
       <button id="mV" aria-pressed="true">自願醫保</button>
       <button id="mC" aria-pressed="false">危疾保險</button>
