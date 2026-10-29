@@ -32,12 +32,16 @@ a{color:var(--jade)}
 
 /* 頁首 */
 .top{background:var(--deep);color:#fff}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap;min-height:56px}
+.top-act{display:flex;gap:8px;flex:none}
 .brand{font-family:var(--sans);font-size:1.25rem;font-weight:700;letter-spacing:.04em}
 .brand{display:flex;align-items:center;gap:10px}
-.brand img{width:40px;height:40px;flex:none}
+.brand img{width:32px;height:32px;flex:none}
+.brand span{white-space:nowrap}
 .brand small{display:block;font-family:var(--sans);font-weight:400;font-size:.78rem;letter-spacing:0;opacity:.8}
 .top .mode{margin-left:auto}
+.top .mk-print-btn,.top .mk-share-btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+.top .mk-print-btn:hover,.top .mk-share-btn:hover{background:rgba(255,255,255,.12)}
 .mode{display:flex;background:rgba(255,255,255,.12);border-radius:999px;padding:4px}
 .mode button{border:0;background:none;color:#fff;padding:8px 16px;white-space:nowrap;border-radius:999px;font-weight:500}
 .mode button[aria-pressed="true"]{background:#fff;color:var(--deep);font-weight:700}
@@ -153,6 +157,10 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
 .notes ul{padding-left:1.2em;margin:6px 0}
 
 @media (max-width:900px){
+  .top .brand{flex:1;min-width:0}
+  .top .mode{order:3;margin-left:0;width:100%;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap}
+  .top .mode::-webkit-scrollbar{display:none}
+  .top .mode button{flex:1 0 auto;padding:6px 14px}
   .main{grid-template-columns:1fr}
   .filters{position:static;max-height:none;display:none}
   .filters.show{display:block}
@@ -266,7 +274,8 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
 .mk-print-head{display:none}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .mk-no-print,.mk-print-btn,.mk-ecard-btn{display:none!important}
+  .mk-no-print,.mk-print-btn,.mk-share-btn,.mk-toast,.mk-ecard-btn{display:none!important}
+  .mk-header{position:static}
   .mk-ecard{break-inside:avoid;padding:10px 14px;margin-top:14px}
   .mk-ecard-qr{display:block}
   .mk-ecard-qr svg{width:22mm;height:22mm;display:block}
@@ -274,6 +283,20 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
   .mk-print-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:2px solid var(--mk-brand);padding:0 0 5px;margin:0 0 10px;font-family:var(--mk-sans);color:var(--mk-muted);font-size:9pt}
   .mk-print-head b{color:var(--mk-deep);font-size:11pt}
 }
+/* 頁頭：統一鎖住喺頂；第一行 icon + 工具名 + 按鈕 */
+.mk-header{position:sticky;top:0;z-index:50}
+.mk-bar{display:flex;align-items:center;gap:12px;min-height:56px}
+.mk-title{display:flex;align-items:center;gap:10px;min-width:0;font-family:var(--mk-sans);font-weight:900;font-size:17px;white-space:nowrap}
+.mk-title span{overflow:hidden;text-overflow:ellipsis}
+.mk-actions{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
+/* 分享呢個方案（同列印按鈕一樣樣式） */
+.mk-share-btn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--mk-brand);background:var(--mk-surface);color:var(--mk-brand-ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+.mk-share-btn:hover{background:var(--mk-brand-soft)}
+.mk-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:999;background:var(--mk-ink);color:#fff;font:600 14px/1.4 var(--mk-sans);padding:10px 16px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:calc(100vw - 32px)}
+.mk-share-btn>.mk-long{margin-left:-6px} /* 抵銷 gap，令「分享呢個方案」連埋 */
+.mk-print-btn>.mk-long{margin-left:-2px} /* 「列印 / 存 PDF」保留一個空格 */
+/* 手機：按鈕字縮短（「分享」「列印」） */
+@media (max-width:480px){.mk-long{display:none}.mk-print-btn,.mk-share-btn{padding:0 10px}}
 /* ===== MKPA 統一標準 完 ===== */
 
 </style>
@@ -281,16 +304,19 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
 <body>
 <div class="mk-print-head"><b>MKPA · 醫保對照｜自願醫保、危疾及癌症保障比較</b><span>列印日期：<span class="mk-print-date"></span></span></div>
 
-<header class="top">
+<header class="top mk-header">
   <div class="wrap">
-    <div class="brand"><img class="mk-logo" src="favicon.svg" alt="" width="40" height="40"><div>醫保對照<small>自願醫保、危疾及癌症保障比較</small></div></div>
+    <div class="brand"><img class="mk-logo" src="favicon.svg" alt="" width="32" height="32"><span>醫保對照</span></div>
     <div class="mode" role="group" aria-label="選擇比較類別">
       <button id="mV" aria-pressed="true">自願醫保</button>
       <button id="mC" aria-pressed="false">危疾保險</button>
       <button id="mK" aria-pressed="false">癌症保障</button>
       <button id="mR" aria-pressed="false">附加保障</button>
     </div>
-    <button type="button" class="mk-print-btn mk-top-print" onclick="window.print()">列印 / 存 PDF</button>
+    <div class="top-act">
+      <button type="button" class="mk-share-btn" id="shareTop">分享<span class="mk-long">呢個方案</span></button>
+      <button type="button" class="mk-print-btn mk-top-print" onclick="window.print()">列印<span class="mk-long"> / 存 PDF</span></button>
+    </div>
   </div>
 </header>
 
@@ -356,7 +382,8 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
     <h2 id="dlgT">並排比較</h2>
     <div>
       <label><input type="checkbox" id="onlyd"> 只顯示有分別的項目</label>
-      <button id="prt" class="mk-print-btn">列印 / 存 PDF</button>
+      <button id="shareCmp" class="mk-share-btn" type="button">分享<span class="mk-long">呢個比較</span></button>
+      <button id="prt" class="mk-print-btn">列印<span class="mk-long"> / 存 PDF</span></button>
       <button id="cls">關閉</button>
     </div>
   </div>
@@ -1027,6 +1054,7 @@ const IL = (p,i) => { const a = ILL[p.name]; if(!a) return "保險公司未有�
 const WARD = {"普通房":1,"半私家房":2,"私家房":3};
 const TBC = "待補充";
 function openCompare(ids){
+  state.cmpIds = (Array.isArray(ids)?ids:state.picks[state.mode]).slice();
   const m = state.mode, ps = (Array.isArray(ids)?ids:state.picks[m]).map(find), yn = b => b?"有":"沒有", B = k => ({v:p=>p[k]?1:0,dir:"hi"}), N = (k,dir="hi") => ({v:p=>p[k]==null?null:p[k],dir});
   /* 每行：[標題, 顯示內容, 是否HTML, 比較方法]。比較方法只用於可以客觀比較的項目。 */
   const isR = p=>p.ctype==="reimb", na = "不適用";
@@ -1146,7 +1174,38 @@ $("#mV").addEventListener("click", ()=>setMode("v")); $("#mC").addEventListener(
 function renderAll(){ renderIntro(); renderFilters(); renderSort(); renderWhole(); renderList(); renderTray(); }
 
 $("#upd").textContent = UPDATED;
+/* 分享呢個方案：#m=v&p=v1,v2&c=1（類別、揀咗嘅計劃、有冇打開並排比較） */
+/* 計劃喺連結入面用「保險公司＋計劃名」嘅指紋，唔用排列位置，咁加減計劃之後舊連結都對得返 */
+function planKey(p){ let x=5381; const s=p.ins+"|"+p.name+"|"+(p.tier||""); for(let i=0;i<s.length;i++) x=((x<<5)+x+s.charCodeAt(i))>>>0; return x.toString(36); }
+function shareUrl(withCompare){ const q=new URLSearchParams(); const m=state.mode; q.set("m",m);
+  const ids = withCompare && state.cmpIds ? state.cmpIds : state.picks[m];
+  if(ids.length) q.set("p",ids.map(id=>planKey(find(id))).join(".")); if(withCompare) q.set("c","1");
+  return location.origin+location.pathname+"#"+q.toString(); }
+$("#shareTop").addEventListener("click", ()=>mkShare(shareUrl($("#dlg").open)));
+$("#shareCmp").addEventListener("click", ()=>mkShare(shareUrl(true)));
+function readShare(){ const s=location.hash.slice(1); if(s.indexOf("=")<0) return false;
+  const q=new URLSearchParams(s), m=q.get("m"); if(!"vcrk".includes(m||"x")) return false;
+  const all=({v:VHIS,c:CI,r:RIDER,k:CANCER})[m];
+  const ids=(q.get("p")||"").split(".").map(k=>{const p=all.find(x=>planKey(x)===k);return p&&p.id;}).filter(Boolean);
+  state.mode=m; state.picks[m]=ids;
+  ["V","C","R","K"].forEach(k=>$("#m"+k).setAttribute("aria-pressed", m===k.toLowerCase()));
+  try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){}
+  return {compare: q.get("c")==="1" && ids.length>0, ids}; }
+const shared = readShare();
 renderAll();
+if(shared && shared.compare) openCompare(shared.ids);
+</script>
+<script>
+/* 分享呢個方案：手機彈出分享選單（WhatsApp 等），電腦複製連結。
+   url 要包括客人揀嘅設定（例如放喺 # 後面），但唔可以包括客人姓名。 */
+function mkShare(url){
+  url=url||location.href;
+  if(navigator.share&&matchMedia('(pointer:coarse)').matches){navigator.share({title:document.title,url:url}).catch(function(){});return;}
+  (navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(
+    function(){mkToast('已複製連結，客人撳開會見到同一個方案');},
+    function(){window.prompt('複製呢條連結：',url);});
+}
+function mkToast(msg){var t=document.createElement('div');t.className='mk-toast';t.setAttribute('role','status');t.textContent=msg;(document.querySelector('dialog[open]')||document.body).appendChild(t);setTimeout(function(){t.remove();},2400);}
 </script>
 <script>
 (function(){var d=new Date();
