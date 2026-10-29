@@ -253,6 +253,9 @@ body[data-m="k"]{--mc:var(--mk-cat-6);--mc-soft:var(--mk-cat-6-soft);--mc-ink:va
 body[data-m="r"]{--mc:var(--mk-cat-7);--mc-soft:var(--mk-cat-7-soft);--mc-ink:var(--mk-cat-7-ink)}
 #mV{--bc:var(--mk-cat-1)} #mC{--bc:var(--mk-cat-3)} #mK{--bc:var(--mk-cat-6)} #mR{--bc:var(--mk-cat-7)}
 .mode button::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--bc);margin-right:7px;vertical-align:1px;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+/* 選中嘅類別掣用返該分類色（同下面底色一致） */
+.mode button[aria-pressed="true"]{background:var(--bc);color:#fff}
+.mode button[aria-pressed="true"]::before{background:#fff;box-shadow:none}
 /* 轉類別時成頁底色跟住轉：簡介區同頁面用該分類淺底，卡片照舊白色 */
 body{background:var(--mc-soft);transition:background-color .2s}
 .intro{background:var(--mc-soft);color:var(--ink);border-top:6px solid var(--mc);border-bottom:1px solid color-mix(in srgb,var(--mc) 25%,transparent)}
