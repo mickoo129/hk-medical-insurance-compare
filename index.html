@@ -31,7 +31,6 @@ a{color:var(--jade)}
 .wrap{max-width:calc(1320px + 2 * var(--mk-gutter));margin:0 auto;padding:0 var(--mk-gutter)}
 
 /* 頁首 */
-.top{background:var(--deep);color:#fff}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap;min-height:56px}
 .top-act{display:flex;gap:8px;flex:none}
 .brand{font-family:var(--sans);font-size:1.25rem;font-weight:700;letter-spacing:.04em}
@@ -39,12 +38,6 @@ a{color:var(--jade)}
 .brand img{width:32px;height:32px;flex:none}
 .brand span{white-space:nowrap}
 .brand small{display:block;font-family:var(--sans);font-weight:400;font-size:.78rem;letter-spacing:0;opacity:.8}
-.top .mode{margin-left:auto}
-.top .mk-print-btn,.top .mk-share-btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
-.top .mk-print-btn:hover,.top .mk-share-btn:hover{background:rgba(255,255,255,.12)}
-.mode{display:flex;background:rgba(255,255,255,.12);border-radius:999px;padding:4px}
-.mode button{border:0;background:none;color:#fff;padding:8px 16px;white-space:nowrap;border-radius:999px;font-weight:500}
-.mode button[aria-pressed="true"]{background:#fff;color:var(--deep);font-weight:700}
 
 /* 開場 */
 .intro{background:var(--deep);color:#fff;padding:26px 0 34px}
@@ -158,9 +151,6 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
 
 @media (max-width:900px){
   .top .brand{flex:1;min-width:0}
-  .top .mode{order:3;margin-left:0;width:100%;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap}
-  .top .mode::-webkit-scrollbar{display:none}
-  .top .mode button{flex:1 0 auto;padding:6px 14px}
   .main{grid-template-columns:1fr}
   .filters{position:static;max-height:none;display:none}
   .filters.show{display:block}
@@ -188,8 +178,6 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
   .needs::-webkit-scrollbar{display:none}
   .needs>*{flex:none;white-space:nowrap}
   .needs span{width:auto;align-self:center}
-  .mode{max-width:100%;overflow-x:auto;scrollbar-width:none}
-  .mode button{padding:7px 11px;font-size:.88rem}
   .main>main,.intro .wrap{min-width:0}
   .main{grid-template-columns:minmax(0,1fr)}
   .whole{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
@@ -251,11 +239,7 @@ body{--mc:var(--mk-cat-1);--mc-soft:var(--mk-cat-1-soft);--mc-ink:var(--mk-cat-1
 body[data-m="c"]{--mc:var(--mk-cat-3);--mc-soft:var(--mk-cat-3-soft);--mc-ink:var(--mk-cat-3-ink)}
 body[data-m="k"]{--mc:var(--mk-cat-6);--mc-soft:var(--mk-cat-6-soft);--mc-ink:var(--mk-cat-6-ink)}
 body[data-m="r"]{--mc:var(--mk-cat-7);--mc-soft:var(--mk-cat-7-soft);--mc-ink:var(--mk-cat-7-ink)}
-#mV{--bc:var(--mk-cat-1);--bi:var(--mk-cat-1-ink)} #mC{--bc:var(--mk-cat-3);--bi:var(--mk-cat-3-ink)} #mK{--bc:var(--mk-cat-6);--bi:var(--mk-cat-6-ink)} #mR{--bc:var(--mk-cat-7);--bi:var(--mk-cat-7-ink)}
-.mode button::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--bc);margin-right:7px;vertical-align:1px;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
 /* 選中嘅類別掣用返該分類色（同下面底色一致） */
-.mode button[aria-pressed="true"]{background:var(--bi);color:#fff}
-.mode button[aria-pressed="true"]::before{background:#fff;box-shadow:none}
 /* 轉類別時成頁底色跟住轉：簡介區同頁面用該分類淺底，卡片照舊白色 */
 body{background:var(--mc-soft);transition:background-color .2s}
 .intro{background:var(--mc-soft);color:var(--ink);border-top:6px solid var(--mc);border-bottom:1px solid color-mix(in srgb,var(--mc) 25%,transparent)}
@@ -331,18 +315,35 @@ dialog{border-top:5px solid var(--mc)}
   .mk-print-head b{color:var(--mk-deep);font-size:11pt}
 }
 /* 頁頭：統一鎖住喺頂；第一行 icon + 工具名 + 按鈕 */
-.mk-header{position:sticky;top:0;z-index:50}
-.mk-bar{display:flex;align-items:center;gap:12px;min-height:56px}
-.mk-title{display:flex;align-items:center;gap:10px;min-width:0;font-family:var(--mk-sans);font-weight:900;font-size:17px;white-space:nowrap}
+/* 頁頭：深青綠底、白字（分頁掣擺法跟 claimsreport）；第一行 icon＋工具名 → 分頁掣（名右邊）→ 右邊按鈕；平板同手機分頁掣落第二行、左右捲 */
+.mk-header{position:sticky;top:0;z-index:50;background:var(--mk-deep);color:#fff;border-bottom:0}
+.mk-bar{display:flex;align-items:center;gap:16px;min-height:60px}
+.mk-title{display:flex;align-items:center;gap:10px;min-width:0;font-family:var(--mk-sans);font-weight:900;font-size:17px;white-space:nowrap;color:var(--mk-deep);text-decoration:none}
 .mk-title span{overflow:hidden;text-overflow:ellipsis}
 /* 工具名 + 細字簡介（兩行都擠喺 56px 頁頭入面） */
 .mk-name{display:flex;flex-direction:column;justify-content:center;min-width:0;line-height:1.2}
 .mk-sub{display:block;margin-top:2px;color:inherit;font-size:12px;font-weight:500;letter-spacing:0;opacity:.78;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mk-header .mk-title,.mk-header .mk-name{color:#fff}
+.mk-header .mk-sub{color:#C9DDD8;opacity:1}
+/* 分頁掣／導覽：每粒加 .mk-tab 同 .mk-cat-N（或者自己設 --c、--c-ink）；選中用 .on／.active／aria-selected／aria-pressed／aria-current */
+.mk-tabs{--c:var(--mk-brand);--c-ink:var(--mk-brand-ink);display:flex;align-items:center;gap:4px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.mk-tabs::-webkit-scrollbar{display:none}
+.mk-tab{display:inline-flex;align-items:center;gap:6px;flex:none;padding:6px 10px;border:0;border-radius:999px;background:none;color:#D7E7E3;font-family:var(--mk-sans);font-size:14px;font-weight:500;line-height:1.4;white-space:nowrap;text-decoration:none;cursor:pointer;box-shadow:none}
+.mk-tab::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c);flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.35);margin:0}
+.mk-tab:hover{background:rgba(255,255,255,.1);color:#fff;text-decoration:none}
+/* 選中：白色膠囊、字用該分類文字色，色點保留分類色 */
+.mk-tab.on,.mk-tab.active,.mk-tab[aria-selected="true"],.mk-tab[aria-pressed="true"],.mk-tab[aria-current="page"]{background:#fff;color:var(--c-ink);font-weight:700}
+.mk-tab.on::before,.mk-tab.active::before,.mk-tab[aria-selected="true"]::before,.mk-tab[aria-pressed="true"]::before,.mk-tab[aria-current="page"]::before{box-shadow:none}
+/* 平板同手機（≤1023px）：分頁掣落第二行，一行過左右捲 */
+@media (max-width:1023px){.mk-bar{flex-wrap:wrap;row-gap:0;column-gap:10px;padding-top:8px}.mk-bar>.mk-title{flex:1}.mk-bar>.mk-tabs{order:3;flex:none;width:100%;margin:2px 0 6px}}
 .mk-actions{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
 /* 分享呢個方案（同列印按鈕一樣樣式） */
 .mk-share-btn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--mk-brand);background:var(--mk-surface);color:var(--mk-brand-ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
 .mk-share-btn:hover{background:var(--mk-brand-soft)}
 .mk-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:999;background:var(--mk-ink);color:#fff;font:600 14px/1.4 var(--mk-sans);padding:10px 16px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:calc(100vw - 32px)}
+/* 頁頭入面嘅掣：透明底、白字白框 */
+.mk-header .mk-share-btn,.mk-header .mk-print-btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+.mk-header .mk-share-btn:hover,.mk-header .mk-print-btn:hover{background:rgba(255,255,255,.12)}
 .mk-share-btn>.mk-long{margin-left:-6px} /* 抵銷 gap，令「分享呢個方案」連埋 */
 .mk-print-btn>.mk-long{margin-left:-2px} /* 「列印 / 存 PDF」保留一個空格 */
 /* 手機：按鈕字縮短（「分享」「列印」） */
@@ -355,13 +356,13 @@ dialog{border-top:5px solid var(--mc)}
 <div class="mk-print-head"><b>MKPA · 醫保對照｜自願醫保、危疾及癌症保障比較</b><span>列印日期：<span class="mk-print-date"></span></span></div>
 
 <header class="top mk-header">
-  <div class="wrap">
+  <div class="wrap mk-bar">
     <div class="brand"><img class="mk-logo" src="favicon.svg" alt="" width="32" height="32"><span class="mk-name">醫保對照<small class="mk-sub">自願醫保、危疾及癌症保障比較</small></span></div>
-    <div class="mode" role="group" aria-label="選擇比較類別">
-      <button id="mV" aria-pressed="true">自願醫保</button>
-      <button id="mC" aria-pressed="false">危疾保險</button>
-      <button id="mK" aria-pressed="false">癌症保障</button>
-      <button id="mR" aria-pressed="false">附加保障</button>
+    <div class="mode mk-tabs" role="group" aria-label="選擇比較類別">
+      <button id="mV" class="mk-tab mk-cat-1" aria-pressed="true">自願醫保</button>
+      <button id="mC" class="mk-tab mk-cat-3" aria-pressed="false">危疾保險</button>
+      <button id="mK" class="mk-tab mk-cat-6" aria-pressed="false">癌症保障</button>
+      <button id="mR" class="mk-tab mk-cat-7" aria-pressed="false">附加保障</button>
     </div>
     <div class="top-act">
       <button type="button" class="mk-share-btn" id="shareTop">分享<span class="mk-long">呢個方案</span></button>
