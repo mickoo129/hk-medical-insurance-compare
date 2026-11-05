@@ -91,6 +91,7 @@ select,input[type=search]{width:100%;padding:8px 10px;border:1px solid var(--lin
 .cmp tr.score td{font-weight:700;font-size:1rem;background:#F1F7F5}
 .cmp tr.score .stars{color:#C58A00;letter-spacing:1px}
 .cmpnote{font-size:.82rem;color:var(--mute);padding:10px 20px 0}
+.cmpwarn{color:#9A5B00}
 .cmp thead th{border-top:5px solid var(--bc,transparent)}
 .pname .tier{font-weight:500}
 .cell b{font-weight:700}
@@ -426,7 +427,7 @@ dialog{border-top:5px solid var(--mc)}
 
 <div class="tray" id="tray"><div class="wrap">
   <div class="items" id="trayItems"></div>
-  <button class="clr" id="trayClr">清除</button>
+  <button class="clr" id="trayClr">清除已揀</button>
   <button class="go" id="trayGo">並排比較</button>
 </div></div>
 
@@ -937,7 +938,7 @@ function renderFilters(){
       + sel("ill","保障疾病數目",[[0,"不限"],[60,"60 種或以上"],[100,"100 種或以上"],[120,"120 種或以上"],[180,"180 種或以上"]])
       + `<fieldset class="fg"><legend>必須包括</legend>${chk("multi","多重賠償")}${chk("early","早期危疾保障")}${chk("child","兒童疾病保障")}${chk("prenatal","孕期／未出生嬰兒版本")}${chk("cash","持續癌症現金或入息式賠償")}${chk("icu","深切治療／未知疾病保障")}${chk("dem","認知障礙或柏金遜額外保障")}</fieldset>`;
   }
-  h += `<fieldset class="fg"><legend>資料狀態</legend>${chk("ok","只顯示主要資料齊備的計劃")}</fieldset><button class="reset" id="reset">清除所有條件</button>`;
+  h += `<button class="reset" id="reset">清除所有條件</button>`;
   $("#filters").innerHTML = h;
 }
 $("#filters").addEventListener("input", e=>{
@@ -1183,7 +1184,10 @@ function openCompare(ids){
   }).join("");
   const top = Math.max(...wins);
   const score = judged ? `<tr class="score"><th>較佳項目數</th>${wins.map(w=>`<td>${w} 項 <span class="stars">${judged>=3&&top?"★".repeat(Math.round(w/top*5))+"☆".repeat(5-Math.round(w/top*5)):""}</span></td>`).join("")}</tr>` : "";
-  $("#cmp").innerHTML = `<p class="cmpnote">👍 及星數只按下表可以用數字或有／沒有直接比較的 ${judged} 個項目計算（例如限額較高、等候期較短、保障項目較多），未計保費、核保、條款細節及個人需要，並不代表整體較適合。標示「待補充」的項目不會計算。</p>
+  const kindOf = p => m==="v" ? (p.type==="標準"?"標準計劃":"靈活計劃") : m==="c" ? p.kind : m==="k" ? CT[p.ctype] : null;
+  const kinds = [...new Set(ps.map(kindOf).filter(Boolean))];
+  const warn = kinds.length>1 ? `<b class="cmpwarn">注意：所選計劃屬不同類型（${kinds.map(esc).join("、")}），保障範圍及保費水平差異較大，比較結果只供參考。</b><br>` : "";
+  $("#cmp").innerHTML = `<p class="cmpnote">${warn}${judged?`👍 及星數只按下表可以用數字或有／沒有直接比較的 ${judged} 個項目計算（例如限額較高、等候期較短、保障項目較多），未計保費、核保、條款細節及個人需要，並不代表整體較適合。標示「待補充」的項目不會計算。`:"這幾個計劃沒有可以用數字或有／沒有直接比較的項目，所以不顯示 👍 及星數；請按下表內容自行比較。"}</p>
   <table class="cmp" id="cmpT" style="min-width:${140+ps.length*230}px"><thead><tr><th></th>${ps.map(p=>`<th style="--bc:${INS[p.ins].c}">${chip(p.ins)}<br>${esc(p.name)}${p.tier?"（"+p.tier+"）":""}</th>`).join("")}</tr></thead><tbody>${score}${body}<tr><th>資料來源</th>${ps.map(p=>`<td><a href="${p.src}" target="_blank" rel="noopener">開啟來源</a></td>`).join("")}</tr></tbody></table>`;
   $("#onlyd").checked = false; $("#dlg").showModal();
 }
