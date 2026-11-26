@@ -128,14 +128,20 @@ select,input[type=search]{width:100%;padding:8px 10px;border:1px solid var(--lin
 .tray .go:disabled{opacity:.5;cursor:not-allowed}
 .tray .clr{background:none;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:6px;padding:9px 12px}
 
-dialog{border:0;border-radius:10px;padding:0;width:min(1500px,97vw);max-width:97vw;max-height:94vh}
+/* 並排比較：成個畫面顯示（似一版新頁），返回鍵返去列表 */
+dialog{border:0;border-radius:0;padding:0;margin:0;width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;overflow:hidden}
+body:has(dialog[open]){overflow:hidden}
+dialog[open]{display:flex;flex-direction:column}
 dialog::backdrop{background:rgba(10,30,35,.55)}
-.dh{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
+.dh{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px clamp(16px,3vw,32px);border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
 .dh h2{margin:0;font-family:var(--sans);font-size:1.2rem}
 .dh div{display:flex;gap:8px;align-items:center}
 .dh button{border:1px solid var(--line);background:#fff;border-radius:6px;padding:7px 12px}
 .dh label{font-size:.88rem;display:flex;gap:6px;align-items:center}
-.cmpwrap{overflow:auto;padding:0 20px 20px;max-height:calc(94vh - 70px)}
+.cmpwrap{overflow:auto;padding:0 clamp(16px,3vw,32px) 24px;flex:1;min-height:0}
+.dh .back{display:inline-flex;align-items:center;gap:4px;font-weight:700;color:var(--mk-brand-ink);border-color:var(--mk-brand)}
+.dh .back:hover{background:var(--mk-brand-soft)}
+.dh .dl{display:flex;align-items:center;gap:12px;min-width:0}
 table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
 .cmp th,.cmp td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
 .cmp thead th{position:sticky;top:0;background:#fff;font-size:.95rem;border-bottom:2px solid var(--deep)}
@@ -191,13 +197,12 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
   .bar .count{width:100%}
   .sort{flex:1;min-width:0}
   .sort select{flex:1;min-width:0}
-  dialog{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0;margin:0}
   .dh{padding:10px 12px;flex-wrap:wrap;gap:6px}
   .dh h2{font-size:1.05rem;white-space:nowrap}
   .dh div{gap:6px;flex-wrap:wrap;justify-content:flex-end}
   .dh label{font-size:.8rem;white-space:nowrap}
   .dh button{padding:6px 10px;white-space:nowrap}
-  .cmpwrap{padding:0 0 12px;max-height:calc(100dvh - 60px)}
+  .cmpwrap{padding:0 0 12px}
   .cmpnote{padding:8px 12px 0;font-size:.76rem}
   .why summary{display:list-item;cursor:pointer;color:var(--deep);font-weight:700;padding:2px 0}
   .why[open] summary{margin-bottom:4px}
@@ -450,12 +455,11 @@ dialog{border-top:5px solid var(--mc)}
 
 <dialog id="dlg" aria-labelledby="dlgT">
   <div class="dh">
-    <h2 id="dlgT">並排比較</h2>
+    <div class="dl"><button id="cls" class="back" type="button">← 返回列表</button><h2 id="dlgT">並排比較</h2></div>
     <div>
       <label><input type="checkbox" id="onlyd"> 只顯示有分別的項目</label>
       <button id="shareCmp" class="mk-share-btn" type="button">分享<span class="mk-long">呢個比較</span></button>
       <button id="prt" class="mk-print-btn">列印<span class="mk-long"> / 存 PDF</span></button>
-      <button id="cls">關閉</button>
     </div>
   </div>
   <div class="cmpwrap" id="cmp"></div>
@@ -1206,10 +1210,15 @@ function openCompare(ids){
   const warn = kinds.length>1 ? `<b class="cmpwarn">注意：所選計劃屬不同類型（${kinds.map(esc).join("、")}），保障範圍及保費水平差異較大，比較結果只供參考。</b><br>` : "";
   $("#cmp").innerHTML = `<div class="cmpnote">${warn}<details class="why" ${matchMedia("(max-width:700px)").matches?"":"open"}><summary>👍 及星數的計算方法</summary>${judged?`👍 及星數只按下表可以用數字或有／沒有直接比較的 ${judged} 個項目計算（例如限額較高、等候期較短、保障項目較多），未計保費、核保、條款細節及個人需要，並不代表整體較適合。標示「待補充」的項目不會計算。`:"這幾個計劃沒有可以用數字或有／沒有直接比較的項目，所以不顯示 👍 及星數；請按下表內容自行比較。"}</details></div>
   <table class="cmp" id="cmpT" style="min-width:${140+ps.length*230}px"><thead><tr><th></th>${ps.map(p=>`<th style="--bc:${INS[p.ins].c}">${chip(p.ins)}<br>${esc(p.name)}${p.tier?"（"+p.tier+"）":""}</th>`).join("")}</tr></thead><tbody>${score}${body}<tr><th>資料來源</th>${ps.map(p=>`<td><a href="${p.src}" target="_blank" rel="noopener">開啟來源</a></td>`).join("")}</tr></tbody></table>`;
-  $("#onlyd").checked = false; $("#dlg").showModal();
+  $("#onlyd").checked = false;
+  if(!$("#dlg").open){ $("#dlg").showModal(); try{ history.pushState({cmp:1},""); }catch(e){} }
+  $("#cmp").scrollTop = 0;
 }
 $("#onlyd").addEventListener("change", e=>$("#cmpT").classList.toggle("onlyd", e.target.checked));
 $("#cls").addEventListener("click", ()=>$("#dlg").close());
+/* 返回鍵：比較版開咗時撳返回 = 返去列表；用其他方法關都同步返歷史紀錄 */
+window.addEventListener("popstate", ()=>{ if($("#dlg").open) $("#dlg").close(); });
+$("#dlg").addEventListener("close", ()=>{ if(history.state && history.state.cmp){ try{ history.back(); }catch(e){} } });
 /* 列印：把比較表搬到對話框以外，每頁最多 4 個計劃，分頁印出全部內容 */
 const PRINT_COLS = 4;
 const MK_PRINT_TAIL = ()=>{ const e=document.querySelector(".notes .mk-ecard"), c=document.querySelector(".notes .mk-copy"); return (e?e.outerHTML:"")+(c?c.outerHTML:""); };
