@@ -92,6 +92,7 @@ select,input[type=search]{width:100%;padding:8px 10px;border:1px solid var(--lin
 .cmp tr.score .stars{color:#C58A00;letter-spacing:1px}
 .cmpnote{font-size:.82rem;color:var(--mute);padding:10px 20px 0}
 .cmpwarn{color:#9A5B00}
+.why summary{display:none}
 .cmp thead th{border-top:5px solid var(--bc,transparent)}
 .pname .tier{font-weight:500}
 .cell b{font-weight:700}
@@ -198,6 +199,14 @@ table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;min-width:640px}
   .dh button{padding:6px 10px;white-space:nowrap}
   .cmpwrap{padding:0 0 12px;max-height:calc(100dvh - 60px)}
   .cmpnote{padding:8px 12px 0;font-size:.76rem}
+  .why summary{display:list-item;cursor:pointer;color:var(--deep);font-weight:700;padding:2px 0}
+  .why[open] summary{margin-bottom:4px}
+  .row .sum{position:relative;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px 10px!important;padding:10px 12px!important;font-size:.85rem}
+  .row .sum .pick{position:absolute;left:12px;top:10px;margin:0;grid-column:auto!important;grid-row:auto!important}
+  .row .sum .pname{grid-column:1 / -1!important;padding-left:32px}
+  .row .sum .cell{grid-column:auto!important}
+  .c .row .sum .cell:nth-child(n+6){grid-column:1 / -1!important}
+  .cell::before{font-size:.7rem}
   table.cmp{font-size:.84rem;min-width:0!important;width:max-content}
   .cmp th,.cmp td{min-width:0;width:44vw;max-width:44vw;padding:8px 9px;overflow-wrap:anywhere}
   .cmp tbody th,.cmp thead th:first-child{width:22vw;max-width:22vw;min-width:0;font-size:.76rem;padding:8px 6px}
@@ -356,6 +365,8 @@ dialog{border-top:5px solid var(--mc)}
 .mk-print-btn>.mk-long{margin-left:-2px} /* 「列印 / 存 PDF」保留一個空格 */
 /* 手機：按鈕字縮短（「分享」「列印」） */
 @media (max-width:480px){.mk-long{display:none}.mk-print-btn,.mk-share-btn{padding:0 10px}}
+@media (max-width:480px){.mk-tabs{gap:2px}.mk-tab{padding:5px 8px;font-size:13px;gap:5px}}
+@media (max-width:360px){.mk-tab{padding:5px 6px;font-size:12px;gap:4px}}
 /* ===== MKPA 統一標準 完 ===== */
 
 </style>
@@ -927,7 +938,7 @@ function renderFilters(){
   const m = state.mode, f = state.f[m];
   let h = `<h2>篩選條件</h2>
   <div class="fg"><label class="h" for="f_q">搜尋計劃名稱</label><input type="search" id="f_q" data-k="q" value="${esc(f.q)}" placeholder="例如：尊耀、愛伴航"></div>
-  <fieldset class="fg"><legend>保險公司</legend><div class="insgrid">${Object.keys(INS).filter(k=>DATA().some(p=>p.ins===k)).map(k=>`<label class="chk"><input type="checkbox" data-ins="${k}" ${f.ins.includes(k)?"checked":""}><span class="dot" style="background:${INS[k].c}"></span>${INS[k].n.split(" ")[0]}</label>`).join("")}</div></fieldset>`;
+  <fieldset class="fg"><legend>保險公司</legend><div class="insgrid">${Object.keys(INS).filter(k=>DATA().some(p=>p.ins===k)).map(k=>`<label class="chk"><input type="checkbox" data-ins="${k}" ${f.ins.includes(k)?"checked":""}><span class="dot" style="background:${INS[k].c}"></span>${INS[k].n.split(" ")[0].replace("（海外）","")}</label>`).join("")}</div></fieldset>`;
   if(m==="v"){
     h += sel("type","計劃類別",[["","全部"],["標準","標準計劃"],["靈活","靈活計劃"]])
       + sel("ward","病房級別",[["","全部"],["普通房","普通房"],["半私家房","半私家房"],["私家房","私家房"]])
@@ -1140,7 +1151,7 @@ function openCompare(ids){
     ["保障地域",p=>p.regTxt,0,{v:p=>p.reg.length?Math.max(...p.reg):null,dir:"hi"}],
     ["每年保障限額",p=>annualTxt(p)+(p.full===false?"（設分項限額）":""),0,{v:p=>p.annual===null||p.full!==true||/每傷病|每個傷病/.test(p.annualTxt||"")?null:p.annual===0?Infinity:p.annual,dir:"hi"}],
     ["終身保障限額",p=>p.life,0,{v:lifeN,dir:"hi"}],
-    ["每年自付費選項",p=>dedTxt(p),0,{v:p=>p.ded.length,dir:"hi"}],
+    ["每年自付費選項",p=>dedTxt(p),0],
     ["賠償方式",p=>p.full===null?TBC:p.full?"全數賠償（不設分項限額）":"分項限額",0,{v:p=>p.full===null?null:p.full?1:0,dir:"hi"}],
     ["額外醫療保障",p=>p.smm],["非手術癌症治療",p=>p.cancerTxt||TBC],["入院前／出院後門診",p=>p.opTxt||TBC],["精神科治療",p=>p.psyTxt||TBC],["未知已有病症及等候期",p=>p.waitTxt||TBC],["續保",p=>p.renew||TBC],["投保年齡",p=>p.age],["計劃特點",p=>"<ul>"+p.feats.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>",1],["備註",p=>p.note||"—"],["資料狀態",p=>p.ok?"主要資料齊備":"資料未齊"]
   ] : m==="r" ? [
@@ -1193,7 +1204,7 @@ function openCompare(ids){
   const kindOf = p => m==="v" ? (p.type==="標準"?"標準計劃":"靈活計劃") : m==="c" ? p.kind : m==="k" ? CT[p.ctype] : null;
   const kinds = [...new Set(ps.map(kindOf).filter(Boolean))];
   const warn = kinds.length>1 ? `<b class="cmpwarn">注意：所選計劃屬不同類型（${kinds.map(esc).join("、")}），保障範圍及保費水平差異較大，比較結果只供參考。</b><br>` : "";
-  $("#cmp").innerHTML = `<p class="cmpnote">${warn}${judged?`👍 及星數只按下表可以用數字或有／沒有直接比較的 ${judged} 個項目計算（例如限額較高、等候期較短、保障項目較多），未計保費、核保、條款細節及個人需要，並不代表整體較適合。標示「待補充」的項目不會計算。`:"這幾個計劃沒有可以用數字或有／沒有直接比較的項目，所以不顯示 👍 及星數；請按下表內容自行比較。"}</p>
+  $("#cmp").innerHTML = `<div class="cmpnote">${warn}<details class="why" ${matchMedia("(max-width:700px)").matches?"":"open"}><summary>👍 及星數的計算方法</summary>${judged?`👍 及星數只按下表可以用數字或有／沒有直接比較的 ${judged} 個項目計算（例如限額較高、等候期較短、保障項目較多），未計保費、核保、條款細節及個人需要，並不代表整體較適合。標示「待補充」的項目不會計算。`:"這幾個計劃沒有可以用數字或有／沒有直接比較的項目，所以不顯示 👍 及星數；請按下表內容自行比較。"}</details></div>
   <table class="cmp" id="cmpT" style="min-width:${140+ps.length*230}px"><thead><tr><th></th>${ps.map(p=>`<th style="--bc:${INS[p.ins].c}">${chip(p.ins)}<br>${esc(p.name)}${p.tier?"（"+p.tier+"）":""}</th>`).join("")}</tr></thead><tbody>${score}${body}<tr><th>資料來源</th>${ps.map(p=>`<td><a href="${p.src}" target="_blank" rel="noopener">開啟來源</a></td>`).join("")}</tr></tbody></table>`;
   $("#onlyd").checked = false; $("#dlg").showModal();
 }
@@ -1208,7 +1219,7 @@ function buildPrint(){
   const onlyd = t.classList.contains("onlyd");
   const rows = [...t.rows].filter(r=>!(onlyd && r.parentNode.tagName==="TBODY" && !r.classList.contains("d") && !r.classList.contains("score")));
   const n = t.rows[0].cells.length-1, pages = Math.ceil(n/PRINT_COLS), per = Math.ceil(n/pages);
-  const note = $("#cmp .cmpnote") ? $("#cmp .cmpnote").outerHTML : "";
+  const note = $("#cmp .cmpnote") ? $("#cmp .cmpnote").outerHTML.replace(/<details class="why"[^>]*>/,'<details class="why" open>') : "";
   const title = {v:"自願醫保",c:"危疾保險",r:"附加保障",k:"癌症保障"}[state.mode];
   let h = "";
   for(let pg=0; pg<pages; pg++){
